@@ -1,0 +1,41 @@
+# This .gitignore is for Unity projects
+# It excludes common Unity build artifacts, caches, and IDE files
+
+# ============ Unity ============
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+
+# Asset meta data should only be ignored when explicitly selected
+/[Aa]ssets/AssetStoreTools*
+
+# Visual Studio
+.vs/
+
+# Visual Studio cache
+*.sln.ide/
+*.csproj
+*.sln
+*.unityproj
+*.pidb
+*.suo
+*.user
+*.userosscache
+*.sln.docstats
+
+# VS Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db

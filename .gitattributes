@@ -1,0 +1,41 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare binary file types
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tga binary
+*.psd binary
+*.fbx binary
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.aiff binary
+*.mp4 binary
+*.avi binary
+*.mov binary
+*.dll binary
+*.exe binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+
+# Unity meta files - force LF (meta files are YAML text)
+*.meta text eol=lf
+
+# Scripts - force LF
+*.cs text eol=lf
+*.shader text eol=lf
+*.cginc text eol=lf
+*.hlsl text eol=lf
+
+# Text config files - force LF
+*.json text eol=lf
+*.xml text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
