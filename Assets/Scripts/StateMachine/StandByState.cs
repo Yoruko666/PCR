@@ -34,7 +34,7 @@ public class StandByState : BaseState
         if (standByDone)
         {
             if (!unit.Detect()) stateMachine.SwitchState(StateType.Run);
-            else stateMachine.SwitchState(StateType.Attack);
+            else stateMachine.SwitchState(StateType.Idle);
         }
     }
 

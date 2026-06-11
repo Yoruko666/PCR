@@ -506,16 +506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FriendUnitsId:
   - 1001
-  - 1002
-  - 1003
-  - 1010
-  - 1036
   EnemyUnitsId:
   - 1001
-  - 1002
-  - 1003
-  - 1010
-  - 1036
 --- !u!114 &1993796359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConfigPath: Assets/Configs/CharacterConfig.csv
+  SkillConfigPath: Assets/Configs/SkillConfig.csv
+  SkillEffectConfigPath: Assets/Configs/SkillEffectConfig.csv
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

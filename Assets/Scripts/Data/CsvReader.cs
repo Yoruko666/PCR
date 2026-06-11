@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
+using System.Globalization;
 
 public static class CsvReader
 {
@@ -40,26 +40,24 @@ public static class CsvReader
                 current.Append(c);
             }
         }
-        fields.Add(current.ToString()); // 最后一个字段
+        fields.Add(current.ToString());
         return fields.ToArray();
     }
 
     /// <summary>
-    /// 将 CSV 文本解析为 UnitConfig 列表。
-    /// CSV 表头（第一行）的列名直接匹配 UnitConfig 的 public 字段名，自动填充。
-    /// 新增字段只需：1) Excel 加一列  2) UnitConfig 加同名 public 字段
+    /// 将 CSV 文本解析为指定类型的配置列表。
+    /// CSV 表头（第一行）的列名直接匹配 T 的 public 字段名，自动填充。
     /// </summary>
-    public static List<UnitConfig> ParseToConfigs(string csvText)
+    public static List<T> ParseToConfigs<T>(string csvText) where T : new()
     {
         var rows = Parse(csvText);
-        if (rows.Count < 2) return new List<UnitConfig>();
+        if (rows.Count < 2) return new List<T>();
 
         string[] headers = rows[0];
-        var configs = new List<UnitConfig>();
+        var configs = new List<T>();
 
-        // 缓存 UnitConfig 字段信息，避免每行重复反射
         var fieldMap = new Dictionary<string, FieldInfo>();
-        foreach (var fi in typeof(UnitConfig).GetFields(BindingFlags.Public | BindingFlags.Instance))
+        foreach (var fi in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Instance))
         {
             fieldMap[fi.Name] = fi;
         }
@@ -67,7 +65,7 @@ public static class CsvReader
         for (int r = 1; r < rows.Count; r++)
         {
             string[] fields = rows[r];
-            var config = new UnitConfig();
+            var config = new T();
 
             for (int c = 0; c < headers.Length && c < fields.Length; c++)
             {
@@ -77,7 +75,7 @@ public static class CsvReader
                 string rawVal = fields[c];
                 if (string.IsNullOrEmpty(rawVal)) continue;
 
-                SetFieldValue(config, field, rawVal, key);
+                SetFieldValue(config, field, rawVal);
             }
 
             configs.Add(config);
@@ -86,7 +84,7 @@ public static class CsvReader
         return configs;
     }
 
-    private static void SetFieldValue(UnitConfig config, FieldInfo field, string rawVal, string fieldName)
+    private static void SetFieldValue(object config, FieldInfo field, string rawVal)
     {
         object val;
         if (field.FieldType == typeof(int))

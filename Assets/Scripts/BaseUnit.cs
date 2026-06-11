@@ -27,6 +27,9 @@ public class BaseUnit
     public float AttackRange { get; private set; }
     public readonly float HitRange = 112;
 
+    public SkillManager Skill { get; private set; }
+    public bool IsPaused { get; set; }
+
     public BaseUnit(string id, CampType campType)
     {
         Config = ConfigManager.Instance.GetConfig(id);
@@ -39,7 +42,7 @@ public class BaseUnit
         gameObject = new GameObject(Config.Name ?? id);
         gameObject.AddComponent<AudioSource>();
         spine = gameObject.AddComponent<SkeletonAnimation>();
-        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.SpineDataAddr).WaitForCompletion();
+        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.Id).WaitForCompletion();
         spine.Initialize(true);
 
         CampType = campType;
@@ -53,6 +56,7 @@ public class BaseUnit
 
         stateMachine = new StateMachine(this);
         stateMachine.SetDefaultState(StateType.RunGameStart);
+        Skill = new SkillManager(this, Config.UbSkillId, Config.Skill1Id, Config.Skill2Id);
     }
 
     public void Init(int orderNumber)
@@ -64,6 +68,8 @@ public class BaseUnit
 
     public void Tick()
     {
+        if (IsPaused) return;
+        Skill.Tick(BattleManager.TickTime);
         stateMachine.CheckSwitchState();
         stateMachine.OnTick();
     }
@@ -124,6 +130,27 @@ public class BaseUnit
             if (AttackRange >= distance - HitRange / 2) return true;
         }
         return false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        HP = Mathf.Max(0, HP - damage);
+        Skill?.OnHit();
+    }
+
+    public void Heal(int amount)
+    {
+        HP = Mathf.Min(MaxHP, HP + amount);
+    }
+
+    public void AddTP(int amount)
+    {
+        TP = Mathf.Min(MaxTP, TP + amount);
+    }
+
+    public void SpendTP(int amount)
+    {
+        TP = Mathf.Max(0, TP - amount);
     }
 }
 

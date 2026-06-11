@@ -17,6 +17,8 @@ public class StateMachine
         states.Add(StateType.Run, new RunState(this, unit));
         states.Add(StateType.Idle, new IdleState(this, unit));
         states.Add(StateType.Attack, new AttackState(this, unit));
+        states.Add(StateType.Skill, new SkillState(this, unit));
+        states.Add(StateType.Ub, new UbState(this, unit));
     }
 
     public void OnTick()
@@ -45,5 +47,5 @@ public class StateMachine
 
 public enum StateType
 {
-    RunGameStart, StandBy, Idle, Run, Attack
+    RunGameStart, StandBy, Idle, Run, Attack, Skill, Ub
 }

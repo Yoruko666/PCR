@@ -31,7 +31,7 @@ public class AttackState : BaseState
         if (attackDone)
         {
             if (!unit.Detect()) stateMachine.SwitchState(StateType.Run);
-            else stateMachine.SwitchState(StateType.Attack);
+            else stateMachine.SwitchState(StateType.Idle);
         }
     }
 
@@ -40,6 +40,7 @@ public class AttackState : BaseState
         if(trackEntry.Animation.Name == unit.GetAnimName("attack"))
         {
             attackDone = true;
+            unit.Skill?.OnAttackPerformed();
         }
     }
 }

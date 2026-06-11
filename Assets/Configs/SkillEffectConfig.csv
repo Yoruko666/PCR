@@ -1,0 +1,5 @@
+SkillId,EffectIndex,EffectType,EffectTarget,SkillMulti,EffectValue
+所属技能ID,效果序号(按顺序执行),效果类型(Damage/Heal/Buff/Debuff),目标(SingleEnemy/AllEnemies/Self/AllAllies),攻击力倍率,附加值(固定数值)
+100100,1,Damage,SingleEnemy,2.4,30
+100101,1,Damage,SingleEnemy,1.6,20
+100102,1,Damage,SingleEnemy,0.6,8
