@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 
 public static class CsvReader
 {
@@ -42,13 +44,25 @@ public static class CsvReader
         return fields.ToArray();
     }
 
+    /// <summary>
+    /// 将 CSV 文本解析为 UnitConfig 列表。
+    /// CSV 表头（第一行）的列名直接匹配 UnitConfig 的 public 字段名，自动填充。
+    /// 新增字段只需：1) Excel 加一列  2) UnitConfig 加同名 public 字段
+    /// </summary>
     public static List<UnitConfig> ParseToConfigs(string csvText)
     {
         var rows = Parse(csvText);
-        if (rows.Count < 2) return new List<UnitConfig>(); // 至少要有表头+1行数据
+        if (rows.Count < 2) return new List<UnitConfig>();
 
         string[] headers = rows[0];
         var configs = new List<UnitConfig>();
+
+        // 缓存 UnitConfig 字段信息，避免每行重复反射
+        var fieldMap = new Dictionary<string, FieldInfo>();
+        foreach (var fi in typeof(UnitConfig).GetFields(BindingFlags.Public | BindingFlags.Instance))
+        {
+            fieldMap[fi.Name] = fi;
+        }
 
         for (int r = 1; r < rows.Count; r++)
         {
@@ -58,36 +72,38 @@ public static class CsvReader
             for (int c = 0; c < headers.Length && c < fields.Length; c++)
             {
                 string key = headers[c];
-                string val = fields[c];
+                if (!fieldMap.TryGetValue(key, out var field)) continue;
 
-                switch (key)
-                {
-                    case "Id":              config.Id = val; break;
-                    case "Name":            config.Name = val; break;
-                    case "MaxHP":           config.MaxHP = ParseInt(val); break;
-                    case "AttackPower":     config.AttackPower = ParseInt(val); break;
-                    case "AttackRange":     config.AttackRange = ParseFloat(val); break;
-                    case "AnimRun":         config.AnimRun = val; break;
-                    case "AnimAttack":      config.AnimAttack = val; break;
-                    case "AnimIdle":        config.AnimIdle = val; break;
-                    case "SpineDataAddr":   config.SpineDataAddr = val; break;
-                }
+                string rawVal = fields[c];
+                if (string.IsNullOrEmpty(rawVal)) continue;
+
+                SetFieldValue(config, field, rawVal, key);
             }
+
             configs.Add(config);
         }
+
         return configs;
     }
 
-    private static int ParseInt(string s)
+    private static void SetFieldValue(UnitConfig config, FieldInfo field, string rawVal, string fieldName)
     {
-        int.TryParse(s, out int v);
-        return v;
-    }
+        object val;
+        if (field.FieldType == typeof(int))
+        {
+            int.TryParse(rawVal, out int intVal);
+            val = intVal;
+        }
+        else if (field.FieldType == typeof(float))
+        {
+            float.TryParse(rawVal, NumberStyles.Float, CultureInfo.InvariantCulture, out float floatVal);
+            val = floatVal;
+        }
+        else
+        {
+            val = rawVal;
+        }
 
-    private static float ParseFloat(string s)
-    {
-        float.TryParse(s, System.Globalization.NumberStyles.Float,
-            System.Globalization.CultureInfo.InvariantCulture, out float v);
-        return v;
+        field.SetValue(config, val);
     }
 }

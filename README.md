@@ -61,6 +61,8 @@ spine.Skeleton.SetToSetupPose();
 ### 一些有用的网址：
 
 [公主连结BWiki](https://wiki.biligame.com/pcr/%E9%A6%96%E9%A1%B5)\
+[公主连结FandomWiki](https://princess-connect.fandom.com/wiki/Princess_Connect!_Re:Dive_Wiki)\
+[蘭德索爾圖書館](https://pcredivewiki.tw/)\
 [干炸里脊资源（©Cygames）](https://redive.estertion.win/)\
 [【公主连结Re:Dive】游戏站位机制](https://zhuanlan.zhihu.com/p/145043002)\
 [【公主连结Re:Dive】游戏机制之普攻和技能机制](https://zhuanlan.zhihu.com/p/148423807)\

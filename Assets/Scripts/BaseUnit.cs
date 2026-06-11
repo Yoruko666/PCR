@@ -52,7 +52,7 @@ public class BaseUnit
         AttackRange = Config.AttackRange;
 
         stateMachine = new StateMachine(this);
-        stateMachine.SetDefaultState(StateType.Run);
+        stateMachine.SetDefaultState(StateType.RunGameStart);
     }
 
     public void Init(int orderNumber)
@@ -77,10 +77,12 @@ public class BaseUnit
     {
         return animKey switch
         {
-            "run"    => Config.AnimRun,
-            "attack" => Config.AnimAttack,
-            "idle"   => Config.AnimIdle,
-            _        => animKey
+            "run_game_start"    => Config.AnimRunGameStart,
+            "stand_by"          => Config.AnimStandBy,
+            "run"               => Config.AnimRun,
+            "attack"            => Config.AnimAttack,
+            "idle"              => Config.AnimIdle,
+            _                   => animKey
         };
     }
 

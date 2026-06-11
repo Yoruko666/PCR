@@ -1,6 +1,6 @@
-Id,Name,MaxHP,AttackPower,AttackRange,AnimRun,AnimAttack,AnimIdle,SpineDataAddr
-1001,日和莉,5800,1580,200,01_run,01_attack,01_multy_idle_standBy,1001
-1002,优衣,4000,200,800,07_run,07_attack,07_multy_idle_standBy,1002
-1003,怜,5000,1000,250,04_run,04_attack,04_multy_idle_standBy,1003
-1010,真步,1000,1000,795,07_run,07_attack,07_multy_idle_standBy,1010
-1036,镜华,1000,1000,810,07_run,07_attack,07_multy_idle_standBy,1036
+Id,Name,MaxHP,AttackPower,AttackRange,AnimRunGameStart,AnimStandBy,AnimRun,AnimAttack,AnimIdle,SpineDataAddr
+1001,日和莉,5800,1580,200,01_run_gamestart,01_standBy,01_run,01_attack,01_multy_idle_standBy,1001
+1002,优衣,4000,200,800,07_run_gamestart,07_standBy,07_run,07_attack,07_multy_idle_standBy,1002
+1003,怜,5000,1000,250,04_run_gamestart,04_standBy,04_run,04_attack,04_multy_idle_standBy,1003
+1010,真步,1000,1000,795,07_run_gamestart,07_standBy,07_run,07_attack,07_multy_idle_standBy,1010
+1036,镜华,1000,1000,810,07_run_gamestart,07_standBy,07_run,07_attack,07_multy_idle_standBy,1036

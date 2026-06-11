@@ -8,6 +8,8 @@ public class UnitConfig
     public int MaxHP;
     public int AttackPower;
     public float AttackRange;
+    public string AnimRunGameStart;
+    public string AnimStandBy;
     public string AnimRun;
     public string AnimAttack;
     public string AnimIdle;

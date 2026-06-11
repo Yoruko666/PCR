@@ -12,6 +12,8 @@ public class StateMachine
     public StateMachine(BaseUnit unit)
     {
         this.unit = unit;
+        states.Add(StateType.RunGameStart, new RunGameStart(this, unit));
+        states.Add(StateType.StandBy, new StandByState(this, unit));
         states.Add(StateType.Run, new RunState(this, unit));
         states.Add(StateType.Idle, new IdleState(this, unit));
         states.Add(StateType.Attack, new AttackState(this, unit));
@@ -43,5 +45,5 @@ public class StateMachine
 
 public enum StateType
 {
-    Idle, Run, Attack
+    RunGameStart, StandBy, Idle, Run, Attack
 }

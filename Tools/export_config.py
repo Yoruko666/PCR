@@ -3,55 +3,21 @@ Excel → CSV 配表导出工具
 
 使用方法：
   1. python export_config.py --template    # 生成空白 Excel 模板
-  2. 在 Excel 中编辑配表后保存为 .xlsx 文件
-  3. python export_config.py               # 导出为 CSV
+  2. 在 Excel 中编辑配表后保存为 .xlsx 文件（第一行为英文字段名）
+  3. python export_config.py               # 导出为 CSV（表头=Excel第一行，原样保留）
 
 依赖安装：
   pip install openpyxl
 
-命令行：
-  python export_config.py                          # 使用默认配置
-  python export_config.py --input 配表.xlsx --output 目标.csv
-  python export_config.py --template               # 生成空白模板
+修改规范：新增字段只需：
+  1. 在 Excel 中添加一列（第一行写英文名）
+  2. 在 C# UnitConfig.cs 中添加同名 public 字段
 """
 
 import argparse
 import csv
 import os
 from openpyxl import load_workbook, Workbook
-
-# 列映射：Excel 列名 → CSV 列名
-COLUMN_MAP = {
-    "Id":             "Id",
-    "角色ID":          "Id",
-    "Name":           "Name",
-    "名称":            "Name",
-    "角色名":           "Name",
-    "MaxHP":          "MaxHP",
-    "HP":             "MaxHP",
-    "最大HP":          "MaxHP",
-    "AttackPower":    "AttackPower",
-    "Attack":         "AttackPower",
-    "AttackRange":    "AttackRange",
-    "攻击范围":          "AttackRange",
-    "AnimRun":        "AnimRun",
-    "走路动画":          "AnimRun",
-    "跑步动画":          "AnimRun",
-    "AnimAttack":     "AnimAttack",
-    "攻击动画":          "AnimAttack",
-    "AnimIdle":       "AnimIdle",
-    "待机动画":          "AnimIdle",
-    "空闲动画":          "AnimIdle",
-    "SpineDataAddr":  "SpineDataAddr",
-    "Spine地址":        "SpineDataAddr",
-    "骨骼地址":          "SpineDataAddr",
-}
-
-# 输出 CSV 的列顺序
-CSV_COLUMNS = [
-    "Id", "Name", "MaxHP", "AttackPower", "AttackRange",
-    "AnimRun", "AnimAttack", "AnimIdle", "SpineDataAddr",
-]
 
 
 def excel_to_csv(input_path, output_path, sheet_name=None):
@@ -71,51 +37,38 @@ def excel_to_csv(input_path, output_path, sheet_name=None):
         print(f"错误：工作表 '{ws.title}' 为空")
         return False
 
-    # 解析表头
-    raw_headers = [str(cell).strip() if cell else "" for cell in rows[0]]
-    headers = []
-    col_indices = []
+    # 第1行作为 CSV 表头，原样保留
+    headers = [str(cell).strip() if cell else "" for cell in rows[0]]
+    headers = [h for h in headers if h]  # 跳过空表头列
 
-    print(f"\n表头识别结果：")
-    for i, raw in enumerate(raw_headers):
-        mapped = COLUMN_MAP.get(raw, raw)
-        if mapped in CSV_COLUMNS:
-            col_indices.append((i, mapped))
-            print(f"  [{i}] {raw:12s} → {mapped}")
-        else:
-            print(f"  [{i}] {raw:12s} -> 未识别，跳过")
-
-    if not col_indices:
-        print("错误：未找到任何可识别的列")
+    if not headers:
+        print("错误：Excel 第一行为空")
         return False
 
+    print(f"\n表头: {headers}")
+
     # 构建 CSV 内容
-    csv_rows = []
-    csv_rows.append(CSV_COLUMNS)  # 表头
+    csv_rows = [headers]
 
     for row_idx, row in enumerate(rows[1:], start=2):
-        values = {}
-        for col_idx, col_name in col_indices:
-            cell_val = row[col_idx]
+        values = []
+        # 只取有表头的列（跳过 Excel 多余的空列）
+        for col_idx in range(len(headers)):
+            cell_val = row[col_idx] if col_idx < len(row) else None
             if cell_val is None:
-                values[col_name] = ""
+                values.append("")
             elif isinstance(cell_val, float):
-                # 整数就去掉小数点
-                if cell_val == int(cell_val):
-                    values[col_name] = str(int(cell_val))
-                else:
-                    values[col_name] = str(cell_val)
+                values.append(str(int(cell_val)) if cell_val == int(cell_val) else str(cell_val))
             else:
-                values[col_name] = str(cell_val).strip()
+                values.append(str(cell_val).strip())
 
-        # 必须有数字 Id
-        id_str = values.get("Id", "")
-        if not id_str or not id_str.isdigit():
+        # 第一列（Id）必须为非空数字
+        id_val = values[0]
+        if not id_val or not id_val.isdigit():
             print(f"  跳过第 {row_idx} 行：Id 非数字")
             continue
 
-        csv_row = [values.get(col, "") for col in CSV_COLUMNS]
-        csv_rows.append(csv_row)
+        csv_rows.append(values)
 
     # 写入 CSV
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
@@ -138,49 +91,45 @@ def list_sheets(input_path):
 def create_template(output_path):
     """生成空白 Excel 模板文件"""
 
-    # 列信息：中文名（注释用） / CSV列名 / 示例值 / 类型提示
+    # 列信息：(英文列名, 示例值, 中文注释)
     columns = [
-        ("角色ID",   "Id",            1001,    "文本"),
-        ("名称",       "Name",          "日和莉",  "文本"),
-        ("最大HP",     "MaxHP",         5800,    "整数"),
-        ("攻击力",     "AttackPower",   1580,    "整数"),
-        ("攻击范围",   "AttackRange",   200,     "浮点数"),
-        ("走路动画",   "AnimRun",       "01_run","文本"),
-        ("攻击动画",   "AnimAttack",    "01_attack","文本"),
-        ("待机动画",   "AnimIdle",      "01_stand","文本"),
-        ("Spine地址",  "SpineDataAddr", "1001",  "文本"),
+        ("Id",            1001,    "角色ID"),
+        ("Name",          "日和莉",  "名称"),
+        ("MaxHP",         5800,    "最大HP"),
+        ("AttackPower",   1580,    "攻击力"),
+        ("AttackRange",   200,     "攻击范围"),
+        ("AnimRun",       "01_run","跑步动画"),
+        ("AnimAttack",    "01_attack","攻击动画"),
+        ("AnimIdle",      "01_stand","待机动画"),
+        ("SpineDataAddr", "1001",  "Spine地址"),
     ]
 
     wb = Workbook()
     ws = wb.active
     ws.title = "角色配置"
 
-    # 第1行：表头（英文列名，程序识别用）
-    header_row = [col[1] for col in columns]
-    ws.append(header_row)
+    # 第1行：表头（英文列名，也是 CSV 键名）
+    ws.append([col[0] for col in columns])
 
     # 第2行：中文注释
-    cn_row = [col[0] for col in columns]
-    ws.append(cn_row)
+    ws.append([col[2] for col in columns])
 
     # 第3行：示例数据
-    sample_row = [col[2] for col in columns]
-    ws.append(sample_row)
+    ws.append([col[1] for col in columns])
 
     # 设置列宽
-    col_widths = [14, 10, 10, 10, 12, 12, 12, 12, 16]
-    for i, width in enumerate(col_widths, start=1):
-        ws.column_dimensions[chr(64 + i)].width = width
+    for i in range(len(columns)):
+        ws.column_dimensions[chr(65 + i)].width = 14
 
-    # 冻结首行
-    ws.freeze_panes = "A2"
+    # 冻结前两行（表头+注释）
+    ws.freeze_panes = "A3"
 
     # 保存
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     wb.save(output_path)
 
     print(f"\n== 模板已生成: {output_path}")
-    print(f"   Excel 列名说明（第1行英文=程序识别，第2行中文=提示，第3行=示例）")
+    print(f"   第1行=英文字段名（CSV键名），第2行=中文注释，第3行=示例数据")
     print(f"   编辑完成后运行 python export_config.py 导出为 CSV")
     return True
 
