@@ -33,6 +33,18 @@ public class BattleManager: MonoBehaviour
         {
             enemyUnits.Add(new BaseUnit(EnemyUnitsId[i], CampType.Enemy));
         }
+
+        friendUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
+        enemyUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
+
+        for (int i = 0; i < friendUnits.Count; i++)
+        {
+            friendUnits[i].Init(i);
+        }
+        for (int i = 0; i < enemyUnits.Count; i++)
+        {
+            enemyUnits[i].Init(i);
+        }
     }
 
     private void Update()

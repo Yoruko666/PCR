@@ -469,6 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1993796357}
   - component: {fileID: 1993796358}
+  - component: {fileID: 1993796359}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -505,8 +506,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FriendUnitsId:
   - 1001
+  - 1002
+  - 1003
+  - 1010
+  - 1036
   EnemyUnitsId:
   - 1001
+  - 1002
+  - 1003
+  - 1010
+  - 1036
+--- !u!114 &1993796359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993796356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2c1931186a52f4a90f2099f3768d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConfigPath: Assets/Configs/CharacterConfig.csv
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

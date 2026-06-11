@@ -14,7 +14,7 @@ public class AttackState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim("01_attack", false);
+        unit.PlayAnim(unit.GetAnimName("attack"), false);
         attackDone = false;
         unit.spine.AnimationState.Complete += OnAttackComplete;
     }
@@ -30,40 +30,16 @@ public class AttackState : BaseState
     {
         if (attackDone)
         {
-            if (!Detect()) stateMachine.SwitchState(StateType.Run);
+            if (!unit.Detect()) stateMachine.SwitchState(StateType.Run);
             else stateMachine.SwitchState(StateType.Attack);
         }
     }
 
     private void OnAttackComplete(TrackEntry trackEntry)
     {
-        if(trackEntry.Animation.Name == "01_attack")
+        if(trackEntry.Animation.Name == unit.GetAnimName("attack"))
         {
             attackDone = true;
         }
-    }
-
-    private bool Detect()
-    {
-        float selfX = unit.LogicX;
-        int dir = unit.XDir;
-        int range = unit.AttackRange;
-
-        List<BaseUnit> targets = BattleManager.Instance.GetOppositeUnits(unit.CampType);
-        foreach (BaseUnit enemy in targets)
-        {
-            float enemyX = enemy.LogicX;
-            float distance = Mathf.Abs(enemyX - selfX);
-
-            if (distance > range)
-                continue;
-
-            bool isFront = dir == 1 ? enemyX > selfX : enemyX < selfX;
-            if (isFront)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }

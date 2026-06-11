@@ -2,43 +2,64 @@ using UnityEngine;
 using Spine;
 using Spine.Unity;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Collections.Generic;
 
 public class BaseUnit
 {
-    public CampType CampType;
     public SkeletonAnimation spine;
 
-    private GameObject gameObject;
-
-    protected StateMachine stateMachine;
-
+    public UnitConfig Config;
+    public string Id => Config.Id;
+    public CampType CampType;
+    public int Number;
     public float LogicX;
     public int XDir => CampType == CampType.Friend ? 1 : -1;
 
-    private int HP;
+    protected StateMachine stateMachine;
 
-    private int MaxHP;
+    private GameObject gameObject;
 
-    private int TP;
-
-    private int MaxTP;
-
-    public int AttackRange = 200;
+    public int HP { get; private set; }
+    public int MaxHP { get; private set; }
+    public int TP { get; private set; }
+    public int MaxTP { get; private set; }
+    public int AttackPower { get; private set; }
+    public float AttackRange { get; private set; }
+    public readonly float HitRange = 112;
 
     public BaseUnit(string id, CampType campType)
     {
-        GameObject goPrefab = Addressables.LoadAssetAsync<GameObject>(id).WaitForCompletion();
-        gameObject = GameObject.Instantiate<GameObject>(goPrefab);
-        spine = gameObject.GetComponent<SkeletonAnimation>();
+        Config = ConfigManager.Instance.GetConfig(id);
+        if (Config == null)
+        {
+            Debug.LogError($"[BaseUnit] 找不到角色配置: {id}");
+            return;
+        }
+
+        gameObject = new GameObject(Config.Name ?? id);
+        gameObject.AddComponent<AudioSource>();
+        spine = gameObject.AddComponent<SkeletonAnimation>();
+        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.SpineDataAddr).WaitForCompletion();
+        spine.Initialize(true);
+
         CampType = campType;
 
-        InitLogicPosition();
-        InitTransform();
+        MaxHP = Config.MaxHP;
+        HP = Config.MaxHP;
+        MaxTP = 1000;
+        TP = 0;
+        AttackPower = Config.AttackPower;
+        AttackRange = Config.AttackRange;
 
         stateMachine = new StateMachine(this);
         stateMachine.SetDefaultState(StateType.Run);
+    }
 
+    public void Init(int orderNumber)
+    {
+        Number = orderNumber;
+        InitLogicPosition();
+        InitTransform();
     }
 
     public void Tick()
@@ -52,6 +73,17 @@ public class BaseUnit
         spine.AnimationState.SetAnimation(0, animName, loop);
     }
 
+    public string GetAnimName(string animKey)
+    {
+        return animKey switch
+        {
+            "run"    => Config.AnimRun,
+            "attack" => Config.AnimAttack,
+            "idle"   => Config.AnimIdle,
+            _        => animKey
+        };
+    }
+
     public void Move()
     {
         LogicX += 7.5f * XDir;
@@ -59,17 +91,19 @@ public class BaseUnit
     }
 
     // 战斗场景设置x坐标限定为-15~15
-    // 逻辑坐标限定为-1080~1080
+    // 逻辑坐标总宽为2320
+    // 逻辑坐标限定为-1360~960
     public void SetLogicPosition(float x)
     {
         this.LogicX = x;
         Vector3 position = gameObject.transform.position;
-        gameObject.transform.position = new Vector3(x * 15 / 1080, position.y, position.z);
+        gameObject.transform.position = new Vector3((x + 200) * 15 / 1160, position.y, position.z);
     }
 
     public void InitLogicPosition()
     {
-        SetLogicPosition(-1080 * XDir);
+        float spawnX = -(660 + 200 * Number) * XDir - 100;
+        SetLogicPosition(spawnX);
     }
 
     public void InitTransform()
@@ -78,10 +112,21 @@ public class BaseUnit
         float offset = Random.Range(-1.5f, 1.5f);
         gameObject.transform.Translate(0, offset, offset);
     }
+
+    public bool Detect()
+    {
+        List<BaseUnit> targets = BattleManager.Instance.GetOppositeUnits(CampType);
+        foreach (BaseUnit enemy in targets)
+        {
+            float distance = Mathf.Abs(enemy.LogicX - LogicX);
+            if (AttackRange >= distance - HitRange / 2) return true;
+        }
+        return false;
+    }
 }
 
 public enum CampType
 {
-    Friend,  
-    Enemy 
+    Friend,
+    Enemy
 }
