@@ -3,9 +3,9 @@ using System;
 [Serializable]
 public class SkillConfig
 {
-    public string Id;           // 技能ID
-    public string Name;         // 技能名称
-    public float CastTime;      // 技能前摇（秒）
-    public string AnimName;     // 技能动画名
-    public string SoundName;    // 技能音效名
+    public string Id;         
+    public string Name;      
+    public int CastTime;         // 前摇帧数
+    public string AnimName;   
+    public string SoundName; 
 }

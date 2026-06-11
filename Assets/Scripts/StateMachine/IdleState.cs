@@ -24,7 +24,7 @@ public class IdleState : BaseState
         if (unit.Skill.TryGetUbSkill())
         {
             currentAction = 'U';
-            waitTimer = unit.Skill.PendingSkill.Config.CastTime;
+            waitTimer = unit.Skill.PendingSkill.Config.CastTime * BattleManager.TickTime;
             return;
         }
 
@@ -43,7 +43,7 @@ public class IdleState : BaseState
 
             var cfg = ConfigManager.Instance.GetSkillConfig(skillId);
             unit.Skill.PendingSkill = cfg != null ? new Skill { Config = cfg } : null;
-            waitTimer = cfg?.CastTime ?? 0;
+            waitTimer = (cfg?.CastTime ?? 0) * BattleManager.TickTime;
         }
     }
 

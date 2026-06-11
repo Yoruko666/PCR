@@ -2,7 +2,7 @@
 chcp 65001 >nul
 echo 正在导出配表...
 
-D:\Anaconda\python.exe export_config.py
+D:\PYTHON\anaconda\python.exe export_config.py
 
 if %errorlevel% equ 0 (
     echo 导出成功！

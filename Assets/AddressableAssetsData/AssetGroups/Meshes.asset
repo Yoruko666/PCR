@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b0eb82045cd43d948ae3aa333252cf90
   m_SerializeEntries:
-  - m_GUID: 62851c3323edd3948b3301fde9caa694
-    m_Address: fx_skill_bubble
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6597ffc08bd267146bf5849093d26d91
     m_Address: spine_1010
     m_ReadOnly: 0

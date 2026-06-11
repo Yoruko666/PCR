@@ -101,19 +101,60 @@ public class SkillManager
     {
         var cfg = skill.Config;
 
-        // 按序执行效果
         var effects = ConfigManager.Instance.GetSkillEffects(cfg.Id);
+        int popupIndex = 0;
         foreach (var effect in effects.OrderBy(e => e.EffectIndex))
-            ApplyEffect(effect);
+        {
+            ApplyEffect(effect, popupIndex);
+            popupIndex++;
+        }
     }
 
     public void Tick(float deltaTime)
     {
     }
 
-    // ============ 效果执行 ============
+    // ============ 效果执行（按前摇时间触发） ============
 
-    private void ApplyEffect(SkillEffectConfig effect)
+    private HashSet<int> appliedEffectIndices = new();
+    private int popupIndex;
+
+    public void ResetAppliedEffects()
+    {
+        appliedEffectIndices.Clear();
+        popupIndex = 0;
+    }
+
+    /// <summary>根据经过帧数，触发所有前摇已到的未生效效果</summary>
+    public void ApplyPendingEffects(string skillId, int elapsedFrames)
+    {
+        var effects = ConfigManager.Instance.GetSkillEffects(skillId)
+            .OrderBy(e => e.EffectIndex);
+
+        foreach (var effect in effects)
+        {
+            if (!appliedEffectIndices.Contains(effect.EffectIndex) && elapsedFrames >= effect.CastFrame)
+            {
+                ApplyEffect(effect, popupIndex);
+                appliedEffectIndices.Add(effect.EffectIndex);
+                popupIndex++;
+            }
+        }
+    }
+
+    /// <summary>检查技能的所有效果是否都已触发完毕</summary>
+    public bool AllEffectsApplied(string skillId)
+    {
+        var effects = ConfigManager.Instance.GetSkillEffects(skillId);
+        foreach (var effect in effects)
+        {
+            if (!appliedEffectIndices.Contains(effect.EffectIndex))
+                return false;
+        }
+        return true;
+    }
+
+    private void ApplyEffect(SkillEffectConfig effect, int popupIndex)
     {
         var targets = GetTargets(effect.EffectTarget);
         foreach (var target in targets)
@@ -122,7 +163,7 @@ public class SkillManager
             {
                 case "Damage":
                     int damage = (int)(owner.AttackPower * effect.SkillMulti + effect.EffectValue);
-                    target.TakeDamage(damage);
+                    target.TakeDamage(damage, popupIndex);
                     break;
 
                 case "Heal":

@@ -43,7 +43,7 @@ public class BaseUnit
         Config = ConfigManager.Instance.GetConfig(id);
         if (Config == null)
         {
-            Debug.LogError($"[BaseUnit] ÕÒ²»µ½½ÇÉ«ÅäÖÃ: {id}");
+            Debug.LogError($"[BaseUnit] æ‰¾ä¸åˆ°è§’è‰²é…ç½®: {id}");
             return;
         }
 
@@ -67,7 +67,7 @@ public class BaseUnit
         stateMachine.SetDefaultState(StateType.RunGameStart);
         Skill = new SkillManager(this, Config.UbSkillId, Config.Skill1Id, Config.Skill2Id);
 
-        // Ô¤´´½¨ÆøÅİ
+        // é¢„åˆ›å»ºæ°”æ³¡
         if (bubblePrefab == null)
             bubblePrefab = Addressables.LoadAssetAsync<GameObject>(BubblePrefabKey).WaitForCompletion();
         if (bubblePrefab != null)
@@ -89,7 +89,7 @@ public class BaseUnit
     {
         if (IsPaused) return;
 
-        // ÆøÅİ¸úËæÍ·²¿¹Ç÷À
+        // æ°”æ³¡è·Ÿéšå¤´éƒ¨éª¨éª¼
         if (bubbleInstance != null && bubbleInstance.activeSelf && headBone != null)
             bubbleInstance.transform.position = headBone.GetWorldPosition(spine.transform) + new Vector3(0, 1.2f, -0.01f);
 
@@ -122,9 +122,9 @@ public class BaseUnit
         SetLogicPosition(LogicX);
     }
 
-    // Õ½¶·³¡¾°ÉèÖÃx×ø±êÏŞ¶¨Îª-15~15
-    // Âß¼­×ø±ê×Ü¿íÎª2320
-    // Âß¼­×ø±êÏŞ¶¨Îª-1360~960
+    // æˆ˜æ–—åœºæ™¯è®¾ç½®xåæ ‡é™å®šä¸º-15~15
+    // é€»è¾‘åæ ‡æ€»å®½ä¸º2320
+    // é€»è¾‘åæ ‡é™å®šä¸º-1360~960
     public void SetLogicPosition(float x)
     {
         this.LogicX = x;
@@ -198,10 +198,19 @@ public class BaseUnit
             bubbleInstance.SetActive(false);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, int popupIndex)
     {
         HP = Mathf.Max(0, HP - damage);
         Skill?.OnHit();
+
+        int displayDamage = Random.Range(10000, 100000);
+        Vector3 popupPos = new Vector3(
+            (LogicX + 200) * 15 / 1160,
+            gameObject.transform.position.y + 1.8f,
+            gameObject.transform.position.z
+        );
+        BattleManager.Instance.ShowDamagePopup(popupPos, displayDamage, popupIndex);
+        BattleManager.Instance.ShakeCamera();
     }
 
     public void Heal(int amount)
