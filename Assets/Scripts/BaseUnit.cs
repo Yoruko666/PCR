@@ -3,6 +3,7 @@ using Spine;
 using Spine.Unity;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
+using TMPro;
 
 public class BaseUnit
 {
@@ -32,6 +33,11 @@ public class BaseUnit
     private AudioSource audioSource;
     private Dictionary<string, AudioClip> soundCache = new();
 
+    private static GameObject bubblePrefab;
+    private GameObject bubbleInstance;
+    private Spine.Bone headBone;
+    private const string BubblePrefabKey = "fx_skill_bubble";
+
     public BaseUnit(string id, CampType campType)
     {
         Config = ConfigManager.Instance.GetConfig(id);
@@ -46,6 +52,7 @@ public class BaseUnit
         spine = gameObject.AddComponent<SkeletonAnimation>();
         spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.SpineId).WaitForCompletion();
         spine.Initialize(true);
+        headBone = spine.Skeleton.FindBone("head");
 
         CampType = campType;
 
@@ -59,6 +66,16 @@ public class BaseUnit
         stateMachine = new StateMachine(this);
         stateMachine.SetDefaultState(StateType.RunGameStart);
         Skill = new SkillManager(this, Config.UbSkillId, Config.Skill1Id, Config.Skill2Id);
+
+        // 预创建气泡
+        if (bubblePrefab == null)
+            bubblePrefab = Addressables.LoadAssetAsync<GameObject>(BubblePrefabKey).WaitForCompletion();
+        if (bubblePrefab != null)
+        {
+            bubbleInstance = Object.Instantiate(bubblePrefab, gameObject.transform);
+            bubbleInstance.transform.localScale = new Vector3(XDir, 1, 1);
+            bubbleInstance.SetActive(false);
+        }
     }
 
     public void Init(int orderNumber)
@@ -71,6 +88,11 @@ public class BaseUnit
     public void Tick()
     {
         if (IsPaused) return;
+
+        // 气泡跟随头部骨骼
+        if (bubbleInstance != null && bubbleInstance.activeSelf && headBone != null)
+            bubbleInstance.transform.position = headBone.GetWorldPosition(spine.transform) + new Vector3(0, 1.2f, -0.01f);
+
         Skill.Tick(BattleManager.TickTime);
         stateMachine.CheckSwitchState();
         stateMachine.OnTick();
@@ -134,7 +156,6 @@ public class BaseUnit
         return false;
     }
 
-    /// <summary>播放音效（Addressable 加载 + 缓存）</summary>
     public void PlaySound(string soundKey)
     {
         if (string.IsNullOrEmpty(soundKey)) return;
@@ -148,6 +169,33 @@ public class BaseUnit
 
         if (clip != null)
             audioSource.PlayOneShot(clip);
+    }
+
+    private const float BubblePadding = 0.5f;
+
+    public void ShowBubble(string skillName)
+    {
+        if (bubbleInstance == null) return;
+
+        var text = bubbleInstance.GetComponentInChildren<TMPro.TextMeshPro>();
+        if (text != null)
+        {
+            text.text = skillName;
+            float textWidth = text.GetPreferredValues().x;
+            var sr = bubbleInstance.GetComponent<SpriteRenderer>();
+            if (sr != null && sr.drawMode == SpriteDrawMode.Tiled)
+                sr.size = new Vector2(textWidth + BubblePadding, sr.size.y);
+        }
+
+        bubbleInstance.SetActive(true);
+        BattleManager.Instance.StartCoroutine(HideBubble());
+    }
+
+    private System.Collections.IEnumerator HideBubble()
+    {
+        yield return new UnityEngine.WaitForSeconds(1f);
+        if (bubbleInstance != null)
+            bubbleInstance.SetActive(false);
     }
 
     public void TakeDamage(int damage)

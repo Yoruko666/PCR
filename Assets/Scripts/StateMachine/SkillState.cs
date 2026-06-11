@@ -23,6 +23,7 @@ public class SkillState : BaseState
 
         unit.PlayAnim(currentSkill.Config.AnimName, false);
         unit.PlaySound(currentSkill.Config.SoundName);
+        unit.ShowBubble(currentSkill.Config.Name);
         animDone = false;
         unit.spine.AnimationState.Complete += OnSkillAnimComplete;
     }

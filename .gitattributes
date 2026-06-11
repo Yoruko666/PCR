@@ -1,6 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-
 # Explicitly declare binary file types
 *.png binary
 *.jpg binary
@@ -22,16 +21,13 @@
 *.pdf binary
 *.zip binary
 *.tar.gz binary
-
 # Unity meta files - force LF (meta files are YAML text)
 *.meta text eol=lf
-
 # Scripts - force LF
 *.cs text eol=lf
 *.shader text eol=lf
 *.cginc text eol=lf
 *.hlsl text eol=lf
-
 # Text config files - force LF
 *.json text eol=lf
 *.xml text eol=lf
@@ -39,3 +35,4 @@
 *.md text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+Assets/Fonts/tengxiangqinyuanjian-W3[[:space:]]SDF.asset filter=lfs diff=lfs merge=lfs -text

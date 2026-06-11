@@ -139,10 +139,10 @@ public class SkillManager
         return targetType switch
         {
             "SingleEnemy" => new() { GetSingleEnemy() },
-            "AllEnemies"  => battle.GetOppositeUnits(owner.CampType),
-            "Self"        => new() { owner },
-            "AllAllies"   => battle.GetAllies(owner.CampType),
-            _             => new() { GetSingleEnemy() },
+            "AllEnemies" => battle.GetOppositeUnits(owner.CampType),
+            "Self" => new() { owner },
+            "AllAllies" => battle.GetAllies(owner.CampType),
+            _ => new() { GetSingleEnemy() },
         };
     }
 

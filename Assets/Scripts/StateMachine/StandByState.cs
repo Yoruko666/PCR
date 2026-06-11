@@ -14,7 +14,7 @@ public class StandByState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim(unit.GetAnimName("stand_by"), true);
+        unit.PlayAnim(unit.GetAnimName("stand_by"), false);
         standByDone = false;
         unit.spine.AnimationState.Complete += OnStandByComplete;
     }

@@ -24,6 +24,8 @@ public class UbState : BaseState
 
         BattleManager.Instance.PauseAllExcept(unit);
         unit.PlayAnim(ubSkill.Config.AnimName, false);
+        unit.PlaySound(ubSkill.Config.SoundName);
+        unit.ShowBubble(ubSkill.Config.Name);
         animDone = false;
         unit.spine.AnimationState.Complete += OnUbAnimComplete;
     }

@@ -6,3 +6,9 @@ Id,Name,CastTime,AnimName,SoundName
 100200,全体治愈,0,100201_skill0,audio_1002_ub
 100201,花瓣射击,1.6,100201_skill1,audio_1002_skill1
 100202,花之庇护,1.46,100201_skill2,audio_1002_skill2
+100300,斩刃风暴,0,100301_skill0,audio_1003_ub
+100301,狂风突刺,0.955,100301_skill1,audio_1003_skill1
+100302,反击斩,1.3275,100301_skill2,audio_1003_skill2
+101000,童话庭院,0,101001_skill0,audio_1010_ub
+101001,真步真步治愈术,0.955,101001_skill1,audio_1010_skill1
+101002,真步真步致盲术,1.3275,101001_skill2,audio_1010_skill2

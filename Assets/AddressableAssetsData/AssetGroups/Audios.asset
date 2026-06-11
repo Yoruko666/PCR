@@ -17,8 +17,23 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 65367a4bd2bf4f044a36fccc5cf0d641
   m_SerializeEntries:
+  - m_GUID: 011477ba6f9547c49a07ac745a1ab80c
+    m_Address: audio_1010_attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1060b8f95fe34ad47b4e4efb128c0d02
     m_Address: audio_1001_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3eab03d70c79e0b43a268ac6abcfcc8e
+    m_Address: audio_1003_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 588dd422d6556804daf9abe03b02ef52
+    m_Address: audio_1003_skill1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -47,6 +62,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caa90212fbe1caa49b17f8af7edc6030
+    m_Address: audio_1010_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc90db184f571984196534fcd82ef33b
     m_Address: audio_1002_skill1
     m_ReadOnly: 0
@@ -54,6 +74,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4ffc0d593d7cb34da7ad1ee7d720e13
     m_Address: audio_1002_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e933ddb7ab3aa8c4fa50fd09c1f4029c
+    m_Address: audio_1003_attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffd078e2bc7cd0e4b827975b96291707
+    m_Address: audio_1010_skill1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
