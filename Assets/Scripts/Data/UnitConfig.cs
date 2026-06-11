@@ -13,10 +13,12 @@ public class UnitConfig
     public string AnimRun;
     public string AnimAttack;
     public string AnimIdle;
+    public string SpineId;       // Spine 资源 Addressable key
     public string UbSkillId;     // UB技能ID
     public string Skill1Id;      // 技能1ID
     public string Skill2Id;      // 技能2ID
     public float AttackInterval; // 普攻间隔（秒）
+    public string AttackSound;   // 普攻音效 Addressable key
     public string StartSequence; // 启动序列，如 "21A12"
     public string LoopSequence;  // 循环序列，如 "A1A2"
 }

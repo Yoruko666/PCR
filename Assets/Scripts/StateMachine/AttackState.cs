@@ -15,6 +15,7 @@ public class AttackState : BaseState
     public override void OnEnter()
     {
         unit.PlayAnim(unit.GetAnimName("attack"), false);
+        unit.PlaySound(unit.Config.AttackSound);
         attackDone = false;
         unit.spine.AnimationState.Complete += OnAttackComplete;
     }

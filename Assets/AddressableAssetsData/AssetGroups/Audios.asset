@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Audios
+  m_EditorClassIdentifier: 
+  m_GroupName: Audios
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 65367a4bd2bf4f044a36fccc5cf0d641
+  m_SerializeEntries:
+  - m_GUID: 1060b8f95fe34ad47b4e4efb128c0d02
+    m_Address: audio_1001_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5eb4833bcdbeab143b7f99b366835cd2
+    m_Address: audio_1002_attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f885d8b631124f4db97f26301acf331
+    m_Address: audio_1001_skill1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6125658111590ab429ff61baa34e202c
+    m_Address: audio_1001_ub1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6e97dbef22dbff4dba8973a5732e49c
+    m_Address: audio_1001_ub0
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa8fe2722483020479f9fa3975d12642
+    m_Address: audio_1001_attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc90db184f571984196534fcd82ef33b
+    m_Address: audio_1002_skill1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4ffc0d593d7cb34da7ad1ee7d720e13
+    m_Address: audio_1002_skill2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2802fe1bd415e304590997a13577e3b8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7e566daaf7c033e4897cdcdade988e89, type: 2}
+    - {fileID: 11400000, guid: 6a93852e0f74c52449777f99fd8111f0, type: 2}

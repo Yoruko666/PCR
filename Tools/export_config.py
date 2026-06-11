@@ -98,19 +98,21 @@ def create_template(output_path):
     char_columns = [
         ("Id",            1001,    "角色ID"),
         ("Name",          "日和莉",  "名称"),
+        ("SpineId",       "spine_1001", "Spine地址"),
         ("MaxHP",         5800,    "最大HP"),
         ("AttackPower",   1580,    "攻击力"),
         ("AttackRange",   200,     "攻击范围"),
         ("AnimRunGameStart", "01_run_gamestart", "开局跑步动画"),
-        ("AnimStandBy",   "01_standBy",  "到达待机动画"),
+        ("AnimStandBy",   "01_standBy",  "准备动画"),
         ("AnimRun",       "01_run", "跑步动画"),
         ("AnimAttack",    "01_attack", "攻击动画"),
         ("AnimIdle",      "01_multy_idle_standBy", "待机动画"),
         ("UbSkillId",     "100101",  "UB技能ID"),
-        ("Skill1Id",      "100102",  "技能1ID"),
-        ("Skill2Id",      "100103",  "技能2ID"),
-        ("AttackInterval",2.0,       "普攻间隔(秒)"),
-        ("StartSequence", "21A12",   "启动序列(2=技2,1=技1,A=普攻)"),
+        ("Skill1Id",      "100102",  "1技能ID"),
+        ("Skill2Id",      "100103",  "2技能ID"),
+        ("AttackInterval",2.0,       "普攻间隔"),
+        ("AttackSound",   "attack_1","普攻音效地址"),
+        ("StartSequence", "21A12",   "启动序列"),
         ("LoopSequence",  "A1A2",    "循环序列"),
     ]
 
@@ -118,7 +120,7 @@ def create_template(output_path):
     skill_columns = [
         ("Id",        100101,     "技能ID"),
         ("Name",      "烈焰斩",   "技能名称"),
-        ("CastTime",  1.5,        "前摇时长(秒)"),
+        ("CastTime",  1.5,        "前摇时长"),
         ("AnimName",  "skill_1",  "技能动画名"),
         ("SoundName", "skill_ub", "技能音效名"),
     ]

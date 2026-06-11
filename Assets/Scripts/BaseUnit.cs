@@ -29,6 +29,8 @@ public class BaseUnit
 
     public SkillManager Skill { get; private set; }
     public bool IsPaused { get; set; }
+    private AudioSource audioSource;
+    private Dictionary<string, AudioClip> soundCache = new();
 
     public BaseUnit(string id, CampType campType)
     {
@@ -40,9 +42,9 @@ public class BaseUnit
         }
 
         gameObject = new GameObject(Config.Name ?? id);
-        gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
         spine = gameObject.AddComponent<SkeletonAnimation>();
-        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.Id).WaitForCompletion();
+        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.SpineId).WaitForCompletion();
         spine.Initialize(true);
 
         CampType = campType;
@@ -130,6 +132,22 @@ public class BaseUnit
             if (AttackRange >= distance - HitRange / 2) return true;
         }
         return false;
+    }
+
+    /// <summary>≤•∑≈“Ù–ß£®Addressable º”‘ÿ + ª∫¥Ê£©</summary>
+    public void PlaySound(string soundKey)
+    {
+        if (string.IsNullOrEmpty(soundKey)) return;
+
+        if (!soundCache.TryGetValue(soundKey, out var clip))
+        {
+            clip = Addressables.LoadAssetAsync<AudioClip>(soundKey).WaitForCompletion();
+            if (clip != null)
+                soundCache[soundKey] = clip;
+        }
+
+        if (clip != null)
+            audioSource.PlayOneShot(clip);
     }
 
     public void TakeDamage(int damage)
