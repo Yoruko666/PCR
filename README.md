@@ -64,6 +64,7 @@ spine.Skeleton.SetToSetupPose();
 [干炸里脊资源（©Cygames）](https://redive.estertion.win/)\
 [【公主连结Re:Dive】游戏站位机制](https://zhuanlan.zhihu.com/p/145043002)\
 [【公主连结Re:Dive】游戏机制之普攻和技能机制](https://zhuanlan.zhihu.com/p/148423807)\
-[【公主连结Re:Dive】游戏机制之公式整合](https://zhuanlan.zhihu.com/p/145042599)
-[【公主连结Re:Dive】游戏机制之tp机制](https://zhuanlan.zhihu.com/p/151069934)
-[【公主连结Re:Dive】游戏机制之先后手的机制](https://zhuanlan.zhihu.com/p/149200253)
+[【公主连结Re:Dive】游戏机制之公式整合](https://zhuanlan.zhihu.com/p/145042599)\
+[【公主连结Re:Dive】游戏机制之tp机制](https://zhuanlan.zhihu.com/p/151069934)\
+[【公主连结Re:Dive】游戏机制之先后手的机制](https://zhuanlan.zhihu.com/p/149200253)\
+[【公主连结/游戏机制】移动&站位机制·修正版](https://www.bilibili.com/opus/454873187389458535)\
