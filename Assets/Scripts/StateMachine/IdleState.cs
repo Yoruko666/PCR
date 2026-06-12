@@ -14,13 +14,15 @@ public class IdleState : BaseState
         if (unit.Skill.TryGetUbSkill())
         {
             isUb = true;
-            waitTimer = unit.Skill.PendingSkill.Config.CastTime;
+            waitTimer = unit.Skill.PendingSkill?.Data?.skill_cast_time ?? 1.5f;
             return;
         }
 
         isUb = false;
         unit.Skill.PendingSkill = unit.Skill.AdvanceSequence() ?? unit.Skill.Attack;
-        waitTimer = unit.Skill.PendingSkill?.Config.CastTime ?? 0;
+        waitTimer = unit.Skill.IsAttack(unit.Skill.PendingSkill)
+            ? unit.Data.normal_atk_cast_time
+            : unit.Skill.PendingSkill?.Data?.skill_cast_time ?? 0;
     }
 
     public override void OnTick()

@@ -9,8 +9,8 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
     public static float TickTime => 1 / 60f;
 
-    public List<string> FriendUnitsId = new();
-    public List<string> EnemyUnitsId = new();
+    public List<int> FriendUnitsId = new();
+    public List<int> EnemyUnitsId = new();
 
     private int tick = 0;
     private float timer = 0;

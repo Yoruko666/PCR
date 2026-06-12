@@ -3,7 +3,7 @@ using Spine;
 public class UbState : BaseState
 {
     private Skill ubSkill;
-    private int elapsedFrames;
+    private float elapsedTime;
     private bool effectsApplied;
     private bool animDone;
 
@@ -24,13 +24,12 @@ public class UbState : BaseState
         }
 
         BattleManager.Instance.PauseAllExcept(unit);
-        unit.PlayAnim(ubSkill.Config.AnimName, false);
-        unit.PlaySound(ubSkill.Config.SoundName);
+        unit.PlayAnim($"{unit.UnitId}_skill0", false);
 
-        if (!string.IsNullOrEmpty(ubSkill.Config.Name))
-            unit.ShowBubble(ubSkill.Config.Name);
+        if (ubSkill.Data != null && !string.IsNullOrEmpty(ubSkill.Data.name))
+            unit.ShowBubble(ubSkill.Data.name);
 
-        elapsedFrames = 0;
+        elapsedTime = 0;
         effectsApplied = false;
         animDone = false;
         unit.spine.AnimationState.Complete += OnUbAnimComplete;
@@ -40,11 +39,11 @@ public class UbState : BaseState
     {
         if (animDone) return;
 
-        elapsedFrames++;
+        elapsedTime += BattleManager.TickTime;
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(ubSkill, elapsedFrames);
+            unit.Skill.ApplyPendingEffects(ubSkill, elapsedTime);
             if (unit.Skill.AllEffectsApplied(ubSkill))
             {
                 BattleManager.Instance.ResumeAll();
@@ -73,7 +72,7 @@ public class UbState : BaseState
 
     private void OnUbAnimComplete(TrackEntry trackEntry)
     {
-        if (ubSkill != null && trackEntry.Animation.Name == ubSkill.Config.AnimName)
+        if (ubSkill != null && trackEntry.Animation.Name == $"{unit.UnitId}_skill0")
             animDone = true;
     }
 }

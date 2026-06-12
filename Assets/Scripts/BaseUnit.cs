@@ -9,8 +9,9 @@ public class BaseUnit
 {
     public SkeletonAnimation spine;
 
-    public UnitConfig Config;
-    public string Id => Config.Id;
+    public UnitData Data;
+    public UnitSkillData SkillData;
+    public int UnitId;
     public CampType CampType;
     public int Number;
     public float LogicX;
@@ -30,6 +31,7 @@ public class BaseUnit
     public int Rarity { get; set; } = 1;
     public int Level { get; set; } = 300;
     public float AttackRange { get; private set; }
+    public int MotionType { get; private set; }
     public readonly float HitRange = 112;
 
     public SkillManager Skill { get; private set; }
@@ -42,28 +44,32 @@ public class BaseUnit
     private Spine.Bone headBone;
     private const string BubblePrefabKey = "fx_skill_bubble";
 
-    public BaseUnit(string id, CampType campType)
+    public BaseUnit(int unitId, CampType campType)
     {
-        Config = ConfigManager.Instance.GetConfig(id);
-        if (Config == null)
+        UnitId = unitId;
+        Data = ConfigManager.Instance.GetUnitData(unitId);
+        if (Data == null)
         {
-            Debug.LogError($"[BaseUnit] 找不到角色配置: {id}");
+            Debug.LogError($"[BaseUnit] 找不到角色数据: {unitId}");
             return;
         }
 
-        gameObject = new GameObject(Config.Name ?? id);
+        MotionType = Data.motion_type;
+        SkillData = ConfigManager.Instance.GetUnitSkillData(unitId);
+
+        gameObject = new GameObject(Data.unit_name ?? unitId.ToString());
         audioSource = gameObject.AddComponent<AudioSource>();
         spine = gameObject.AddComponent<SkeletonAnimation>();
-        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(Config.SpineId).WaitForCompletion();
+
+        string spineKey = $"{unitId}";
+        spine.skeletonDataAsset = Addressables.LoadAssetAsync<SkeletonDataAsset>(spineKey).WaitForCompletion();
         spine.Initialize(true);
         headBone = spine.Skeleton.FindBone("head");
 
         CampType = campType;
 
-        // 从 UnitRarityConfig 读取属性 = 基础值 + 成长 * (等级 - 1)
-        // CharacterConfig 的 Id 是 4 位, UnitRarityConfig 的 unit_id 是 5 位(末尾 + "01")
-        int rarityUnitId = int.Parse(Config.Id + "01");
-        var rarityCfg = ConfigManager.Instance.GetUnitRarityConfig(rarityUnitId, Rarity);
+        // 从 UnitRarity 读取属性 = 基础值 + 成长 * (等级 - 1)
+        var rarityCfg = ConfigManager.Instance.GetUnitRarity(unitId, Rarity);
         if (rarityCfg != null)
         {
             MaxHP = Mathf.RoundToInt(rarityCfg.hp + rarityCfg.hp_growth * (Level - 1));
@@ -73,7 +79,7 @@ public class BaseUnit
         }
         else
         {
-            Debug.LogWarning($"[BaseUnit] 找不到稀有度数据: {Config.Id}_rarity{Rarity}");
+            Debug.LogWarning($"[BaseUnit] 找不到稀有度数据: {unitId}_rarity{Rarity}");
             MaxHP = 1;
             HP = 1;
             PhysicalAttack = 0;
@@ -83,11 +89,15 @@ public class BaseUnit
         MaxTP = 1000;
         TP = 0;
         SkillLevel = 1;
-        AttackRange = Config.AttackRange;
+        AttackRange = Data.search_area_width;
 
         stateMachine = new StateMachine(this);
         stateMachine.SetDefaultState(StateType.RunGameStart);
-        Skill = new SkillManager(this, Config.UbSkillId, Config.Skill1Id, Config.Skill2Id);
+
+        int ubId = SkillData?.union_burst ?? 0;
+        int skill1Id = SkillData?.main_skill_1 ?? 0;
+        int skill2Id = SkillData?.main_skill_2 ?? 0;
+        Skill = new SkillManager(this, ubId, skill1Id, skill2Id);
 
         if (bubblePrefab == null)
             bubblePrefab = Addressables.LoadAssetAsync<GameObject>(BubblePrefabKey).WaitForCompletion();
@@ -110,7 +120,6 @@ public class BaseUnit
     {
         if (IsPaused) return;
 
-        // 气泡跟随头部骨骼
         if (bubbleInstance != null && bubbleInstance.activeSelf && headBone != null)
             bubbleInstance.transform.position = headBone.GetWorldPosition(spine.transform) + new Vector3(0, 1.2f, -0.01f);
 
@@ -122,7 +131,7 @@ public class BaseUnit
     {
         if (spine.Skeleton.Data.FindAnimation(animName) == null)
         {
-            Debug.LogWarning($"[BaseUnit] 找不到动画 '{animName}' (角色: {Config?.Name ?? Id})");
+            Debug.LogWarning($"[BaseUnit] 找不到动画 '{animName}' (角色: {Data?.unit_name ?? UnitId.ToString()})");
             return;
         }
         spine.AnimationState.SetAnimation(0, animName, loop);
@@ -130,12 +139,15 @@ public class BaseUnit
 
     public string GetAnimName(string animKey)
     {
+        string prefix = MotionType.ToString("00");
+        string unitPrefix = UnitId.ToString();
         return animKey switch
         {
-            "run_game_start"    => Config.AnimRunGameStart,
-            "stand_by"          => Config.AnimStandBy,
-            "run"               => Config.AnimRun,
-            "idle"              => Config.AnimIdle,
+            "run_game_start"    => $"{prefix}_run_gamestart",
+            "stand_by"          => $"{prefix}_standBy",
+            "run"               => $"{prefix}_run",
+            "idle"              => $"{prefix}_idle",
+            "attack"            => $"{Data.se_type:D2}_attack",
             _                   => animKey
         };
     }
@@ -146,9 +158,6 @@ public class BaseUnit
         SetLogicPosition(LogicX);
     }
 
-    // 战斗场景设置x坐标限定为-15~15
-    // 逻辑坐标总宽为2320
-    // 逻辑坐标限定为-1360~960
     public void SetLogicPosition(float x)
     {
         this.LogicX = x;
@@ -194,7 +203,7 @@ public class BaseUnit
         if (clip != null)
             audioSource.PlayOneShot(clip);
         else
-            Debug.LogWarning($"[BaseUnit] 找不到语音 '{soundKey}' (角色: {Config?.Name ?? Id})");
+            Debug.LogWarning($"[BaseUnit] 找不到语音 '{soundKey}' (角色: {Data?.unit_name ?? UnitId.ToString()})");
     }
 
     private const float BubblePadding = 0.5f;

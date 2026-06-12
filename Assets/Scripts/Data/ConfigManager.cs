@@ -1,20 +1,23 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class ConfigManager : MonoBehaviour
 {
     public static ConfigManager Instance { get; private set; }
 
-    public string ConfigPath = "Assets/Configs/CharacterConfig.csv";
-    public string SkillConfigPath = "Assets/Configs/SkillConfig.csv";
-    public string SkillEffectConfigPath = "Assets/Configs/SkillEffectConfig.csv";
-    public string UnitRarityConfigPath = "Assets/Configs/UnitRarityConfig.csv";
+    private const string CsvDir = "Assets/Configs/csv/";
+    private const string SkillTimeDir = "Assets/Configs/SkillTimeData/";
 
-    private Dictionary<string, UnitConfig> unitConfigs = new();
-    private Dictionary<string, SkillConfig> skillConfigs = new();
-    private Dictionary<string, List<SkillEffectConfig>> skillEffectConfigs = new();
-    private Dictionary<string, UnitRarityConfig> unitRarityConfigs = new();
+    private Dictionary<int, UnitData> unitDatas = new();
+    private Dictionary<int, UnitRarity> unitRarities = new();
+    private Dictionary<int, UnitSkillData> unitSkillDatas = new();
+    private Dictionary<int, SkillData> skillDatas = new();
+    private Dictionary<int, SkillAction> skillActions = new();
+    private Dictionary<int, UnitAttackPattern> unitAttackPatterns = new();
+    private Dictionary<int, List<SkillAction>> skillActionGroups = new();
+    private Dictionary<int, UnitSkillTimeData> skillTimeDatas = new();
 
     private void Awake()
     {
@@ -32,15 +35,17 @@ public class ConfigManager : MonoBehaviour
 
     private void LoadAllConfigs()
     {
-        LoadCsv(ConfigPath, ref unitConfigs, (cfg) => cfg.Id);
-        LoadCsv(SkillConfigPath, ref skillConfigs, (cfg) => cfg.Id);
-        LoadSkillEffects();
-        LoadCsv(UnitRarityConfigPath, ref unitRarityConfigs, (cfg) => $"{cfg.unit_id}_{cfg.rarity}");
+        LoadCsv("unit_data.csv", ref unitDatas, cfg => cfg.unit_id);
+        LoadCsv("unit_rarity.csv", ref unitRarities, cfg => cfg.unit_id * 10 + cfg.rarity);
+        LoadCsv("unit_skill_data.csv", ref unitSkillDatas, cfg => cfg.unit_id);
+        LoadCsv("skill_data.csv", ref skillDatas, cfg => cfg.skill_id);
+        LoadCsv("unit_attack_pattern.csv", ref unitAttackPatterns, cfg => cfg.pattern_id);
+        LoadSkillActions();
     }
 
-    private void LoadCsv<T>(string relativePath, ref Dictionary<string, T> dict, System.Func<T, string> keySelector) where T : new()
+    private void LoadCsv<T>(string fileName, ref Dictionary<int, T> dict, System.Func<T, int> keySelector) where T : new()
     {
-        string fullPath = Path.Combine(Application.dataPath, "..", relativePath);
+        string fullPath = Path.Combine(Application.dataPath, "..", CsvDir, fileName);
         if (!File.Exists(fullPath))
         {
             Debug.LogWarning($"[ConfigManager] 配表文件不存在: {fullPath}");
@@ -51,17 +56,16 @@ public class ConfigManager : MonoBehaviour
         var configs = CsvReader.ParseToConfigs<T>(csvText);
         foreach (var cfg in configs)
         {
-            string key = keySelector(cfg);
-            if (!string.IsNullOrEmpty(key))
-                dict[key] = cfg;
+            int key = keySelector(cfg);
+            dict[key] = cfg;
         }
 
         Debug.Log($"[ConfigManager] 加载了 {configs.Count} 条 {typeof(T).Name}");
     }
 
-    private void LoadSkillEffects()
+    private void LoadSkillActions()
     {
-        string fullPath = Path.Combine(Application.dataPath, "..", SkillEffectConfigPath);
+        string fullPath = Path.Combine(Application.dataPath, "..", CsvDir, "skill_action.csv");
         if (!File.Exists(fullPath))
         {
             Debug.LogWarning($"[ConfigManager] 配表文件不存在: {fullPath}");
@@ -69,50 +73,102 @@ public class ConfigManager : MonoBehaviour
         }
 
         string csvText = File.ReadAllText(fullPath);
-        var effects = CsvReader.ParseToConfigs<SkillEffectConfig>(csvText);
-        foreach (var effect in effects)
+        var actions = CsvReader.ParseToConfigs<SkillAction>(csvText);
+        foreach (var action in actions)
         {
-            if (!skillEffectConfigs.ContainsKey(effect.SkillId))
-                skillEffectConfigs[effect.SkillId] = new List<SkillEffectConfig>();
-            skillEffectConfigs[effect.SkillId].Add(effect);
+            skillActions[action.action_id] = action;
+
+            // 找出这个 action 属于哪个 skill，归组
+            foreach (var kv in skillDatas)
+            {
+                var skill = kv.Value;
+                if (skill.action_1 == action.action_id || skill.action_2 == action.action_id ||
+                    skill.action_3 == action.action_id || skill.action_4 == action.action_id ||
+                    skill.action_5 == action.action_id || skill.action_6 == action.action_id ||
+                    skill.action_7 == action.action_id || skill.action_8 == action.action_id ||
+                    skill.action_9 == action.action_id || skill.action_10 == action.action_id)
+                {
+                    if (!skillActionGroups.ContainsKey(skill.skill_id))
+                        skillActionGroups[skill.skill_id] = new List<SkillAction>();
+                    skillActionGroups[skill.skill_id].Add(action);
+                    break;
+                }
+            }
         }
 
-        Debug.Log($"[ConfigManager] 加载了 {effects.Count} 条技能效果");
+        Debug.Log($"[ConfigManager] 加载了 {actions.Count} 条 SkillAction");
     }
 
-    public UnitConfig GetConfig(string id)
+    public UnitData GetUnitData(int unitId)
     {
-        unitConfigs.TryGetValue(id, out var cfg);
+        unitDatas.TryGetValue(unitId, out var cfg);
         return cfg;
     }
 
-    public SkillConfig GetSkillConfig(string id)
+    public UnitRarity GetUnitRarity(int unitId, int rarity)
     {
-        skillConfigs.TryGetValue(id, out var cfg);
+        unitRarities.TryGetValue(unitId * 10 + rarity, out var cfg);
         return cfg;
     }
 
-    public List<SkillEffectConfig> GetSkillEffects(string skillId)
+    public List<UnitRarity> GetAllRarities(int unitId)
     {
-        skillEffectConfigs.TryGetValue(skillId, out var list);
-        return list ?? new List<SkillEffectConfig>();
-    }
-
-    public UnitRarityConfig GetUnitRarityConfig(int unitId, int rarity)
-    {
-        unitRarityConfigs.TryGetValue($"{unitId}_{rarity}", out var cfg);
-        return cfg;
-    }
-
-    public List<UnitRarityConfig> GetAllRarityConfigs(int unitId)
-    {
-        var result = new List<UnitRarityConfig>();
-        foreach (var kv in unitRarityConfigs)
+        var result = new List<UnitRarity>();
+        for (int r = 1; r <= 6; r++)
         {
-            if (kv.Key.StartsWith($"{unitId}_"))
-                result.Add(kv.Value);
+            if (unitRarities.TryGetValue(unitId * 10 + r, out var cfg))
+                result.Add(cfg);
         }
-        result.Sort((a, b) => a.rarity.CompareTo(b.rarity));
         return result;
+    }
+
+    public UnitSkillData GetUnitSkillData(int unitId)
+    {
+        unitSkillDatas.TryGetValue(unitId, out var cfg);
+        return cfg;
+    }
+
+    public SkillData GetSkillData(int skillId)
+    {
+        skillDatas.TryGetValue(skillId, out var cfg);
+        return cfg;
+    }
+
+    public SkillAction GetSkillAction(int actionId)
+    {
+        skillActions.TryGetValue(actionId, out var action);
+        return action;
+    }
+
+    public List<SkillAction> GetSkillActions(int skillId)
+    {
+        skillActionGroups.TryGetValue(skillId, out var list);
+        return list ?? new List<SkillAction>();
+    }
+
+    public UnitAttackPattern GetAttackPattern(int patternId)
+    {
+        unitAttackPatterns.TryGetValue(patternId, out var cfg);
+        return cfg;
+    }
+
+    public UnitSkillTimeData GetSkillTimeData(int unitId)
+    {
+        if (skillTimeDatas.TryGetValue(unitId, out var data))
+            return data;
+
+        string fullPath = Path.Combine(Application.dataPath, "..", SkillTimeDir, $"{unitId}.json");
+        if (!File.Exists(fullPath))
+        {
+            Debug.LogWarning($"[ConfigManager] 技能时间数据不存在: {fullPath}");
+            return null;
+        }
+
+        string json = File.ReadAllText(fullPath);
+        data = JsonConvert.DeserializeObject<UnitSkillTimeData>(json);
+        if (data != null)
+            skillTimeDatas[unitId] = data;
+
+        return data;
     }
 }

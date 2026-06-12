@@ -4,7 +4,7 @@ public class ActionState : BaseState
 {
     private Skill currentSkill;
     private string animName;
-    private int elapsedFrames;
+    private float elapsedTime;
     private bool effectsApplied;
     private bool animDone;
 
@@ -23,14 +23,13 @@ public class ActionState : BaseState
             return;
         }
 
-        animName = currentSkill.Config.AnimName;
+        animName = GetAnimName(currentSkill);
         unit.PlayAnim(animName, false);
-        unit.PlaySound(currentSkill.Config.SoundName);
 
-        if (!unit.Skill.IsAttack(currentSkill) && !string.IsNullOrEmpty(currentSkill.Config.Name))
-            unit.ShowBubble(currentSkill.Config.Name);
+        if (!unit.Skill.IsAttack(currentSkill) && currentSkill.Data != null && !string.IsNullOrEmpty(currentSkill.Data.name))
+            unit.ShowBubble(currentSkill.Data.name);
 
-        elapsedFrames = 0;
+        elapsedTime = 0;
         effectsApplied = false;
         animDone = false;
         unit.spine.AnimationState.Complete += OnAnimComplete;
@@ -40,11 +39,11 @@ public class ActionState : BaseState
     {
         if (animDone) return;
 
-        elapsedFrames++;
+        elapsedTime += BattleManager.TickTime;
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(currentSkill, elapsedFrames);
+            unit.Skill.ApplyPendingEffects(currentSkill, elapsedTime);
             if (unit.Skill.AllEffectsApplied(currentSkill))
                 effectsApplied = true;
         }
@@ -71,5 +70,15 @@ public class ActionState : BaseState
     {
         if (currentSkill != null && trackEntry.Animation.Name == animName)
             animDone = true;
+    }
+
+    private string GetAnimName(Skill skill)
+    {
+        if (skill == null) return "";
+        if (unit.Skill.IsAttack(skill)) return unit.GetAnimName("attack");
+        if (skill == unit.Skill.Attack) return unit.GetAnimName("attack");
+        if (skill == unit.Skill.MainSkill1) return $"{unit.UnitId}_skill1";
+        if (skill == unit.Skill.MainSkill2) return $"{unit.UnitId}_skill2";
+        return "skill1";
     }
 }

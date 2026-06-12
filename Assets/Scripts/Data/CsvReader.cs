@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Globalization;
@@ -93,6 +94,16 @@ public static class CsvReader
         {
             float.TryParse(rawVal, NumberStyles.Float, CultureInfo.InvariantCulture, out float floatVal);
             val = floatVal;
+        }
+        else if (field.FieldType == typeof(bool))
+        {
+            int.TryParse(rawVal, out int intVal);
+            val = intVal != 0;
+        }
+        else if (field.FieldType.IsEnum)
+        {
+            int.TryParse(rawVal, out int intVal);
+            val = Enum.ToObject(field.FieldType, intVal);
         }
         else
         {
