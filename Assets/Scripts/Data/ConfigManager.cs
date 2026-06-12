@@ -9,10 +9,12 @@ public class ConfigManager : MonoBehaviour
     public string ConfigPath = "Assets/Configs/CharacterConfig.csv";
     public string SkillConfigPath = "Assets/Configs/SkillConfig.csv";
     public string SkillEffectConfigPath = "Assets/Configs/SkillEffectConfig.csv";
+    public string UnitRarityConfigPath = "Assets/Configs/UnitRarityConfig.csv";
 
     private Dictionary<string, UnitConfig> unitConfigs = new();
     private Dictionary<string, SkillConfig> skillConfigs = new();
     private Dictionary<string, List<SkillEffectConfig>> skillEffectConfigs = new();
+    private Dictionary<string, UnitRarityConfig> unitRarityConfigs = new();
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class ConfigManager : MonoBehaviour
         LoadCsv(ConfigPath, ref unitConfigs, (cfg) => cfg.Id);
         LoadCsv(SkillConfigPath, ref skillConfigs, (cfg) => cfg.Id);
         LoadSkillEffects();
+        LoadCsv(UnitRarityConfigPath, ref unitRarityConfigs, (cfg) => $"{cfg.unit_id}_{cfg.rarity}");
     }
 
     private void LoadCsv<T>(string relativePath, ref Dictionary<string, T> dict, System.Func<T, string> keySelector) where T : new()
@@ -93,5 +96,23 @@ public class ConfigManager : MonoBehaviour
     {
         skillEffectConfigs.TryGetValue(skillId, out var list);
         return list ?? new List<SkillEffectConfig>();
+    }
+
+    public UnitRarityConfig GetUnitRarityConfig(int unitId, int rarity)
+    {
+        unitRarityConfigs.TryGetValue($"{unitId}_{rarity}", out var cfg);
+        return cfg;
+    }
+
+    public List<UnitRarityConfig> GetAllRarityConfigs(int unitId)
+    {
+        var result = new List<UnitRarityConfig>();
+        foreach (var kv in unitRarityConfigs)
+        {
+            if (kv.Key.StartsWith($"{unitId}_"))
+                result.Add(kv.Value);
+        }
+        result.Sort((a, b) => a.rarity.CompareTo(b.rarity));
+        return result;
     }
 }

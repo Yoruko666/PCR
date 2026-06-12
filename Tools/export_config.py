@@ -96,7 +96,7 @@ def list_sheets(input_path):
 
 
 def create_template(output_path):
-    """生成空白 Excel 模板文件（3 个 Sheet）"""
+    """生成空白 Excel 模板文件（4 个 Sheet）"""
 
     # ==================== Sheet 1: 角色配置 ====================
     char_columns = [
@@ -104,9 +104,6 @@ def create_template(output_path):
         ("Name",          "日和莉",   "中文名"),
         ("OriginName",    "Hiyori",   "名称"),
         ("SpineId",       "spine_1001", "Spine地址"),
-        ("HP",            5800,       "生命值"),
-        ("PhysicalAttack",1580,       "物理攻击力"),
-        ("MagicAttack",   0,          "魔法攻击力"),
         ("AttackRange",   200,        "攻击范围"),
         ("AnimRunGameStart", "01_run_gamestart", "开局跑步动画"),
         ("AnimStandBy",   "01_standBy",  "准备动画"),
@@ -143,6 +140,27 @@ def create_template(output_path):
         ("CastFrame",    50,         "效果前摇(帧)"),
     ]
 
+    # ==================== Sheet 4: 角色稀有度属性 ====================
+    rarity_columns = [
+        ("unit_id",              100101,    "角色ID"),
+        ("rarity",               1,         "稀有度"),
+        ("hp",                   376.0,     "HP"),
+        ("hp_growth",            41.77,     "HP成长"),
+        ("atk",                  51.04,     "物理攻击力"),
+        ("atk_growth",           5.67,      "物理攻击力成长"),
+        ("magic_str",            0.0,       "魔法攻击力"),
+        ("magic_str_growth",     0.0,       "魔法攻击力成长"),
+        ("def",                  2.73,      "物理防御"),
+        ("def_growth",           0.3,       "物理防御成长"),
+        ("magic_def",            2.28,      "魔法防御"),
+        ("magic_def_growth",     0.25,      "魔法防御成长"),
+        ("physical_critical",    20.0,      "物理暴击"),
+        ("magic_critical",       0.0,       "魔法暴击"),
+        ("dodge",                0.0,       "闪避"),
+        ("life_steal",           0.0,       "生命吸取"),
+        ("accuracy",             0.0,       "命中"),
+    ]
+
     wb = Workbook()
 
     # ---- Sheet 1: 角色配置 ----
@@ -173,12 +191,21 @@ def create_template(output_path):
         ws3.column_dimensions[chr(65 + i)].width = 16
     ws3.freeze_panes = "A3"
 
+    # ---- Sheet 4: 角色稀有度属性 ----
+    ws4 = wb.create_sheet("UnitRarityConfig")
+    ws4.append([col[0] for col in rarity_columns])
+    ws4.append([col[2] for col in rarity_columns])
+    ws4.append([col[1] for col in rarity_columns])
+    for i in range(len(rarity_columns)):
+        ws4.column_dimensions[chr(65 + i)].width = 16
+    ws4.freeze_panes = "A3"
+
     # 保存
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     wb.save(output_path)
 
     print(f"\n== 模板已生成: {output_path}")
-    print(f"   包含 3 个工作表: CharacterConfig / SkillConfig / SkillEffectConfig")
+    print(f"   包含 4 个工作表: CharacterConfig / SkillConfig / SkillEffectConfig / UnitRarityConfig")
     print(f"   每表第1行=英文字段名，第2行=中文注释，第3行=示例数据")
     print(f"   编辑完成后运行 python export_config.py 导出 CSV")
 

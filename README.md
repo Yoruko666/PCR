@@ -61,13 +61,16 @@ spine.Skeleton.SetToSetupPose();
 ### 一些有用的网址：
 
 [公主连结BWiki](https://wiki.biligame.com/pcr/%E9%A6%96%E9%A1%B5)\
+[公主连结Box](https://pcr.satroki.tech)\
 [公主连结FandomWiki](https://princess-connect.fandom.com/wiki/Princess_Connect!_Re:Dive_Wiki)\
-[蘭德索爾圖書館](https://pcredivewiki.tw/)\
+[蘭德索爾圖書館](https://pcredivewiki.tw)\
+[プリコネ Re:Dive Wiki](https://priconne_redive.rwiki.jp)\
 [干炸里脊资源（©Cygames）](https://redive.estertion.win/)\
+[公主连结数据库](https://github.com/wthee/pcr-tool-sql-diff)
 [【公主连结Re:Dive】游戏站位机制](https://zhuanlan.zhihu.com/p/145043002)\
 [【公主连结Re:Dive】游戏机制之普攻和技能机制](https://zhuanlan.zhihu.com/p/148423807)\
 [【公主连结Re:Dive】游戏机制之公式整合](https://zhuanlan.zhihu.com/p/145042599)\
 [【公主连结Re:Dive】游戏机制之tp机制](https://zhuanlan.zhihu.com/p/151069934)\
 [【公主连结Re:Dive】游戏机制之先后手的机制](https://zhuanlan.zhihu.com/p/149200253)\
 [【公主连结/游戏机制】移动&站位机制·修正版](https://www.bilibili.com/opus/454873187389458535)\
-[【教程】如何提取公主连结游戏动画素材](https://www.bilibili.com/opus/801111052800491733)\
+[【教程】如何提取公主连结游戏动画素材](https://www.bilibili.com/opus/801111052800491733)

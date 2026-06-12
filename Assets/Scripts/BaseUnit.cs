@@ -27,6 +27,8 @@ public class BaseUnit
     public int PhysicalAttack { get; private set; }
     public int MagicAttack { get; private set; }
     public int SkillLevel { get; set; }
+    public int Rarity { get; set; } = 1;
+    public int Level { get; set; } = 300;
     public float AttackRange { get; private set; }
     public readonly float HitRange = 112;
 
@@ -58,12 +60,28 @@ public class BaseUnit
 
         CampType = campType;
 
-        MaxHP = Config.HP;
-        HP = Config.HP;
+        // 从 UnitRarityConfig 读取属性 = 基础值 + 成长 * (等级 - 1)
+        // CharacterConfig 的 Id 是 4 位, UnitRarityConfig 的 unit_id 是 5 位(末尾 + "01")
+        int rarityUnitId = int.Parse(Config.Id + "01");
+        var rarityCfg = ConfigManager.Instance.GetUnitRarityConfig(rarityUnitId, Rarity);
+        if (rarityCfg != null)
+        {
+            MaxHP = Mathf.RoundToInt(rarityCfg.hp + rarityCfg.hp_growth * (Level - 1));
+            HP = MaxHP;
+            PhysicalAttack = Mathf.RoundToInt(rarityCfg.atk + rarityCfg.atk_growth * (Level - 1));
+            MagicAttack = Mathf.RoundToInt(rarityCfg.magic_str + rarityCfg.magic_str_growth * (Level - 1));
+        }
+        else
+        {
+            Debug.LogWarning($"[BaseUnit] 找不到稀有度数据: {Config.Id}_rarity{Rarity}");
+            MaxHP = 1;
+            HP = 1;
+            PhysicalAttack = 0;
+            MagicAttack = 0;
+        }
+
         MaxTP = 1000;
         TP = 0;
-        PhysicalAttack = Config.PhysicalAttack;
-        MagicAttack = Config.MagicAttack;
         SkillLevel = 1;
         AttackRange = Config.AttackRange;
 
@@ -175,6 +193,8 @@ public class BaseUnit
 
         if (clip != null)
             audioSource.PlayOneShot(clip);
+        else
+            Debug.LogWarning($"[BaseUnit] 找不到语音 '{soundKey}' (角色: {Config?.Name ?? Id})");
     }
 
     private const float BubblePadding = 0.5f;
@@ -211,13 +231,12 @@ public class BaseUnit
 
         if (showVisual)
         {
-            int displayDamage = Random.Range(10000, 100000);
             Vector3 popupPos = new Vector3(
                 (LogicX + 200) * 15 / 1160,
                 gameObject.transform.position.y + 1.8f,
                 gameObject.transform.position.z
             );
-            BattleManager.Instance.ShowDamagePopup(popupPos, displayDamage, popupIndex);
+            BattleManager.Instance.ShowDamagePopup(popupPos, damage, popupIndex);
             BattleManager.Instance.ShakeCamera();
         }
     }

@@ -5,9 +5,6 @@ public class UnitConfig
 {
     public string Id;
     public string Name;
-    public int HP;
-    public int PhysicalAttack;
-    public int MagicAttack;
     public float AttackRange;
     public string AnimRunGameStart;
     public string AnimStandBy;
