@@ -276,7 +276,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -10}
+  m_LocalPosition: {x: 0, y: 1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -461,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 1480243038}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 10}
+  m_LocalPosition: {x: 0, y: 1.2, z: 10}
   m_LocalScale: {x: 2.8, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1993796356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b7f89b2effac604db33ac034d227057, type: 3}
+  m_Script: {fileID: 11500000, guid: d1e8f54347baf0e4cadbbf33358e8f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FriendUnitsId:
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c330c19accb355d4bad8005f57355488, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d5270982b7c303841bc9ee8dc416fdb9, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -635,7 +635,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6cd7d7467aa79c14da75f17f835b1bc3, type: 2}
+  - {fileID: 2100000, guid: 60d54c1a95010f74a824be7e02d511e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

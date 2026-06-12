@@ -1,41 +1,37 @@
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// 技能运行时管理器 + 行动序列管理
-/// </summary>
 public class SkillManager
 {
     private BaseUnit owner;
-
-    // 技能缓存
     private Skill ubSkill;
     private Skill skill1;
     private Skill skill2;
+    private Skill attack;
 
-    // 行动序列
     private string startSeq;
     private string loopSeq;
     private string fullSeq;
     private int seqIndex;
 
-    /// <summary>当前待施放的技能（由IdleState设置，SkillState消费）</summary>
     public Skill PendingSkill { get; set; }
+    public Skill Attack => attack;
 
     public SkillManager(BaseUnit owner, string ubSkillId, string skill1Id, string skill2Id)
     {
         this.owner = owner;
-
         ubSkill = TryLoadSkill(ubSkillId);
         skill1 = TryLoadSkill(skill1Id);
         skill2 = TryLoadSkill(skill2Id);
+        attack = TryLoadSkill(owner.Config.AttackId);
 
-        // 初始化行动序列
         startSeq = owner.Config.StartSequence ?? "";
         loopSeq = owner.Config.LoopSequence ?? "";
         fullSeq = startSeq + loopSeq;
         seqIndex = 0;
     }
+
+    public bool IsAttack(Skill skill) => skill == attack;
 
     private Skill TryLoadSkill(string skillId)
     {
@@ -44,18 +40,17 @@ public class SkillManager
         return cfg != null ? new Skill { Config = cfg } : null;
     }
 
-    // ============ 行动序列 ============
-
-    /// <summary>推进序列，返回下一个动作类型：'A'=普攻, '1'=技能1, '2'=技能2</summary>
-    public char AdvanceSequence()
+    public Skill AdvanceSequence()
     {
         if (string.IsNullOrEmpty(fullSeq))
-            return 'A'; // 无序列则默认普攻
+            return attack;
 
-        char action = fullSeq[seqIndex];
+        if (attack == null)
+            return null;
+
+        var action = fullSeq[seqIndex];
         seqIndex++;
 
-        // 到达末尾 → 循环 loopSeq 部分
         if (seqIndex >= fullSeq.Length)
         {
             seqIndex = startSeq.Length;
@@ -63,58 +58,24 @@ public class SkillManager
                 seqIndex = 0;
         }
 
-        return action;
+        return action switch
+        {
+            'A' => attack,
+            '1' => skill1 ?? attack,
+            '2' => skill2 ?? attack
+        };
     }
 
-    public void ResetSequence()
-    {
-        seqIndex = 0;
-    }
+    public void ResetSequence() => seqIndex = 0;
 
-    // ============ UB 判定 ============
-
-    /// <summary>检查UB是否就绪，就绪时设置 PendingSkill</summary>
     public bool TryGetUbSkill()
     {
-        if (ubSkill == null) return false;
-        if (owner.TP < 1000) return false;
-
+        if (ubSkill == null || owner.TP < 1000) return false;
         PendingSkill = ubSkill;
         return true;
     }
 
-    // ============ 攻击/受击回调 ============
-
-    public void OnAttackPerformed()
-    {
-        owner.AddTP(50);
-    }
-
-    public void OnHit()
-    {
-        owner.AddTP(30);
-    }
-
-    // ============ 技能执行 ============
-
-    public void ExecuteSkill(Skill skill)
-    {
-        var cfg = skill.Config;
-
-        var effects = ConfigManager.Instance.GetSkillEffects(cfg.Id);
-        int popupIndex = 0;
-        foreach (var effect in effects.OrderBy(e => e.EffectIndex))
-        {
-            ApplyEffect(effect, popupIndex);
-            popupIndex++;
-        }
-    }
-
-    public void Tick(float deltaTime)
-    {
-    }
-
-    // ============ 效果执行（按前摇时间触发） ============
+    public void OnHit() => owner.AddTP(30);
 
     private HashSet<int> appliedEffectIndices = new();
     private int popupIndex;
@@ -125,11 +86,9 @@ public class SkillManager
         popupIndex = 0;
     }
 
-    /// <summary>根据经过帧数，触发所有前摇已到的未生效效果</summary>
-    public void ApplyPendingEffects(string skillId, int elapsedFrames)
+    public void ApplyPendingEffects(Skill skill, int elapsedFrames)
     {
-        var effects = ConfigManager.Instance.GetSkillEffects(skillId)
-            .OrderBy(e => e.EffectIndex);
+        var effects = GetEffects(skill).OrderBy(e => e.EffectIndex);
 
         foreach (var effect in effects)
         {
@@ -142,16 +101,21 @@ public class SkillManager
         }
     }
 
-    /// <summary>检查技能的所有效果是否都已触发完毕</summary>
-    public bool AllEffectsApplied(string skillId)
+    public bool AllEffectsApplied(Skill skill)
     {
-        var effects = ConfigManager.Instance.GetSkillEffects(skillId);
-        foreach (var effect in effects)
-        {
-            if (!appliedEffectIndices.Contains(effect.EffectIndex))
-                return false;
-        }
-        return true;
+        return GetEffects(skill).All(e => appliedEffectIndices.Contains(e.EffectIndex));
+    }
+
+    private List<SkillEffectConfig> GetEffects(Skill skill)
+    {
+        if (skill.Effects != null)
+            return skill.Effects;
+
+        var effects = ConfigManager.Instance.GetSkillEffects(skill.Config.Id);
+        if (effects.Count > 0)
+            return effects;
+
+        return IsAttack(skill) ? ConfigManager.Instance.GetSkillEffects("na_default") : effects;
     }
 
     private void ApplyEffect(SkillEffectConfig effect, int popupIndex)
@@ -162,13 +126,22 @@ public class SkillManager
             switch (effect.EffectType)
             {
                 case "Damage":
-                    int damage = (int)(owner.AttackPower * effect.SkillMulti + effect.EffectValue);
-                    target.TakeDamage(damage, popupIndex);
+                {
+                    int atk = effect.DamageType == "Magic" ? owner.MagicAttack : owner.PhysicalAttack;
+                    int damage = (int)(atk * effect.SkillMulti + effect.EffectValue + owner.SkillLevel * effect.SkillLevelMulti);
+                    bool showVisual = effect.CastFrame > 0;
+                    target.TakeDamage(damage, popupIndex, showVisual);
                     break;
-
+                }
                 case "Heal":
-                    int heal = (int)(owner.AttackPower * effect.SkillMulti + effect.EffectValue);
-                    target.Heal(heal);
+                {
+                    int atk = effect.DamageType == "Magic" ? owner.MagicAttack : owner.PhysicalAttack;
+                    int amount = (int)(atk * effect.SkillMulti + effect.EffectValue + owner.SkillLevel * effect.SkillLevelMulti);
+                    target.Heal(amount);
+                    break;
+                }
+                case "AddTP":
+                    owner.AddTP((int)effect.EffectValue);
                     break;
             }
         }
@@ -193,9 +166,4 @@ public class SkillManager
             .OrderBy(e => System.Math.Abs(e.LogicX - owner.LogicX))
             .FirstOrDefault();
     }
-}
-
-public class Skill
-{
-    public SkillConfig Config { get; set; }
 }

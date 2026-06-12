@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunGameStart : BaseState
+public class RunGameStartState : BaseState
 {
-    public RunGameStart(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    public RunGameStartState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
     {
 
     }

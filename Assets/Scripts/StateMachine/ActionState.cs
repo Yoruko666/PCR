@@ -1,16 +1,14 @@
 using Spine;
 
-/// <summary>
-/// 技能施放状态：播动画 → 各效果按各自前摇时间依次触发 → 动画播完回Idle
-/// </summary>
-public class SkillState : BaseState
+public class ActionState : BaseState
 {
     private Skill currentSkill;
+    private string animName;
     private int elapsedFrames;
     private bool effectsApplied;
     private bool animDone;
 
-    public SkillState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    public ActionState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
     {
     }
 
@@ -25,14 +23,17 @@ public class SkillState : BaseState
             return;
         }
 
-        unit.PlayAnim(currentSkill.Config.AnimName, false);
+        animName = currentSkill.Config.AnimName;
+        unit.PlayAnim(animName, false);
         unit.PlaySound(currentSkill.Config.SoundName);
-        unit.ShowBubble(currentSkill.Config.Name);
+
+        if (!unit.Skill.IsAttack(currentSkill) && !string.IsNullOrEmpty(currentSkill.Config.Name))
+            unit.ShowBubble(currentSkill.Config.Name);
 
         elapsedFrames = 0;
         effectsApplied = false;
         animDone = false;
-        unit.spine.AnimationState.Complete += OnSkillAnimComplete;
+        unit.spine.AnimationState.Complete += OnAnimComplete;
     }
 
     public override void OnTick()
@@ -43,15 +44,15 @@ public class SkillState : BaseState
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(currentSkill.Config.Id, elapsedFrames);
-            if (unit.Skill.AllEffectsApplied(currentSkill.Config.Id))
+            unit.Skill.ApplyPendingEffects(currentSkill, elapsedFrames);
+            if (unit.Skill.AllEffectsApplied(currentSkill))
                 effectsApplied = true;
         }
     }
 
     public override void OnExit()
     {
-        unit.spine.AnimationState.Complete -= OnSkillAnimComplete;
+        unit.spine.AnimationState.Complete -= OnAnimComplete;
         unit.Skill.PendingSkill = null;
     }
 
@@ -66,9 +67,9 @@ public class SkillState : BaseState
         }
     }
 
-    private void OnSkillAnimComplete(TrackEntry trackEntry)
+    private void OnAnimComplete(TrackEntry trackEntry)
     {
-        if (currentSkill != null && trackEntry.Animation.Name == currentSkill.Config.AnimName)
+        if (currentSkill != null && trackEntry.Animation.Name == animName)
             animDone = true;
     }
 }

@@ -45,16 +45,20 @@ def excel_to_csv(input_path, output_path, sheet_name):
     print(f"\n[{sheet_name}] 表头: {headers}")
 
     csv_rows = [headers]
+    last_vals = [""] * len(headers)
     for row_idx, row in enumerate(rows[1:], start=2):
         values = []
         for col_idx in range(len(headers)):
             cell_val = row[col_idx] if col_idx < len(row) else None
-            if cell_val is None:
-                values.append("")
+            # 合并单元格：空单元格继承上一行同一列的值
+            if cell_val is None or (isinstance(cell_val, str) and not cell_val.strip()):
+                cell_val = last_vals[col_idx]
             elif isinstance(cell_val, float):
-                values.append(str(int(cell_val)) if cell_val == int(cell_val) else str(cell_val))
+                cell_val = str(int(cell_val)) if cell_val == int(cell_val) else str(cell_val)
             else:
-                values.append(str(cell_val).strip())
+                cell_val = str(cell_val).strip()
+            last_vals[col_idx] = cell_val
+            values.append(cell_val)
 
         id_val = values[0]
         if not id_val:
@@ -96,28 +100,29 @@ def create_template(output_path):
 
     # ==================== Sheet 1: 角色配置 ====================
     char_columns = [
-        ("Id",            1001,    "角色ID"),
-        ("Name",          "日和莉",  "名称"),
+        ("Id",            1001,       "角色ID"),
+        ("Name",          "日和莉",   "中文名"),
+        ("OriginName",    "Hiyori",   "名称"),
         ("SpineId",       "spine_1001", "Spine地址"),
-        ("MaxHP",         5800,    "最大HP"),
-        ("AttackPower",   1580,    "攻击力"),
-        ("AttackRange",   200,     "攻击范围"),
+        ("HP",            5800,       "生命值"),
+        ("PhysicalAttack",1580,       "物理攻击力"),
+        ("MagicAttack",   0,          "魔法攻击力"),
+        ("AttackRange",   200,        "攻击范围"),
         ("AnimRunGameStart", "01_run_gamestart", "开局跑步动画"),
         ("AnimStandBy",   "01_standBy",  "准备动画"),
-        ("AnimRun",       "01_run", "跑步动画"),
-        ("AnimAttack",    "01_attack", "攻击动画"),
+        ("AnimRun",       "01_run",      "跑步动画"),
         ("AnimIdle",      "01_multy_idle_standBy", "待机动画"),
-        ("UbSkillId",     "100101",  "UB技能ID"),
-        ("Skill1Id",      "100102",  "1技能ID"),
-        ("Skill2Id",      "100103",  "2技能ID"),
-        ("AttackInterval",2.0,       "普攻间隔"),
-        ("AttackSound",   "attack_1","普攻音效地址"),
-        ("StartSequence", "21A12",   "启动序列"),
-        ("LoopSequence",  "A1A2",    "循环序列"),
+        ("AttackId",      "100101_attack", "普攻ID"),
+        ("UbSkillId",     "100101_skill0", "UB技能ID"),
+        ("Skill1Id",      "100101_skill1", "1技能ID"),
+        ("Skill2Id",      "100101_skill2", "2技能ID"),
+        ("StartSequence", "21",          "启动序列"),
+        ("LoopSequence",  "AA2A1",       "循环序列"),
     ]
 
     # ==================== Sheet 2: 技能配置 ====================
     skill_columns = [
+        ("CharacterId", "",         "角色ID"),
         ("Id",        100101,     "技能ID"),
         ("Name",      "烈焰斩",   "技能名称"),
         ("CastTime",  1.5,        "前摇时长"),
@@ -131,8 +136,11 @@ def create_template(output_path):
         ("EffectIndex",  1,          "效果序号(按顺序执行)"),
         ("EffectType",   "Damage",   "效果类型(Damage/Heal/Buff/Debuff)"),
         ("EffectTarget", "SingleEnemy", "目标(SingleEnemy/AllEnemies/Self/AllAllies)"),
+        ("DamageType",   "Physical", "伤害类型(Physical/Magic)"),
         ("SkillMulti",   3.0,        "攻击力倍率"),
-        ("EffectValue",  0,          "附加值(固定数值)"),
+        ("EffectValue",  0,          "基础数值"),
+        ("SkillLevelMulti", 0,       "技能等级倍率"),
+        ("CastFrame",    50,         "效果前摇(帧)"),
     ]
 
     wb = Workbook()

@@ -24,7 +24,9 @@ public class BaseUnit
     public int MaxHP { get; private set; }
     public int TP { get; private set; }
     public int MaxTP { get; private set; }
-    public int AttackPower { get; private set; }
+    public int PhysicalAttack { get; private set; }
+    public int MagicAttack { get; private set; }
+    public int SkillLevel { get; set; }
     public float AttackRange { get; private set; }
     public readonly float HitRange = 112;
 
@@ -56,18 +58,19 @@ public class BaseUnit
 
         CampType = campType;
 
-        MaxHP = Config.MaxHP;
-        HP = Config.MaxHP;
+        MaxHP = Config.HP;
+        HP = Config.HP;
         MaxTP = 1000;
         TP = 0;
-        AttackPower = Config.AttackPower;
+        PhysicalAttack = Config.PhysicalAttack;
+        MagicAttack = Config.MagicAttack;
+        SkillLevel = 1;
         AttackRange = Config.AttackRange;
 
         stateMachine = new StateMachine(this);
         stateMachine.SetDefaultState(StateType.RunGameStart);
         Skill = new SkillManager(this, Config.UbSkillId, Config.Skill1Id, Config.Skill2Id);
 
-        // 预创建气泡
         if (bubblePrefab == null)
             bubblePrefab = Addressables.LoadAssetAsync<GameObject>(BubblePrefabKey).WaitForCompletion();
         if (bubblePrefab != null)
@@ -93,13 +96,17 @@ public class BaseUnit
         if (bubbleInstance != null && bubbleInstance.activeSelf && headBone != null)
             bubbleInstance.transform.position = headBone.GetWorldPosition(spine.transform) + new Vector3(0, 1.2f, -0.01f);
 
-        Skill.Tick(BattleManager.TickTime);
         stateMachine.CheckSwitchState();
         stateMachine.OnTick();
     }
 
     public void PlayAnim(string animName, bool loop)
     {
+        if (spine.Skeleton.Data.FindAnimation(animName) == null)
+        {
+            Debug.LogWarning($"[BaseUnit] 找不到动画 '{animName}' (角色: {Config?.Name ?? Id})");
+            return;
+        }
         spine.AnimationState.SetAnimation(0, animName, loop);
     }
 
@@ -110,7 +117,6 @@ public class BaseUnit
             "run_game_start"    => Config.AnimRunGameStart,
             "stand_by"          => Config.AnimStandBy,
             "run"               => Config.AnimRun,
-            "attack"            => Config.AnimAttack,
             "idle"              => Config.AnimIdle,
             _                   => animKey
         };
@@ -198,19 +204,22 @@ public class BaseUnit
             bubbleInstance.SetActive(false);
     }
 
-    public void TakeDamage(int damage, int popupIndex)
+    public void TakeDamage(int damage, int popupIndex, bool showVisual = true)
     {
         HP = Mathf.Max(0, HP - damage);
         Skill?.OnHit();
 
-        int displayDamage = Random.Range(10000, 100000);
-        Vector3 popupPos = new Vector3(
-            (LogicX + 200) * 15 / 1160,
-            gameObject.transform.position.y + 1.8f,
-            gameObject.transform.position.z
-        );
-        BattleManager.Instance.ShowDamagePopup(popupPos, displayDamage, popupIndex);
-        BattleManager.Instance.ShakeCamera();
+        if (showVisual)
+        {
+            int displayDamage = Random.Range(10000, 100000);
+            Vector3 popupPos = new Vector3(
+                (LogicX + 200) * 15 / 1160,
+                gameObject.transform.position.y + 1.8f,
+                gameObject.transform.position.z
+            );
+            BattleManager.Instance.ShowDamagePopup(popupPos, displayDamage, popupIndex);
+            BattleManager.Instance.ShakeCamera();
+        }
     }
 
     public void Heal(int amount)
@@ -227,10 +236,4 @@ public class BaseUnit
     {
         TP = Mathf.Max(0, TP - amount);
     }
-}
-
-public enum CampType
-{
-    Friend,
-    Enemy
 }

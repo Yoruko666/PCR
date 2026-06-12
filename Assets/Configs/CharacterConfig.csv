@@ -1,7 +1,7 @@
-Id,Name,OriginName,SpineId,MaxHP,AttackPower,AttackRange,AnimRunGameStart,AnimStandBy,AnimRun,AnimAttack,AnimIdle,UbSkillId,Skill1Id,Skill2Id,AttackInterval,AttackSound,StartSequence,LoopSequence
-角色ID,中文名,名称,Spine地址,最大HP,攻击力,攻击范围,开局跑步动画,准备动画,跑步动画,攻击动画,待机动画,UB技能id,1技能id,2技能id,普攻间隔,普攻音效地址,启动序列,循环序列
-1001,日和莉,Hiyori,spine_1001,5800,1580,200,01_run_gamestart,01_standBy,01_run,01_attack,01_idle,100100,100101,100102,2.295,audio_1001_attack,21,AA2A1
-1002,优衣,Yui,spine_1002,4000,200,800,07_run_gamestart,07_standBy,07_run,07_attack,07_idle,100200,100201,100202,2.27,audio_1002_attack,21,AA2A1AA1
-1003,怜,Rei,spine_1003,5000,1000,250,04_run_gamestart,04_standBy,04_run,04_attack,04_idle,100300,100301,100302,1.965,audio_1003_attack,A12,AA1A2
-1010,真步,Maho,spine_1010,1000,1000,795,07_run_gamestart,07_standBy,07_run,07_attack,07_idle,101000,101001,101002,2.27,audio_1010_attack,21,2AA1A2A
-1036,镜华,,spine_1036,1000,1000,810,07_run_gamestart,07_standBy,07_run,07_attack,07_idle,,,,,,,
+Id,Name,OriginName,SpineId,HP,PhysicalAttack,MagicAttack,AttackRange,AnimRunGameStart,AnimStandBy,AnimRun,AnimIdle,AttackId,UbSkillId,Skill1Id,Skill2Id,StartSequence,LoopSequence
+角色ID,中文名,名称,Spine地址,生命值,物理攻击,魔法攻击,攻击范围,开局跑步动画,准备动画,跑步动画,待机动画,普攻ID,UB技能ID,1技能ID,2技能ID,启动序列,循环序列
+1001,日和莉,Hiyori,spine_1001,5800,1580,0,200,01_run_gamestart,01_standBy,01_run,01_idle,100101_attack,100101_skill0,100101_skill1,100101_skill2,21,AA2A1
+1002,优衣,Yui,spine_1002,4000,200,0,800,07_run_gamestart,07_standBy,07_run,07_idle,100201_attack,100201_skill0,100201_skill1,100201_skill2,21,AA2A1AA1
+1003,怜,Rei,spine_1003,5000,1000,0,250,04_run_gamestart,04_standBy,04_run,04_idle,100301_attack,100301_skill0,100301_skill1,100301_skill2,A12,AA1A2
+1010,真步,Maho,spine_1010,1000,1000,0,795,07_run_gamestart,07_standBy,07_run,07_idle,101001_attack,101001_skill0,101001_skill1,101001_skill2,21,2AA1A2A
+1036,镜华,Maho,spine_1036,1000,1000,0,810,07_run_gamestart,07_standBy,07_run,07_idle,101001_attack,101001_skill0,101001_skill1,101001_skill2,21,2AA1A2A

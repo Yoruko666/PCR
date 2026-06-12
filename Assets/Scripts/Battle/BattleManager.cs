@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using TMPro;
 
-public class BattleManager: MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
     public static float TickTime => 1 / 60f;
@@ -19,23 +19,22 @@ public class BattleManager: MonoBehaviour
     private List<BaseUnit> enemyUnits = new();
 
     private Canvas uiCanvas;
+    private Canvas damageWorldCanvas;
     private static GameObject damagePopupPrefab;
     private const string DamagePopupKey = "DamagePopup";
+    private const float DamagePopupWorldScale = 0.01f;
+    private const float DamageStackOffset = 1f;
+    private const float DamageFloatUp = 1.0f;
 
-    // ============ 弹簧阻尼相机震动 ============
     private float shakeVelocity;
     private float shakeDisplacement;
     private Vector3 cameraOrigin;
     private bool cameraOriginInited;
 
-    // 震动频率
-    private const float SpringStiffness = 800f; 
-    // 衰减速率
-    private const float SpringDamping = 20f;   
-    // 受击冲量（振幅）    
-    private const float ShakeImpulse = 10f;         
+    private const float SpringStiffness = 800f;
+    private const float SpringDamping = 20f;
+    private const float ShakeImpulse = 10f;
 
-    /// <summary>造成伤害时镜头上下震动（弹簧阻尼模型，多段自然叠加）</summary>
     public void ShakeCamera()
     {
         float dir = Random.value > 0.5f ? -1f : 1f;
@@ -75,25 +74,28 @@ public class BattleManager: MonoBehaviour
         else Destroy(gameObject);
     }
 
-    /// <summary>在受击位置显示伤害数字弹出</summary>
+    private Canvas GetOrCreateDamageWorldCanvas()
+    {
+        if (damageWorldCanvas != null) return damageWorldCanvas;
+        var go = new GameObject("DamageWorldCanvas");
+        damageWorldCanvas = go.AddComponent<Canvas>();
+        damageWorldCanvas.renderMode = RenderMode.WorldSpace;
+        damageWorldCanvas.worldCamera = Camera.main;
+        damageWorldCanvas.sortingOrder = 9999;
+        damageWorldCanvas.transform.position = Vector3.zero;
+        damageWorldCanvas.transform.rotation = Quaternion.identity;
+        return damageWorldCanvas;
+    }
+
     public void ShowDamagePopup(Vector3 worldPosition, int damage, int popupIndex)
     {
-        if (uiCanvas == null)
-        {
-            var canvasGo = GameObject.Find("UICanvas");
-            if (canvasGo != null)
-                uiCanvas = canvasGo.GetComponent<Canvas>();
-        }
-        if (uiCanvas == null) return;
-
-        // 通过 Addressables 加载 DamagePopup 预制体（缓存）
         if (damagePopupPrefab == null)
             damagePopupPrefab = Addressables.LoadAssetAsync<GameObject>(DamagePopupKey).WaitForCompletion();
         if (damagePopupPrefab == null) return;
 
-        var popup = Object.Instantiate(damagePopupPrefab, uiCanvas.transform);
+        var canvas = GetOrCreateDamageWorldCanvas();
+        var popup = Object.Instantiate(damagePopupPrefab, canvas.transform);
 
-        // 将伤害数字的每一位转为 <sprite index=X> 格式
         string damageStr = damage.ToString();
         string spriteText = "";
         foreach (char c in damageStr)
@@ -103,17 +105,9 @@ public class BattleManager: MonoBehaviour
         if (tmp != null)
             tmp.text = spriteText;
 
-        // 将世界坐标转换到屏幕坐标，定位弹出位置
-        var rt = popup.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 0.5f);
-        rt.anchorMax = new Vector2(0.5f, 0.5f);
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPosition);
-        rt.anchoredPosition = new Vector2(
-            screenPos.x - Screen.width * 0.5f,
-            screenPos.y - Screen.height * 0.5f + popupIndex * 80f  // 多段伤害递增上移
-        );
+        popup.transform.position = worldPosition + Vector3.up * (popupIndex * DamageStackOffset);
+        popup.transform.localScale = Vector3.one * DamagePopupWorldScale;
 
-        // 上浮 + 淡出动画后自动销毁
         StartCoroutine(AnimateDamagePopup(popup));
     }
 
@@ -122,7 +116,7 @@ public class BattleManager: MonoBehaviour
         float duration = 1.0f;
         float elapsed = 0f;
         Vector3 startPos = popup.transform.position;
-        Vector3 endPos = startPos + Vector3.up * 1.5f;
+        Vector3 endPos = startPos + Vector3.up * DamageFloatUp;
 
         var tmp = popup.GetComponent<TMP_Text>();
         Color startColor = tmp != null ? tmp.color : Color.white;
@@ -143,25 +137,18 @@ public class BattleManager: MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < FriendUnitsId.Count; i++)
-        {
             friendUnits.Add(new BaseUnit(FriendUnitsId[i], CampType.Friend));
-        }
+
         for (int i = 0; i < EnemyUnitsId.Count; i++)
-        {
             enemyUnits.Add(new BaseUnit(EnemyUnitsId[i], CampType.Enemy));
-        }
 
         friendUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
         enemyUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
 
         for (int i = 0; i < friendUnits.Count; i++)
-        {
             friendUnits[i].Init(i);
-        }
         for (int i = 0; i < enemyUnits.Count; i++)
-        {
             enemyUnits[i].Init(i);
-        }
     }
 
     private void Update()
@@ -169,7 +156,7 @@ public class BattleManager: MonoBehaviour
         UpdateSpringShake();
 
         timer += Time.deltaTime;
-        while(timer > TickTime)
+        while (timer > TickTime)
         {
             timer -= TickTime;
             tick++;
@@ -179,16 +166,10 @@ public class BattleManager: MonoBehaviour
 
     private void Tick()
     {
-        for(int i = 0;i < friendUnits.Count; i++)
-        {
-            BaseUnit unit = friendUnits[i];
+        foreach (var unit in friendUnits)
             unit.Tick();
-        }
-        for (int i = 0; i < enemyUnits.Count; i++)
-        {
-            BaseUnit unit = enemyUnits[i];
+        foreach (var unit in enemyUnits)
             unit.Tick();
-        }
     }
 
     public List<BaseUnit> GetOppositeUnits(CampType campType)
@@ -201,7 +182,6 @@ public class BattleManager: MonoBehaviour
         return campType == CampType.Friend ? friendUnits : enemyUnits;
     }
 
-    /// <summary>暂停除 activeUnit 外的所有单位</summary>
     public void PauseAllExcept(BaseUnit activeUnit)
     {
         foreach (var u in friendUnits)
@@ -210,7 +190,6 @@ public class BattleManager: MonoBehaviour
             if (u != activeUnit) u.IsPaused = true;
     }
 
-    /// <summary>恢复所有单位</summary>
     public void ResumeAll()
     {
         foreach (var u in friendUnits) u.IsPaused = false;

@@ -44,10 +44,7 @@ public static class CsvReader
         return fields.ToArray();
     }
 
-    /// <summary>
-    /// 将 CSV 文本解析为指定类型的配置列表。
-    /// CSV 表头（第一行）的列名直接匹配 T 的 public 字段名，自动填充。
-    /// </summary>
+    /// <summary>将 CSV 文本解析为指定类型的配置列表。表头列名匹配 T 的 public 字段名自动填充。</summary>
     public static List<T> ParseToConfigs<T>(string csvText) where T : new()
     {
         var rows = Parse(csvText);

@@ -70,3 +70,4 @@ spine.Skeleton.SetToSetupPose();
 [【公主连结Re:Dive】游戏机制之tp机制](https://zhuanlan.zhihu.com/p/151069934)\
 [【公主连结Re:Dive】游戏机制之先后手的机制](https://zhuanlan.zhihu.com/p/149200253)\
 [【公主连结/游戏机制】移动&站位机制·修正版](https://www.bilibili.com/opus/454873187389458535)\
+[【教程】如何提取公主连结游戏动画素材](https://www.bilibili.com/opus/801111052800491733)\

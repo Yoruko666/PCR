@@ -1,8 +1,5 @@
 using Spine;
 
-/// <summary>
-/// UB 施放状态：暂停所有单位 → 播动画 → 各效果按各自前摇依次触发 → 动画播完恢复所有单位
-/// </summary>
 public class UbState : BaseState
 {
     private Skill ubSkill;
@@ -29,7 +26,9 @@ public class UbState : BaseState
         BattleManager.Instance.PauseAllExcept(unit);
         unit.PlayAnim(ubSkill.Config.AnimName, false);
         unit.PlaySound(ubSkill.Config.SoundName);
-        unit.ShowBubble(ubSkill.Config.Name);
+
+        if (!string.IsNullOrEmpty(ubSkill.Config.Name))
+            unit.ShowBubble(ubSkill.Config.Name);
 
         elapsedFrames = 0;
         effectsApplied = false;
@@ -45,8 +44,8 @@ public class UbState : BaseState
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(ubSkill.Config.Id, elapsedFrames);
-            if (unit.Skill.AllEffectsApplied(ubSkill.Config.Id))
+            unit.Skill.ApplyPendingEffects(ubSkill, elapsedFrames);
+            if (unit.Skill.AllEffectsApplied(ubSkill))
             {
                 BattleManager.Instance.ResumeAll();
                 unit.SpendTP(1000);
