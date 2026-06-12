@@ -34,7 +34,7 @@ public class SkillAction
     public float action_value_5;
     public float action_value_6;
     public float action_value_7;
-    public int target_assignment;
+    public int target_assignment;   
     public int target_count;
     public int target_range;
     public int target_area;

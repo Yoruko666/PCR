@@ -31,22 +31,6 @@ void OnAnimComplete(TrackEntry entry) {
 }
 ```
 
-- Spine 编辑器自定义帧事件
-```C#
-spine.AnimationState.Event += OnSpineEvent;
-
-void OnSpineEvent(TrackEntry entry, Event evt) {
-    switch (evt.Data.Name) {
-        case "hit":
-            Debug.Log("触发伤害判定");
-            break;
-        case "footstep":
-            // 播放脚步声
-            break;
-    }
-}
-```
-
 - 控制播放速度
 ```C#
 spine.AnimationState.TimeScale = 1f;
@@ -66,7 +50,7 @@ spine.Skeleton.SetToSetupPose();
 [蘭德索爾圖書館](https://pcredivewiki.tw)\
 [プリコネ Re:Dive Wiki](https://priconne_redive.rwiki.jp)\
 [干炸里脊资源（©Cygames）](https://redive.estertion.win/)\
-[公主连结数据库](https://github.com/wthee/pcr-tool-sql-diff)
+[公主连结数据库](https://github.com/wthee/pcr-tool-sql-diff)\
 [【公主连结Re:Dive】游戏站位机制](https://zhuanlan.zhihu.com/p/145043002)\
 [【公主连结Re:Dive】游戏机制之普攻和技能机制](https://zhuanlan.zhihu.com/p/148423807)\
 [【公主连结Re:Dive】游戏机制之公式整合](https://zhuanlan.zhihu.com/p/145042599)\

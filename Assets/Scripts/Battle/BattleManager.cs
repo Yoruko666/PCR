@@ -164,12 +164,54 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private List<EffectProjectile> projectiles = new();
+
+    public void SpawnProjectile(BaseUnit caster, BaseUnit target, SkillAction action,
+                                 Skill skill, SkillManager skillManager,
+                                 float moveRate, float hitDelay, int popupIndex)
+    {
+        var visual = new GameObject("EffectProjectile");
+        visual.transform.position = caster.GetPosition() + Vector3.up * 2.0f;
+        visual.transform.localScale = Vector3.one * 4f;
+        var sr = visual.AddComponent<SpriteRenderer>();
+        sr.sprite = CreateCircleSprite();
+        sr.sortingOrder = 10;
+
+        var proj = new EffectProjectile
+        {
+            Caster = caster,
+            Target = target,
+            Action = action,
+            Skill = skill,
+            SkillManager = skillManager,
+            PopupIndex = popupIndex,
+            Speed = moveRate > 0 ? moveRate * 60f : 30f,
+            HitDelay = hitDelay,
+            Visual = visual,
+            CurrentLogicX = caster.LogicX,
+            XDir = caster.XDir,
+        };
+        projectiles.Add(proj);
+    }
+
     private void Tick()
     {
         foreach (var unit in friendUnits)
             unit.Tick();
         foreach (var unit in enemyUnits)
             unit.Tick();
+
+        for (int i = projectiles.Count - 1; i >= 0; i--)
+        {
+            var p = projectiles[i];
+            p.Tick();
+            if (p.Done)
+            {
+                if (p.Visual != null)
+                    Object.Destroy(p.Visual);
+                projectiles.RemoveAt(i);
+            }
+        }
     }
 
     public List<BaseUnit> GetOppositeUnits(CampType campType)
@@ -194,5 +236,18 @@ public class BattleManager : MonoBehaviour
     {
         foreach (var u in friendUnits) u.IsPaused = false;
         foreach (var u in enemyUnits) u.IsPaused = false;
+    }
+
+    private static Sprite CreateCircleSprite()
+    {
+        int size = 16;
+        var tex = new Texture2D(size, size);
+        var center = new Vector2(size / 2f, size / 2f);
+        float radius = size / 2f - 1;
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+                tex.SetPixel(x, y, Vector2.Distance(new Vector2(x, y), center) <= radius ? Color.white : Color.clear);
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f));
     }
 }

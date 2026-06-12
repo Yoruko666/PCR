@@ -152,6 +152,8 @@ public class BaseUnit
         };
     }
 
+    public Vector3 GetPosition() => gameObject.transform.position;
+
     public void Move()
     {
         LogicX += 7.5f * XDir;

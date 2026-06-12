@@ -19,6 +19,9 @@ public class SkillManager
     public Skill MainSkill1 => skill1;
     public Skill MainSkill2 => skill2;
 
+    private Dictionary<int, int> actionTriggerIndex = new();
+    private int popupIndex;
+
     public SkillManager(BaseUnit owner, int ubSkillId, int skill1Id, int skill2Id)
     {
         this.owner = owner;
@@ -72,7 +75,16 @@ public class SkillManager
 
     private Skill LoadAttack()
     {
-        return new Skill { Actions = new List<SkillAction>() };
+        var action = new SkillAction
+        {
+            action_id = 0,
+            action_type = 1,       
+            action_value_1 = 100,   
+            action_value_2 = 0,    
+            target_type = 1,        
+            target_count = 1,
+        };
+        return new Skill { Actions = new List<SkillAction> { action } };
     }
 
     private List<UnitAttackPattern> GetAttackPatterns()
@@ -139,9 +151,6 @@ public class SkillManager
 
     public void OnHit() => owner.AddTP(30);
 
-    private Dictionary<int, int> actionTriggerIndex = new(); 
-    private int popupIndex;
-
     public void ResetAppliedEffects()
     {
         actionTriggerIndex.Clear();
@@ -161,9 +170,22 @@ public class SkillManager
             var times = GetExecTimeList(action.action_id, execTimes);
             if (times == null || idx >= times.Length) continue;
 
-            if (elapsedTime >= times[idx])
+            float triggerTime = times[idx];
+            // 飞行特效自身的发射延迟
+            if (NeedsProjectile(skill, action, timingData))
+                triggerTime += GetProjectileExecDelay(action, timingData);
+            if (elapsedTime < triggerTime) continue;
+
+            // 检查是否需要生成飞行物
+            if (NeedsProjectile(skill, action, timingData))
             {
-                ApplyAction(action, popupIndex);
+                SpawnProjectile(action, skill, timingData);
+                actionTriggerIndex[action.action_id] = idx + 1;
+                popupIndex++;
+            }
+            else
+            {
+                ApplyActionEffect(action, popupIndex);
                 actionTriggerIndex[action.action_id] = idx + 1;
                 popupIndex++;
             }
@@ -187,6 +209,52 @@ public class SkillManager
         return true;
     }
 
+    public void ApplyActionEffect(SkillAction action, int popupIdx)
+    {
+        ApplyAction(action, popupIdx);
+    }
+
+    private bool NeedsProjectile(Skill skill, SkillAction action, UnitSkillTimeData timingData)
+    {
+        // 有无特效数据决定是否生成飞行物
+        return timingData?.actionEffectDic != null &&
+               timingData.actionEffectDic.ContainsKey(action.action_id);
+    }
+
+    private float GetProjectileExecDelay(SkillAction action, UnitSkillTimeData timingData)
+    {
+        if (timingData?.actionEffectDic == null) return 0;
+        if (!timingData.actionEffectDic.TryGetValue(action.action_id, out var effects) || effects.Count == 0)
+            return 0;
+        var effectData = effects[0];
+        return effectData.execTime != null && effectData.execTime.Length > 0 ? effectData.execTime[0] : 0;
+    }
+
+    private void SpawnProjectile(SkillAction action, Skill skill, UnitSkillTimeData timingData)
+    {
+        var target = GetSingleTarget();
+        if (target == null) return;
+
+        float moveRate = 30f;
+        float hitDelay = 0;
+
+        if (timingData?.actionEffectDic != null && timingData.actionEffectDic.TryGetValue(action.action_id, out var effects) && effects.Count > 0)
+        {
+            moveRate = effects[0].moveRate;
+            hitDelay = effects[0].hitDelay;
+        }
+
+        BattleManager.Instance.SpawnProjectile(owner, target, action, skill, this, moveRate, hitDelay, popupIndex);
+    }
+
+    private BaseUnit GetSingleTarget()
+    {
+        return BattleManager.Instance.GetOppositeUnits(owner.CampType)
+            .OrderBy(e => System.Math.Abs(e.LogicX - owner.LogicX))
+            .FirstOrDefault();
+    }
+
+
     private Dictionary<int, float[]> GetExecTimes(Skill skill, UnitSkillTimeData timingData)
     {
         if (timingData == null) return null;
@@ -202,6 +270,9 @@ public class SkillManager
     {
         if (execTimes == null) return null;
         execTimes.TryGetValue(actionId, out var times);
+        // 普攻 execTime key 可能为 1，兼容
+        if (times == null && actionId == 0)
+            execTimes.TryGetValue(1, out times);
         return times;
     }
 
