@@ -18,13 +18,13 @@ public class NormalSkillEffect
 	public ActionParameter FireAction; // 0x50
 	public int FireActionId; // 0x58
 	public int TargetMotionIndex; // 0x5C
-	public GAPCEIKMBGH EffectBehavior; // 0x60
-	public FJMDPHIKDND EffectTarget; // 0x64
-	public LIHJDOLGNIN TargetBone; // 0x68
-	public FJMDPHIKDND FireArmEndTarget; // 0x6C
-	public LIHJDOLGNIN FireArmEndTargetBone; // 0x70
-	public EFOOGOFPDMC TrackType; // 0x74
-	public PBDBBFJFOPL TrackDimension; // 0x78
+	public eEffectBehavior EffectBehavior; // 0x60
+	public eTargetType EffectTarget; // 0x64
+	public eBoneType TargetBone; // 0x68
+	public eTargetType FireArmEndTarget; // 0x6C
+	public eBoneType FireArmEndTargetBone; // 0x70
+	public eTrackType TrackType; // 0x74
+	public eTrackDimension TrackDimension; // 0x78
 	public string TargetBoneName; // 0x80
 	public bool TrackRotation; // 0x88
 	public bool DestroyOnEnemyDead; // 0x89
@@ -37,21 +37,14 @@ public class NormalSkillEffect
 	public List<ShakeEffect> ShakeEffects; // 0xA8
 	public int TargetBranchId; // 0xB0
 	public bool PlayWithCutIn; // 0xB4
-	[CompilerGenerated]
-	private Dictionary<UnitCtrl, bool> <AlreadyFireArmExecedData>k__BackingField; // 0xB8
-	[CompilerGenerated]
-	private List<UnitCtrl> <AlreadyFireArmExecedKeys>k__BackingField; // 0xC0
 
 	// Properties
 	public Dictionary<UnitCtrl, bool> AlreadyFireArmExecedData { get; set; }
 	public List<UnitCtrl> AlreadyFireArmExecedKeys { get; set; }
 
-	// RVA: 0x207BE00 Offset: 0x207BE00 VA: 0x207BE00
 	public bool AppendAndJudgeAlreadyExeced(UnitCtrl _target) { }
 
-	// RVA: 0x207BF78 Offset: 0x207BF78 VA: 0x207BF78
 	public bool IsVisualEffect() { }
 
-	// RVA: 0x207BF90 Offset: 0x207BF90 VA: 0x207BF90
-	public void .ctor() { }
+	public void NormalSkillEffect() { }
 }

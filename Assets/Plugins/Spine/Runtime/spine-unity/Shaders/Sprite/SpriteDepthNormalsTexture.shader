@@ -193,7 +193,7 @@ ENDCG
 }
 
 SubShader {
-	Tags { "RenderType"="TreeOpaque" "DisableBatching"="True" }
+	Tags { "RenderType"="TreeOpaque" "DisableBatching"="true" }
 	Pass {
 CGPROGRAM
 #pragma target 3.0
@@ -230,7 +230,7 @@ ENDCG
 } 
 
 SubShader {
-	Tags { "RenderType"="TreeTransparentCutout" "DisableBatching"="True" }
+	Tags { "RenderType"="TreeTransparentCutout" "DisableBatching"="true" }
 	Pass {
 		Cull Back
 CGPROGRAM

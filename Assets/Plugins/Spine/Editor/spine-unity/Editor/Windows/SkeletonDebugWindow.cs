@@ -163,7 +163,7 @@ namespace Spine.Unity.Editor {
 			Clear();
 		}
 
-		static void FalseDropDown (string label, string stringValue, Texture2D icon = null, bool disabledGroup = false) {
+		static void falseDropDown (string label, string stringValue, Texture2D icon = null, bool disabledGroup = false) {
 			if (disabledGroup) EditorGUI.BeginDisabledGroup(true);
 			Rect pos = EditorGUILayout.GetControlRect(true);
 			pos = EditorGUI.PrefixLabel(pos, SpineInspectorUtility.TempContent(label));
@@ -242,7 +242,7 @@ namespace Spine.Unity.Editor {
 							EditorGUI.BeginChangeCheck();
 
 							EditorGUI.BeginDisabledGroup(true);
-							FalseDropDown(".Skin", skeleton.Skin != null ? skeletonRenderer.Skeleton.Skin.Name : "<None>", Icons.skin);
+							falseDropDown(".Skin", skeleton.Skin != null ? skeletonRenderer.Skeleton.Skin.Name : "<None>", Icons.skin);
 							EditorGUI.EndDisabledGroup();
 
 							// Flip
@@ -285,7 +285,7 @@ namespace Spine.Unity.Editor {
 										EditorGUILayout.Space();
 
 										Bone boneParent = bone.Parent;
-										if (boneParent != null) FalseDropDown("Parent", boneParent.Data.Name, Icons.bone);
+										if (boneParent != null) falseDropDown("Parent", boneParent.Data.Name, Icons.bone);
 
 										const string RoundFormat = "0.##";
 										float lw = EditorGUIUtility.labelWidth;
@@ -389,7 +389,7 @@ namespace Spine.Unity.Editor {
 								if (skeleton.IkConstraints.Count > 0) {
 									foreach (IkConstraint c in skeleton.IkConstraints) {
 										EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(c.Data.Name, Icons.constraintIK));
-										FalseDropDown("Goal", c.Data.Target.Name, Icons.bone, true);
+										falseDropDown("Goal", c.Data.Target.Name, Icons.bone, true);
 										using (new EditorGUI.DisabledGroupScope(true)) {
 											EditorGUILayout.Toggle(SpineInspectorUtility.TempContent("Data.Uniform", tooltip: "Uniformly scales a bone when Ik stretches or compresses."), c.Data.Uniform);
 										}
@@ -415,7 +415,7 @@ namespace Spine.Unity.Editor {
 									foreach (TransformConstraint c in skeleton.TransformConstraints) {
 										EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(c.Data.Name, Icons.constraintTransform));
 										EditorGUI.BeginDisabledGroup(true);
-										FalseDropDown("Goal", c.Data.Target.Name, Icons.bone);
+										falseDropDown("Goal", c.Data.Target.Name, Icons.bone);
 										EditorGUI.EndDisabledGroup();
 
 										EditorGUI.BeginChangeCheck();
@@ -469,9 +469,9 @@ namespace Spine.Unity.Editor {
 									foreach (PathConstraint c in skeleton.PathConstraints) {
 										EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(c.Data.Name, Icons.constraintPath));
 										EditorGUI.BeginDisabledGroup(true);
-										FalseDropDown("Path Slot", c.Data.Target.Name, Icons.slot);
+										falseDropDown("Path Slot", c.Data.Target.Name, Icons.slot);
 										Attachment activeAttachment = c.Target.Attachment;
-										FalseDropDown("Active Path", activeAttachment != null ? activeAttachment.Name : "<None>", activeAttachment is PathAttachment ? Icons.path : null);
+										falseDropDown("Active Path", activeAttachment != null ? activeAttachment.Name : "<None>", activeAttachment is PathAttachment ? Icons.path : null);
 										EditorGUILayout.LabelField("PositionMode." + c.Data.PositionMode);
 										EditorGUILayout.LabelField("SpacingMode." + c.Data.SpacingMode);
 										EditorGUILayout.LabelField("RotateMode." + c.Data.RotateMode);

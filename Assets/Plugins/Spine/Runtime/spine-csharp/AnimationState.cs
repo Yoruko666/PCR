@@ -224,7 +224,7 @@ namespace Spine {
 		/// <summary>
 		/// Poses the skeleton using the track entry animations.  The animation state is not changed, so can be applied to multiple
 		/// skeletons to pose them identically.</summary>
-		/// <returns>True if any animations were applied.</returns>
+		/// <returns>true if any animations were applied.</returns>
 		public bool Apply (Skeleton skeleton) {
 			if (skeleton == null) throw new ArgumentNullException("skeleton", "skeleton cannot be null.");
 			if (animationsChanged) AnimationsChanged();
@@ -485,7 +485,7 @@ namespace Spine {
 		}
 
 		/// <summary> Applies the attachment timeline and sets <see cref="Slot.attachmentState"/>.</summary>
-		/// <param name="attachments">False when: 1) the attachment timeline is mixing out, 2) mix &lt; attachmentThreshold, and 3) the timeline
+		/// <param name="attachments">false when: 1) the attachment timeline is mixing out, 2) mix &lt; attachmentThreshold, and 3) the timeline
 		/// is not the last timeline to set the slot's attachment. In that case the timeline is applied only so subsequent
 		/// timelines see any deform.</param>
 		private void ApplyAttachmentTimeline (AttachmentTimeline timeline, Skeleton skeleton, float time, MixBlend blend,

@@ -75,8 +75,8 @@ namespace SharpJson {
 		public enum Token {
 			None,
 			Null,
-			True,
-			False,
+			true,
+			false,
 			Colon,
 			Comma,
 			String,
@@ -329,7 +329,7 @@ namespace SharpJson {
 					json[index + 3] == 's' &&
 					json[index + 4] == 'e') {
 					index += 5;
-					return Token.False;
+					return Token.false;
 				}
 			}
 
@@ -340,7 +340,7 @@ namespace SharpJson {
 					json[index + 2] == 'u' &&
 					json[index + 3] == 'e') {
 					index += 4;
-					return Token.True;
+					return Token.true;
 				}
 			}
 
@@ -485,10 +485,10 @@ namespace SharpJson {
 				return ParseObject();
 			case Lexer.Token.SquaredOpen:
 				return ParseArray();
-			case Lexer.Token.True:
+			case Lexer.Token.true:
 				lexer.NextToken();
 				return true;
-			case Lexer.Token.False:
+			case Lexer.Token.false:
 				lexer.NextToken();
 				return false;
 			case Lexer.Token.Null:

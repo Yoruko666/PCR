@@ -122,7 +122,7 @@ namespace Spine {
 		/// <summary>The dark color used to tint the slot's attachment for two color tinting, ignored if two color tinting is not used.</summary>
 		/// <seealso cref="HasSecondColor"/>
 		public float B2 { get { return b2; } set { b2 = value; } }
-		/// <summary>Whether R2 G2 B2 are used to tint the slot's attachment for two color tinting. False if two color tinting is not used.</summary>
+		/// <summary>Whether R2 G2 B2 are used to tint the slot's attachment for two color tinting. false if two color tinting is not used.</summary>
 		public bool HasSecondColor { get { return data.hasSecondColor; } set { data.hasSecondColor = value; } }
 
 		public void ClampSecondColor () {

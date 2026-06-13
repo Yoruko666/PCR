@@ -38,10 +38,10 @@ Shader "Spine/SkeletonGraphic Tint Black Screen"
 		Tags
 		{
 			"Queue"="Transparent"
-			"IgnoreProjector"="True"
+			"IgnoreProjector"="true"
 			"RenderType"="Transparent"
 			"PreviewType"="Plane"
-			"CanUseSpriteAtlas"="True"
+			"CanUseSpriteAtlas"="true"
 		}
 
 		Stencil

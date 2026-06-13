@@ -1,0 +1,23 @@
+public class UnitDataForView // TypeDefIndex: 2410
+{
+	public ObscuredInt Id { get; set; }
+    public ObscuredInt UnitLevel { get; set; }
+    public ObscuredInt UnitRarity { get; set; }
+    public ObscuredInt BattleRarity { get; set; }
+    public ePromotionLevel PromotionLevel { get; set; }
+    public ObscuredInt Power { get; set; }
+    public SkinData SkinData { get; set; }
+    public List<EquipSlot> UniqueEquipSlot { get; set; }
+    public List<ExtraEquipSlot> ExEquipSlot { get; set; }
+    public List<ExtraEquipSlot> CbExEquipSlot { get; set; }
+
+    private void initializeUnitDataForView() { }
+
+    public UnitDataForView() { }
+
+    public UnitDataForView(int _id, int _unitLevel, int _unitRarity, int _battleRarity, ePromotionLevel _promotionLevel, int _power, SkinData _skinData, List<EquipSlot> _uniqueEquipSlot, List<ExtraEquipSlot> _exEquipSlot, List<ExtraEquipSlot> _cbExEquipSlot) { }
+
+    public UnitDataForView(JsonData _json) { }
+
+    public void ParseUnitDataForView(JsonData _json) { }
+}

@@ -24,7 +24,7 @@ Shader "Spine/Outline/Skeleton Tint Black" {
 	}
 
 	SubShader {
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+		Tags { "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" }
 		LOD 100
 
 		Fog { Mode Off }

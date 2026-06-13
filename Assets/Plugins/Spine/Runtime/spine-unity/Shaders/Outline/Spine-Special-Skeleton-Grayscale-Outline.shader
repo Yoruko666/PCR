@@ -23,7 +23,7 @@ Shader "Spine/Outline/Special/Skeleton Grayscale" {
 	}
 
 	SubShader {
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
+		Tags { "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" "PreviewType"="Plane" }
 		Blend One OneMinusSrcAlpha
 		Cull Off
 		ZWrite Off

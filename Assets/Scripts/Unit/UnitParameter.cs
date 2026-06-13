@@ -22,5 +22,5 @@ public class UnitParameter
 
 	public void CalcUnitData() { }
 
-	public void UpdateLimitedUnitData(bool _calcLocalPower = True, bool _isSupportOrReplay = False) { }
+	public void UpdateLimitedUnitData(bool _calcLocalPower = true, bool _isSupportOrReplay = false) { }
 }

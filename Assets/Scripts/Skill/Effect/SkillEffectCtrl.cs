@@ -91,7 +91,7 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	public void InitializeSortForWithOutBattle() { }
 
 	// RVA: 0x1D32CE8 Offset: 0x1D32CE8 VA: 0x1D32CE8 Slot: 6
-	public virtual void ExecAppendCoroutine(UnitCtrl _unit, bool _isAbnormal = False) { }
+	public virtual void ExecAppendCoroutine(UnitCtrl _unit, bool _isAbnormal = false) { }
 
 	// RVA: 0x1D3B860 Offset: 0x1D3B860 VA: 0x1D3B860
 	private void particleRendererDictionaryInitialize() { }
@@ -104,7 +104,7 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 
 	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTarget>d__92))]
 	// RVA: 0x1D3BD44 Offset: 0x1D3BD44 VA: 0x1D3BD44
-	public IEnumerator TrackTarget(BasePartsData _trans, Vector3 _absolutePosition, bool _followX = True, bool _followY = True, Bone _bone, bool _trackRotation = False, SkillEffectCtrl.eToadTrackType _toadTrackType = 0) { }
+	public IEnumerator TrackTarget(BasePartsData _trans, Vector3 _absolutePosition, bool _followX = true, bool _followY = true, Bone _bone, bool _trackRotation = false, SkillEffectCtrl.eToadTrackType _toadTrackType = 0) { }
 
 	[IteratorStateMachine(typeof(SkillEffectCtrl.<updateBoneTimeLine>d__93))]
 	// RVA: 0x1D3BE48 Offset: 0x1D3BE48 VA: 0x1D3BE48
@@ -112,11 +112,11 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 
 	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTarget>d__94))]
 	// RVA: 0x1D3BF48 Offset: 0x1D3BF48 VA: 0x1D3BF48
-	public IEnumerator TrackTarget(BattleUnitBaseSpineController _spine, Vector3 _absolutePosition, bool _followX = True, bool _followY = True, Bone _bone, bool _trackRotation = False, Transform _traskScale, float _coefficient = 1, bool _callFromBossDialog = False) { }
+	public IEnumerator TrackTarget(BattleUnitBaseSpineController _spine, Vector3 _absolutePosition, bool _followX = true, bool _followY = true, Bone _bone, bool _trackRotation = false, Transform _traskScale, float _coefficient = 1, bool _callFromBossDialog = false) { }
 
 	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTargetSort>d__95))]
 	// RVA: 0x1D3C094 Offset: 0x1D3C094 VA: 0x1D3C094
-	public IEnumerator TrackTargetSort(UnitCtrl _unit, bool _allowSortOrderFront = True) { }
+	public IEnumerator TrackTargetSort(UnitCtrl _unit, bool _allowSortOrderFront = true) { }
 
 	[IteratorStateMachine(typeof(SkillEffectCtrl.<updateTimer>d__96))]
 	// RVA: 0x1D3BC3C Offset: 0x1D3BC3C VA: 0x1D3BC3C
@@ -182,7 +182,7 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	public void SetSource(UnitCtrl _source) { }
 
 	// RVA: 0x1D2F118 Offset: 0x1D2F118 VA: 0x1D2F118 Slot: 16
-	public virtual void ResetParameter(GameObject _prefab, int _skinID = 0, bool _isShadow = False) { }
+	public virtual void ResetParameter(GameObject _prefab, int _skinID = 0, bool _isShadow = false) { }
 
 	// RVA: 0x1D3D088 Offset: 0x1D3D088 VA: 0x1D3D088
 	public void RestartTween() { }

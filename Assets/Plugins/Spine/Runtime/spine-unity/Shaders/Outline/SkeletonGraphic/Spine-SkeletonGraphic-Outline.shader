@@ -37,10 +37,10 @@ Shader "Spine/Outline/SkeletonGraphic"
 		Tags
 		{
 			"Queue"="Transparent"
-			"IgnoreProjector"="True"
+			"IgnoreProjector"="true"
 			"RenderType"="Transparent"
 			"PreviewType"="Plane"
-			"CanUseSpriteAtlas"="True"
+			"CanUseSpriteAtlas"="true"
 		}
 
 		Stencil

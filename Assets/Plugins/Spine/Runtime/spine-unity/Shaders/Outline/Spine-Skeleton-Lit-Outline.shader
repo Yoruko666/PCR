@@ -23,7 +23,7 @@ Shader "Spine/Outline/Skeleton Lit" {
 	}
 
 	SubShader {
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+		Tags { "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" }
 		LOD 100
 
 		Stencil {

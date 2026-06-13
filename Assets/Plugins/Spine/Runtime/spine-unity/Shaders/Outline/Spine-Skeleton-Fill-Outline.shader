@@ -23,7 +23,7 @@ Shader "Spine/Outline/Skeleton Fill" {
 		[HideInInspector] _OutlineMipLevel("Outline Mip Level", Range(0,3)) = 0
 	}
 	SubShader {
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
+		Tags { "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" "PreviewType"="Plane" }
 		Blend One OneMinusSrcAlpha
 		Cull Off
 		ZWrite Off

@@ -957,7 +957,7 @@ public class SpineSpriteShaderGUI : SpineShaderWithOutlineGUI {
 		}
 
 		//If we don't write to depth set tag so custom shaders can write to depth themselves
-		material.SetOverrideTag("AlphaDepth", zWrite ? "False" : "True");
+		material.SetOverrideTag("AlphaDepth", zWrite ? "false" : "true");
 
 		material.SetOverrideTag("RenderType", renderType);
 	}
@@ -1138,7 +1138,7 @@ public class SpineSpriteShaderGUI : SpineShaderWithOutlineGUI {
 		}
 
 		material.renderQueue = renderQueue + material.GetInt("_RenderQueue");
-		material.SetOverrideTag("IgnoreProjector", blendMode == eBlendMode.Opaque ? "False" : "True");
+		material.SetOverrideTag("IgnoreProjector", blendMode == eBlendMode.Opaque ? "false" : "true");
 	}
 
 	static eNormalsMode GetMaterialNormalsMode (Material material) {

@@ -47,21 +47,21 @@ namespace Spine.Unity {
 		public abstract string GetPlaceholderTextureName (string originalTextureName);
 		/// <summary>
 		/// Assigns previously setup placeholder textures at each Material of the associated AtlasAssetBase.</summary>
-		/// <returns>True on success, false if the placeholder texture could not be assigned at any of the
+		/// <returns>true on success, false if the placeholder texture could not be assigned at any of the
 		/// AtlasAssetBase's materials.</returns>
 		public abstract bool AssignPlaceholderTextures (out IEnumerable<Material> modifiedMaterials);
 		/// <summary>
 		/// Returns whether any placeholder textures are assigned at the Material of the associated AtlasAssetBase.
 		/// </summary>
 		/// <param name="placeholderMaterials">A newly created list of materials which has a placeholder texture assigned.</param>
-		/// <returns>True, if any placeholder texture is assigned at a Material of the associated AtlasAssetBase.</returns>
+		/// <returns>true, if any placeholder texture is assigned at a Material of the associated AtlasAssetBase.</returns>
 		public abstract bool HasPlaceholderTexturesAssigned (out List<Material> placeholderMaterials);
 
 		/// <summary>
 		/// Returns whether any main texture is null at a Material of the associated AtlasAssetBase.
 		/// </summary>
 		/// <param name="nullTextureMaterials">A newly created list of materials which has a null main texture assigned.</param>
-		/// <returns>True, if any null main texture is assigned at a Material of the associated AtlasAssetBase.</returns>
+		/// <returns>true, if any null main texture is assigned at a Material of the associated AtlasAssetBase.</returns>
 		public virtual bool HasNullMainTexturesAssigned (out List<Material> nullTextureMaterials) {
 			nullTextureMaterials = null;
 			if (!atlasAsset) return false;
@@ -79,7 +79,7 @@ namespace Spine.Unity {
 
 		/// <summary>
 		/// Assigns previously setup target textures at each Material where placeholder textures are setup.</summary>
-		/// <returns>True on success, false if the target texture could not be assigned at any of the
+		/// <returns>true on success, false if the target texture could not be assigned at any of the
 		/// AtlasAssetBase's materials.</returns>
 		public abstract bool AssignTargetTextures (out IEnumerable<Material> modifiedMaterials);
 		public abstract void BeginCustomTextureLoading ();

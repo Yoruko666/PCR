@@ -21,7 +21,7 @@ Shader "Spine/Outline/OutlineOnly-ZWrite" {
 	}
 
 	SubShader {
-		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
+		Tags { "Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent" "PreviewType"="Plane" }
 
 		Fog { Mode Off }
 		Cull Off

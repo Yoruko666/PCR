@@ -61,7 +61,7 @@ Shader "Spine/Outline/Sprite/Pixel Lit"
 
 	SubShader
 	{
-		Tags { "Queue"="Transparent" "RenderType"="Sprite" "AlphaDepth"="False" "CanUseSpriteAtlas"="True" "IgnoreProjector"="True" }
+		Tags { "Queue"="Transparent" "RenderType"="Sprite" "AlphaDepth"="False" "CanUseSpriteAtlas"="true" "IgnoreProjector"="true" }
 		LOD 200
 
 		Stencil {

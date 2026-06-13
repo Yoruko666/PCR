@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
+using System;
+using System.Collections;
 
 public class UnitActionController : MonoBehaviour, ISingletonField
 {
@@ -51,7 +54,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	private void OnDestroy() { }
 
 	// RVA: 0x2084870 Offset: 0x2084870 VA: 0x2084870
-	public void Initialize(UnitCtrl _owner, UnitParameter _unitParameter, bool _initializeAttackOnly = False, UnitCtrl _seOwner) { }
+	public void Initialize(UnitCtrl _owner, UnitParameter _unitParameter, bool _initializeAttackOnly = false, UnitCtrl _seOwner) { }
 
 	// RVA: 0x20866AC Offset: 0x20866AC VA: 0x20866AC
 	private void setSkillParameter(Skill _skill, CEPNIIGEBLD.KBBMDFBGAIP _skillParameter, int _parentSkillId = -1) { }
@@ -60,7 +63,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	private void dependActionSolve(Skill skill) { }
 
 	// RVA: 0x2088354 Offset: 0x2088354 VA: 0x2088354
-	public void UpdateEffectRunTimeData(Skill _skill, List<NormalSkillEffect> _skillList, bool _resetflag = True) { }
+	public void UpdateEffectRunTimeData(Skill _skill, List<NormalSkillEffect> _skillList, bool _resetflag = true) { }
 
 	// RVA: 0x2086434 Offset: 0x2086434 VA: 0x2086434
 	private void execActionOnStart(Skill _skill) { }
@@ -81,7 +84,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	private void actionStartFirstProcess(Skill _skill, out bool _hasNoTarget) { }
 
 	// RVA: 0x208A2A0 Offset: 0x208A2A0 VA: 0x208A2A0
-	private void searchAndSortTarget(Skill _skill, ActionParameter _action, Vector3 _basePosition, bool _quiet = False, bool _considerBodyWidth = True) { }
+	private void searchAndSortTarget(Skill _skill, ActionParameter _action, Vector3 _basePosition, bool _quiet = false, bool _considerBodyWidth = true) { }
 
 	// RVA: 0x20872A8 Offset: 0x20872A8 VA: 0x20872A8
 	private void setCutInSkipTimeForPrincessForm(int _skillId) { }
@@ -112,20 +115,20 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	private IEnumerator updateCoroutineWithOutCutIn(IEnumerator _coroutine) { }
 
 	// RVA: 0x2089B40 Offset: 0x2089B40 VA: 0x2089B40
-	public void CreateNormalPrefabWithTargetMotion(Skill _skill, int _targetmotion, bool _first, bool _useStartCoroutine = False, bool _modechangeEndEffect = False) { }
+	public void CreateNormalPrefabWithTargetMotion(Skill _skill, int _targetmotion, bool _first, bool _useStartCoroutine = false, bool _modechangeEndEffect = false) { }
 
 	// RVA: 0x208A0A4 Offset: 0x208A0A4 VA: 0x208A0A4
-	public void ExecUnitActionWithDelay(ActionParameter _action, Skill _skill, bool _first, bool _boneCount, bool _ignoreCancel = False) { }
+	public void ExecUnitActionWithDelay(ActionParameter _action, Skill _skill, bool _first, bool _boneCount, bool _ignoreCancel = false) { }
 
 	// RVA: 0x208E4A4 Offset: 0x208E4A4 VA: 0x208E4A4
 	public void ExecUnitActionNoDelay(ActionParameter _action, Skill _skill) { }
 
 	[IteratorStateMachine(typeof(UnitActionController.<ExecActionWithDelayAndTarget>d__103))]
 	// RVA: 0x208E394 Offset: 0x208E394 VA: 0x208E394
-	public IEnumerator ExecActionWithDelayAndTarget(ActionParameter _action, Skill _skill, BasePartsData _target, float _starttime, bool _first = False, bool _boneCount = True, bool _ignoreCancel = False, BasePartsData _protectedTarget) { }
+	public IEnumerator ExecActionWithDelayAndTarget(ActionParameter _action, Skill _skill, BasePartsData _target, float _starttime, bool _first = false, bool _boneCount = true, bool _ignoreCancel = false, BasePartsData _protectedTarget) { }
 
 	// RVA: 0x208E5A4 Offset: 0x208E5A4 VA: 0x208E5A4
-	public void ExecAction(ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, bool _execChildNoFrame = False, BasePartsData _protectedTarget, bool _ignoreProtect = False) { }
+	public void ExecAction(ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, bool _execChildNoFrame = false, BasePartsData _protectedTarget, bool _ignoreProtect = false) { }
 
 	// RVA: 0x208EEB8 Offset: 0x208EEB8 VA: 0x208EEB8
 	public void ExecChildrenAction(ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, Dictionary<int, bool> _enabledChildAction, bool _execNoFrame, BasePartsData _protectedTarget) { }
@@ -135,14 +138,14 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 
 	[IteratorStateMachine(typeof(UnitActionController.<createNormalPrefabWithDelay>d__107))]
 	// RVA: 0x208E10C Offset: 0x208E10C VA: 0x208E10C
-	private IEnumerator createNormalPrefabWithDelay(NormalSkillEffect _skilleffect, Skill _skill, bool _first = False, bool _skipCutIn = False, bool _isFirearmEndEffect = False, bool _modeChangeEndEffect = False) { }
+	private IEnumerator createNormalPrefabWithDelay(NormalSkillEffect _skilleffect, Skill _skill, bool _first = false, bool _skipCutIn = false, bool _isFirearmEndEffect = false, bool _modeChangeEndEffect = false) { }
 
 	[IteratorStateMachine(typeof(UnitActionController.<createNormalPrefabWithDelayAndTarget>d__108))]
 	// RVA: 0x208F438 Offset: 0x208F438 VA: 0x208F438
 	private IEnumerator createNormalPrefabWithDelayAndTarget(NormalSkillEffect _skilleffect, Skill _skill, float _delay, BasePartsData _target, bool _first) { }
 
 	// RVA: 0x208F51C Offset: 0x208F51C VA: 0x208F51C
-	private void createNormalEffectPrefab(NormalSkillEffect _skillEffect, Skill _skill, BasePartsData _target, BasePartsData _firearmEndTarget, bool actionStart, float _starttime, bool _skipCutIn, int execTimeIndex = 0, bool _modeChangeEndEffect = False) { }
+	private void createNormalEffectPrefab(NormalSkillEffect _skillEffect, Skill _skill, BasePartsData _target, BasePartsData _firearmEndTarget, bool actionStart, float _starttime, bool _skipCutIn, int execTimeIndex = 0, bool _modeChangeEndEffect = false) { }
 
 	// RVA: 0x2090158 Offset: 0x2090158 VA: 0x2090158
 	private SkillEffectCtrl createPrefab(NormalSkillEffect skillEffect, Skill skill, BasePartsData target, ref GameObject prefab) { }
@@ -182,10 +185,10 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 
 	[IteratorStateMachine(typeof(UnitActionController.<StartShakeWithDelay>d__122))]
 	// RVA: 0x2089E14 Offset: 0x2089E14 VA: 0x2089E14
-	public IEnumerator StartShakeWithDelay(ShakeEffect _shake, Skill _skill, bool _first = False) { }
+	public IEnumerator StartShakeWithDelay(ShakeEffect _shake, Skill _skill, bool _first = false) { }
 
 	// RVA: 0x2089FC0 Offset: 0x2089FC0 VA: 0x2089FC0
-	private void startBlurEffects(Skill _skill, bool _first = False) { }
+	private void startBlurEffects(Skill _skill, bool _first = false) { }
 
 	[IteratorStateMachine(typeof(UnitActionController.<startBlurWithDelay>d__124))]
 	// RVA: 0x2091418 Offset: 0x2091418 VA: 0x2091418
@@ -201,7 +204,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	public bool IsLoopMotionPlaying(int _skillId) { }
 
 	// RVA: 0x2091674 Offset: 0x2091674 VA: 0x2091674
-	public LPMPILJJBJP GetSkillMotionType(int _skillId) { }
+	public eSkillMotionType GetSkillMotionType(int _skillId) { }
 
 	// RVA: 0x20916E4 Offset: 0x20916E4 VA: 0x20916E4
 	public int GetSkillNum(int _skillId) { }
