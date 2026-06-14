@@ -88,17 +88,10 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 
 	// RVA: 0x20872A8 Offset: 0x20872A8 VA: 0x20872A8
 	private void setCutInSkipTimeForPrincessForm(int _skillId) { }
-
-	[IteratorStateMachine(typeof(UnitActionController.<StartActionWithOutCutIn>d__93))]
-	// RVA: 0x208D334 Offset: 0x208D334 VA: 0x208D334
 	public IEnumerator StartActionWithOutCutIn(UnitCtrl _unit, int _skillId, Action _callback) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<StartAnnihilationSkillAnimation>d__94))]
-	// RVA: 0x208D3EC Offset: 0x208D3EC VA: 0x208D3EC
 	public IEnumerator StartAnnihilationSkillAnimation(int _annihilationId) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<foregroundActiveWithDelay>d__95))]
-	// RVA: 0x208D474 Offset: 0x208D474 VA: 0x208D474
 	private IEnumerator foregroundActiveWithDelay(float _time) { }
 
 	// RVA: 0x208D504 Offset: 0x208D504 VA: 0x208D504
@@ -110,8 +103,6 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	// RVA: 0x208DCB0 Offset: 0x208DCB0 VA: 0x208DCB0
 	public void SearchTargetByAction(int _skillId) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<updateCoroutineWithOutCutIn>d__99))]
-	// RVA: 0x208E078 Offset: 0x208E078 VA: 0x208E078
 	private IEnumerator updateCoroutineWithOutCutIn(IEnumerator _coroutine) { }
 
 	// RVA: 0x2089B40 Offset: 0x2089B40 VA: 0x2089B40
@@ -123,8 +114,6 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	// RVA: 0x208E4A4 Offset: 0x208E4A4 VA: 0x208E4A4
 	public void ExecUnitActionNoDelay(ActionParameter _action, Skill _skill) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<ExecActionWithDelayAndTarget>d__103))]
-	// RVA: 0x208E394 Offset: 0x208E394 VA: 0x208E394
 	public IEnumerator ExecActionWithDelayAndTarget(ActionParameter _action, Skill _skill, BasePartsData _target, float _starttime, bool _first = false, bool _boneCount = true, bool _ignoreCancel = false, BasePartsData _protectedTarget) { }
 
 	// RVA: 0x208E5A4 Offset: 0x208E5A4 VA: 0x208E5A4
@@ -136,12 +125,8 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	// RVA: 0x208E1EC Offset: 0x208E1EC VA: 0x208E1EC
 	private void initWhenNoTarget(ActionParameter _action, Skill _skill) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<createNormalPrefabWithDelay>d__107))]
-	// RVA: 0x208E10C Offset: 0x208E10C VA: 0x208E10C
 	private IEnumerator createNormalPrefabWithDelay(NormalSkillEffect _skilleffect, Skill _skill, bool _first = false, bool _skipCutIn = false, bool _isFirearmEndEffect = false, bool _modeChangeEndEffect = false) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<createNormalPrefabWithDelayAndTarget>d__108))]
-	// RVA: 0x208F438 Offset: 0x208F438 VA: 0x208F438
 	private IEnumerator createNormalPrefabWithDelayAndTarget(NormalSkillEffect _skilleffect, Skill _skill, float _delay, BasePartsData _target, bool _first) { }
 
 	// RVA: 0x208F51C Offset: 0x208F51C VA: 0x208F51C
@@ -169,7 +154,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	public static int GetAttackSide(GDCIMHECIFP _direction, UnitCtrl _owner) { }
 
 	// RVA: 0x2090B14 Offset: 0x2090B14 VA: 0x2090B14
-	private KHNEEEDKBJK convertPriorityPattern(KHNEEEDKBJK _pattern) { }
+	private eTargetType convertPriorityPattern(eTargetType _pattern) { }
 
 	// RVA: 0x208BC20 Offset: 0x208BC20 VA: 0x208BC20
 	private void sortTargetListByTargetPattern(ActionParameter _actionParameter, Transform _baseTransform, bool _quiet) { }
@@ -182,16 +167,11 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 
 	// RVA: 0x2091220 Offset: 0x2091220 VA: 0x2091220
 	public void CancelAction(int skillId) { }
-
-	[IteratorStateMachine(typeof(UnitActionController.<StartShakeWithDelay>d__122))]
-	// RVA: 0x2089E14 Offset: 0x2089E14 VA: 0x2089E14
 	public IEnumerator StartShakeWithDelay(ShakeEffect _shake, Skill _skill, bool _first = false) { }
 
 	// RVA: 0x2089FC0 Offset: 0x2089FC0 VA: 0x2089FC0
 	private void startBlurEffects(Skill _skill, bool _first = false) { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<startBlurWithDelay>d__124))]
-	// RVA: 0x2091418 Offset: 0x2091418 VA: 0x2091418
 	private IEnumerator startBlurWithDelay(BlurEffect.BlurEffectData _blurData, Skill _skill, bool _first) { }
 
 	// RVA: 0x2089ECC Offset: 0x2089ECC VA: 0x2089ECC
@@ -224,8 +204,6 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	// RVA: 0x20919E8 Offset: 0x20919E8 VA: 0x20919E8
 	public void ExecActionOnWaveStart() { }
 
-	[IteratorStateMachine(typeof(UnitActionController.<UpdateBranchMotion>d__135))]
-	// RVA: 0x2091B28 Offset: 0x2091B28 VA: 0x2091B28
 	public IEnumerator UpdateBranchMotion(ActionParameter _action, Skill _skill) { }
 
 	// RVA: 0x2091BBC Offset: 0x2091BBC VA: 0x2091BBC

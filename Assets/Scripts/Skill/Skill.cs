@@ -76,9 +76,10 @@ public class Skill
 	public long AbsorberValue { get; set; }
 	public int BonusId { get; set; }
 
-	// RVA: 0x208324C Offset: 0x208324C VA: 0x208324C
-	public void SetLevel(int _level) { }
+	public void SetLevel(int _level)
+	{
+        Level = _level;
+    }
 
-	// RVA: 0x20832F4 Offset: 0x20832F4 VA: 0x20832F4
 	public void ReadySkill() { }
 }

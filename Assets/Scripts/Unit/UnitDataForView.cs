@@ -1,11 +1,13 @@
+using System.Collections.Generic;
+
 public class UnitDataForView // TypeDefIndex: 2410
 {
-	public ObscuredInt Id { get; set; }
-    public ObscuredInt UnitLevel { get; set; }
-    public ObscuredInt UnitRarity { get; set; }
-    public ObscuredInt BattleRarity { get; set; }
+	public int Id { get; set; }
+    public int UnitLevel { get; set; }
+    public int UnitRarity { get; set; }
+    public int BattleRarity { get; set; }
     public ePromotionLevel PromotionLevel { get; set; }
-    public ObscuredInt Power { get; set; }
+    public int Power { get; set; }
     public SkinData SkinData { get; set; }
     public List<EquipSlot> UniqueEquipSlot { get; set; }
     public List<ExtraEquipSlot> ExEquipSlot { get; set; }

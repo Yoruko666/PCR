@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System;
+using Spine;
 
 public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitComponentContainer 
 {
@@ -24,13 +26,9 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	private List<PrefabWithTime> idleEffects;
 	[SerializeField]
 	private List<PrefabWithTime> auraEffects;
-	[SerializeField]
 	public float ShowTitleDelay;
-	[SerializeField]
 	public float UnitAppearDelay;
-	[SerializeField]
 	public float BossAppearDelay;
-	[SerializeField]
 	public float BattleCameraSize;
 	public float Scale;
 	public float BossDeltaX;
@@ -79,11 +77,11 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	private static IBattleCameraEffectForUnitCtrl staticBattleCameraEffect;
 	private static IBattleEffectPool staticBattleEffectPool;
 	private static IBattleTimeScaleForUnitCtrl staticBattleTimeScale;
-	private ObscuredBool <IsMoveSpeedForceZero>k__BackingField;
+	private bool <IsMoveSpeedForceZero>k__BackingField;
 	private static BattleManager staticBattleManager;
 
 	public UnitActionController UnitActionController { get; set; }
-	public IBKNOJIGFLJ PrincessFormProcessor { get; set; }
+	public PrincessFormProcessor PrincessFormProcessor { get; set; }
 	public IComponentAbnormal ComponentAbnormal { get; set; }
 	public IComponentActionPattern ComponentActionPattern { get; set; }
 	public IComponentAnimation ComponentAnimation { get; set; }
@@ -171,9 +169,9 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	public LifeGaugeController LifeGauge { get; set; }
 	public bool IsDepthBack { get; set; }
 	public bool IsForceLeftDirOrPartsBoss { get; }
-	public ObscuredFloat CastTimer { get; set; }
-	public ObscuredDouble SkillStackValDmg { get; set; }
-	public ObscuredDouble SkillStackVal { get; set; }
+	public float CastTimer { get; set; }
+	public double SkillStackValDmg { get; set; }
+	public double SkillStackVal { get; set; }
 	public float MoveRate { get; set; }
 	public bool IsAwakeMotion { get; set; }
 	public bool StartDashDone { get; set; }
@@ -206,11 +204,11 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	public float AtkRecastTime { get; set; }
 	public int UnionBurstSkillId { get; set; }
 	public List<int> LevelFixedSpSkillIdList { get; set; }
-	public ObscuredInt Rupee { get; set; }
-	public ObscuredInt RewardCount { get; set; }
+	public int Rupee { get; set; }
+	public int RewardCount { get; set; }
 	public List<int> TalentIds { get; set; }
 	public float StartHpPercent { get; set; }
-	public ObscuredBool IsMoveSpeedForceZero { get; set; }
+	public bool IsMoveSpeedForceZero { get; set; }
 	public Dictionary<int, int> SkillLevels { get; set; }
 	public Dictionary<int, eSpineCharacterAnimeId> AnimeIdDictionary { get; set; }
 	public List<int> MainSkillIdList { get; set; }

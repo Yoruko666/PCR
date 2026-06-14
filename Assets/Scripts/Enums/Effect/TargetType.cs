@@ -1,4 +1,4 @@
-public enum eTargetType
+public enum eEffectTargetType
 {
     Owner = 0,
     AllTarget = 1,

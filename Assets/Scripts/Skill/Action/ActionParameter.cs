@@ -1,16 +1,17 @@
 using UnityEngine;
 using System;
+
 using System.Collections.Generic;
 
-public class ActionParameter : ISingletonField // TypeDefIndex: 18094
+public class ActionParameter : ISingletonField 
 {
 	// Fields
 	private static Yggdrasil<ActionParameter> CGADOKMOKLF; // 0x0
 	private static IBattleManagerForActionParameter NCKEHKCEKEB; // 0x8
 	private static IBattleEffectPool battleEffectPool; // 0x10
 	private static IBattleLog CBEHNPBCALN; // 0x18
-	public eActionType HPDDAADFEMC; // 0x50
-	public ActionParameter.GDDEJJNOPMH OMFAJMBFPGE; // 0xB8
+	public eActionType ActionType; // 0x50
+	public delegate void ActionDelegate();
 	public Dictionary<int, GameObject> CKJKJIOBLJE; // 0xF0
 	public bool JAGJDFNJLDC; // 0x18C
 	public bool OGCEDJEHPAI; // 0x198
@@ -20,8 +21,8 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	protected IBattleManagerForActionParameter OHHDPGCOAKG { get; }
 	protected IBattleEffectPool FNKIMHBNDHB { get; }
 	protected IBattleLog KBEKLHMIHGD { get; }
-	public GJIKMBHMBPD KBAIEKOMMDD { get; set; }
-	public KHNEEEDKBJK EFNBEOCFLAM { get; set; }
+	public eTargetAssignment TargetAssignment { get; set; }
+	public eTargetType TargetType { get; set; }
 	public int MPGNOCOHOIK { get; set; }
 	public int AFLJOGINHNK { get; set; }
 	public float LADGHOJMJOJ { get; set; }
@@ -32,7 +33,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public int CJNOGDAAKLI { get; set; }
 	public int CIOEAFLNNKC { get; set; }
 	public List<BasePartsData> OPEOAICBCPB { get; set; }
-	public Dictionary<NFJKJOOIFBO, double> IDGLGOLAOMA { get; set; }
+	public Dictionary<eActionValue, double> IDGLGOLAOMA { get; set; }
 	public float[] JIKJHCPJLNL { get; set; }
 	public List<ActionExecTime> HFIPPOPIOOF { get; set; }
 	public double KOFNFGAPIHC { get; set; }
@@ -66,11 +67,11 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public Dictionary<BasePartsData, long> NFKIGNPADOA { get; set; }
 	public Dictionary<BasePartsData, long> MGMKBAEMGNF { get; set; }
 	public Dictionary<BasePartsData, long> HFLNLPFPDJG { get; set; }
-	public Dictionary<NFJKJOOIFBO, double> MPBNILHHAJL { get; set; }
-	public Dictionary<NFJKJOOIFBO, double> EAMOEGLCMIE { get; set; }
+	public Dictionary<eActionValue, double> MPBNILHHAJL { get; set; }
+	public Dictionary<eActionValue, double> EAMOEGLCMIE { get; set; }
 	public Dictionary<UnitCtrl, double> NMCLGGDMNPL { get; set; }
 	public double ADJCIINJPHB { get; set; }
-	public Dictionary<NFJKJOOIFBO, double> JFDPEDIHNCM { get; set; }
+	public Dictionary<eActionValue, double> JFDPEDIHNCM { get; set; }
 	public PDBLHMLEOHA.FHHCALPOPAK ADFGPHIFLFB { get; set; }
 	public eEffectType EBPCDCMINIH { get; set; }
 	public bool LMKPHDDFIKA { get; set; }
@@ -79,29 +80,18 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public bool HMMAHNCHDNH { get; set; }
 	public bool PLGIFCNIOKD { get; set; }
 
-	// Methods
-
-	[CompilerGenerated]
-	// RVA: 0x36BA778 Offset: 0x36BA778 VA: 0x36BA778
-	public List<BasePartsData> BCJPLPDMFOJ() { }
-
-	[CompilerGenerated]
-	// RVA: 0x36BA780 Offset: 0x36BA780 VA: 0x36BA780
-	public void IBDJEGCEEOD(Dictionary<BasePartsData, bool> JKECHLFMLEI) { }
-
-	// RVA: 0x36BA790 Offset: 0x36BA790 VA: 0x36BA790
-	public void .ctor() { }
+	public ActionParameter() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BAB4C Offset: 0x36BAB4C VA: 0x36BAB4C
-	public void GCANHLCEMAO(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void GCANHLCEMAO(Dictionary<eActionValue, double> param) { }
 
 	// RVA: 0x36BAB5C Offset: 0x36BAB5C VA: 0x36BAB5C
-	public void FHHNKMGLNNH(Action JKECHLFMLEI) { }
+	public void FHHNKMGLNNH(Action param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BAB64 Offset: 0x36BAB64 VA: 0x36BAB64
-	public void EEKNONFBJAJ(bool JKECHLFMLEI) { }
+	public void EEKNONFBJAJ(bool param) { }
 
 	// RVA: 0x36BAB6C Offset: 0x36BAB6C VA: 0x36BAB6C
 	public static void BFFFNOLCGJI() { }
@@ -110,11 +100,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public bool EHBMAJDAFJL(UnitCtrl BEBLHLKLOPK, int FCEMMMPDGCC) { }
 
 	// RVA: 0x36BACBC Offset: 0x36BACBC VA: 0x36BACBC
-	public Dictionary<NFJKJOOIFBO, double> CMDPMFFKDJH() { }
-
-	[CompilerGenerated]
-	// RVA: 0x36BACC4 Offset: 0x36BACC4 VA: 0x36BACC4
-	public KHNEEEDKBJK FNBMOBMGIKG() { }
+	public Dictionary<eActionValue, double> CMDPMFFKDJH() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BACCC Offset: 0x36BACCC VA: 0x36BACCC
@@ -137,7 +123,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BAD38 Offset: 0x36BAD38 VA: 0x36BAD38
-	public void GEBBHNDPHOE(List<int> JKECHLFMLEI) { }
+	public void GEBBHNDPHOE(List<int> param) { }
 
 	// RVA: 0x36BAD40 Offset: 0x36BAD40 VA: 0x36BAD40
 	public List<BasePartsData> GDPIGIKBJMB() { }
@@ -163,14 +149,14 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BAE08 Offset: 0x36BAE08 VA: 0x36BAE08
-	public void ENGMLKFMPJD(bool JKECHLFMLEI) { }
+	public void ENGMLKFMPJD(bool param) { }
 
 	// RVA: 0x36BAE10 Offset: 0x36BAE10 VA: 0x36BAE10
 	public void OODNCOPLHJC(UnitCtrl BEBLHLKLOPK, int FCEMMMPDGCC) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB1D0 Offset: 0x36BB1D0 VA: 0x36BB1D0
-	public void NEBAPEFJHAN(GDCIMHECIFP JKECHLFMLEI) { }
+	public void NEBAPEFJHAN(GDCIMHECIFP param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB1D8 Offset: 0x36BB1D8 VA: 0x36BB1D8
@@ -182,7 +168,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB1E8 Offset: 0x36BB1E8 VA: 0x36BB1E8
-	public void OFOOMINIHJD(double JKECHLFMLEI) { }
+	public void OFOOMINIHJD(double param) { }
 
 	// RVA: 0x36BB1F0 Offset: 0x36BB1F0 VA: 0x36BB1F0
 	public float[] IFMJKCHMFCK() { }
@@ -192,16 +178,16 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB200 Offset: 0x36BB200 VA: 0x36BB200
-	public void EAPKIEGLLGE(AnimationCurve JKECHLFMLEI) { }
+	public void EAPKIEGLLGE(AnimationCurve param) { }
 
 	// RVA: 0x36BB210 Offset: 0x36BB210 VA: 0x36BB210
-	public void KJBAHALFOPI(double JKECHLFMLEI) { }
+	public void KJBAHALFOPI(double param) { }
 
 	// RVA: 0x36BB218 Offset: 0x36BB218 VA: 0x36BB218
-	public void AJJHLMMCIFO(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void AJJHLMMCIFO(Dictionary<BasePartsData, long> param) { }
 
 	// RVA: 0x36BB228 Offset: 0x36BB228 VA: 0x36BB228
-	public void FJDDAIEJOBD(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void FJDDAIEJOBD(Dictionary<BasePartsData, long> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB238 Offset: 0x36BB238 VA: 0x36BB238
@@ -211,17 +197,17 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public bool GFMEEGKAIEI() { }
 
 	// RVA: 0x36BB26C Offset: 0x36BB26C VA: 0x36BB26C
-	public Dictionary<NFJKJOOIFBO, double> BCNMCGEGOKL() { }
+	public Dictionary<eActionValue, double> BCNMCGEGOKL() { }
 
 	// RVA: 0x36BB274 Offset: 0x36BB274 VA: 0x36BB274
 	public List<BasePartsData> NJEBENEGJOA() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB27C Offset: 0x36BB27C VA: 0x36BB27C
-	public void IENHDKCLLMP(KHNEEEDKBJK JKECHLFMLEI) { }
+	public void IENHDKCLLMP(eTargetType param) { }
 
 	// RVA: 0x36BB284 Offset: 0x36BB284 VA: 0x36BB284
-	public void MDMDDDEMBLL(bool JKECHLFMLEI) { }
+	public void MDMDDDEMBLL(bool param) { }
 
 	// RVA: 0x36BB28C Offset: 0x36BB28C VA: 0x36BB28C
 	public Dictionary<UnitCtrl, List<int>> HKNDNAPKPMM() { }
@@ -232,27 +218,27 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB29C Offset: 0x36BB29C VA: 0x36BB29C
-	public void ADMJIMLNAFH(double JKECHLFMLEI) { }
+	public void ADMJIMLNAFH(double param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2A4 Offset: 0x36BB2A4 VA: 0x36BB2A4
-	public void BPFKDGIDJFG(bool JKECHLFMLEI) { }
+	public void BPFKDGIDJFG(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2AC Offset: 0x36BB2AC VA: 0x36BB2AC
-	public void GIIFGDKBIPA(Dictionary<eStateIconType, List<UnitCtrl>> JKECHLFMLEI) { }
+	public void GIIFGDKBIPA(Dictionary<eStateIconType, List<UnitCtrl>> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2BC Offset: 0x36BB2BC VA: 0x36BB2BC
-	public void LHFFOPALAJG(List<BasePartsData> JKECHLFMLEI) { }
+	public void LHFFOPALAJG(List<BasePartsData> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2CC Offset: 0x36BB2CC VA: 0x36BB2CC
-	public void JMMEMCLIKGF(NAEFABEPMJF JKECHLFMLEI) { }
+	public void JMMEMCLIKGF(NAEFABEPMJF param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2D4 Offset: 0x36BB2D4 VA: 0x36BB2D4
-	public void EGNJPHCLMPE(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void EGNJPHCLMPE(Dictionary<BasePartsData, long> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2E4 Offset: 0x36BB2E4 VA: 0x36BB2E4
@@ -260,7 +246,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB2EC Offset: 0x36BB2EC VA: 0x36BB2EC
-	public void FJGOPEMDJEF(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void FJGOPEMDJEF(Dictionary<BasePartsData, long> param) { }
 
 	// RVA: 0x36BB2FC Offset: 0x36BB2FC VA: 0x36BB2FC Slot: 4
 	public virtual void SetLevel(int DMGAJDMAJDG) { }
@@ -278,17 +264,17 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB35C Offset: 0x36BB35C VA: 0x36BB35C
-	public void JHCOOBFJMCG(GJIKMBHMBPD JKECHLFMLEI) { }
+	public void JHCOOBFJMCG(eTargetAssignment param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB364 Offset: 0x36BB364 VA: 0x36BB364
-	public Dictionary<NFJKJOOIFBO, double> MHBGIHHOHBF() { }
+	public Dictionary<eActionValue, double> MHBGIHHOHBF() { }
 
 	// RVA: 0x36BB36C Offset: 0x36BB36C VA: 0x36BB36C
 	public int ICOMPKNCOEC() { }
 
 	// RVA: 0x36BB374 Offset: 0x36BB374 VA: 0x36BB374
-	public void APPFDEMDIMI(bool JKECHLFMLEI) { }
+	public void APPFDEMDIMI(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB37C Offset: 0x36BB37C VA: 0x36BB37C
@@ -296,33 +282,33 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB384 Offset: 0x36BB384 VA: 0x36BB384
-	public void CLNEKCLAOCM(GameObject JKECHLFMLEI) { }
+	public void CLNEKCLAOCM(GameObject param) { }
 
 	// RVA: 0x36BB38C Offset: 0x36BB38C VA: 0x36BB38C
-	public void CNPDIPCCIJH(double JKECHLFMLEI) { }
+	public void CNPDIPCCIJH(double param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB394 Offset: 0x36BB394 VA: 0x36BB394
-	public void LKHIIDGJLJF(int JKECHLFMLEI) { }
+	public void LKHIIDGJLJF(int param) { }
 
 	// RVA: 0x36BB39C Offset: 0x36BB39C VA: 0x36BB39C
 	public int DGOANDNBGED() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3A4 Offset: 0x36BB3A4 VA: 0x36BB3A4
-	public GJIKMBHMBPD GKBNJDJKMCG() { }
+	public eTargetAssignment GKBNJDJKMCG() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3AC Offset: 0x36BB3AC VA: 0x36BB3AC
-	public Dictionary<NFJKJOOIFBO, double> GIJDGNOLGAN() { }
+	public Dictionary<eActionValue, double> GIJDGNOLGAN() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3B4 Offset: 0x36BB3B4 VA: 0x36BB3B4
-	public void JPKCBNBPIHO(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void JPKCBNBPIHO(Dictionary<eActionValue, double> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3C4 Offset: 0x36BB3C4 VA: 0x36BB3C4
-	public void PEEECDNEGPI(List<ActionExecTime> JKECHLFMLEI) { }
+	public void PEEECDNEGPI(List<ActionExecTime> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3CC Offset: 0x36BB3CC VA: 0x36BB3CC
@@ -330,23 +316,23 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3D4 Offset: 0x36BB3D4 VA: 0x36BB3D4
-	public void IFGLCHHHGLN(AnimationCurve JKECHLFMLEI) { }
+	public void IFGLCHHHGLN(AnimationCurve param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3DC Offset: 0x36BB3DC VA: 0x36BB3DC
-	public void HIOCMHLNNCH(FLJOBLLDDNF JKECHLFMLEI) { }
+	public void HIOCMHLNNCH(FLJOBLLDDNF param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3E4 Offset: 0x36BB3E4 VA: 0x36BB3E4
-	public void HDNHNNDFGCP(Action JKECHLFMLEI) { }
+	public void HDNHNNDFGCP(Action param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3EC Offset: 0x36BB3EC VA: 0x36BB3EC
-	public void BBEJOJGFHDF(int JKECHLFMLEI) { }
+	public void BBEJOJGFHDF(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3F4 Offset: 0x36BB3F4 VA: 0x36BB3F4
-	public void NJDFOEOIODC(ActionParameter.BIOHAHKMJDF JKECHLFMLEI) { }
+	public void NJDFOEOIODC(ActionParameter.BIOHAHKMJDF param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB3FC Offset: 0x36BB3FC VA: 0x36BB3FC
@@ -366,7 +352,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB41C Offset: 0x36BB41C VA: 0x36BB41C
-	public void ODNIAJJFHEJ(int JKECHLFMLEI) { }
+	public void ODNIAJJFHEJ(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB424 Offset: 0x36BB424 VA: 0x36BB424
@@ -381,15 +367,15 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB480 Offset: 0x36BB480 VA: 0x36BB480
-	public void GLNJOGMJOBE(int JKECHLFMLEI) { }
+	public void GLNJOGMJOBE(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB488 Offset: 0x36BB488 VA: 0x36BB488
-	public void CJEPCAOFIOG(int JKECHLFMLEI) { }
+	public void CJEPCAOFIOG(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB490 Offset: 0x36BB490 VA: 0x36BB490
-	public void IOIFPIAGKOI(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void IOIFPIAGKOI(Dictionary<BasePartsData, long> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB498 Offset: 0x36BB498 VA: 0x36BB498
@@ -399,7 +385,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public Dictionary<UnitCtrl, List<int>> PGICKPFJIPN() { }
 
 	// RVA: 0x36BB4A8 Offset: 0x36BB4A8 VA: 0x36BB4A8
-	public void FGCLCAEMJNJ(bool JKECHLFMLEI) { }
+	public void FGCLCAEMJNJ(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB4B0 Offset: 0x36BB4B0 VA: 0x36BB4B0
@@ -416,7 +402,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public float FJKODGMJPPN() { }
 
 	// RVA: 0x36BB4D0 Offset: 0x36BB4D0 VA: 0x36BB4D0
-	public void DIEBCDDBFEB(bool JKECHLFMLEI) { }
+	public void DIEBCDDBFEB(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB4D8 Offset: 0x36BB4D8 VA: 0x36BB4D8
@@ -427,27 +413,27 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public List<UnitCtrl> DLIFPDKIAEB() { }
 
 	// RVA: 0x36BB4E8 Offset: 0x36BB4E8 VA: 0x36BB4E8
-	public void FJHMAMINGAP(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void FJHMAMINGAP(Dictionary<eActionValue, double> param) { }
 
 	// RVA: 0x36BB4F8 Offset: 0x36BB4F8 VA: 0x36BB4F8
-	public void CDDKDFIBCDP(int JKECHLFMLEI) { }
+	public void CDDKDFIBCDP(int param) { }
 
 	// RVA: 0x36BB500 Offset: 0x36BB500 VA: 0x36BB500 Slot: 5
 	public virtual void EILONGIMJMK(UnitCtrl NIOEPBALBCG) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB50C Offset: 0x36BB50C VA: 0x36BB50C
-	public void NFECFLFLCHI(int JKECHLFMLEI) { }
+	public void NFECFLFLCHI(int param) { }
 
 	// RVA: 0x36BB514 Offset: 0x36BB514 VA: 0x36BB514 Slot: 6
-	public virtual void BMNEADLCKPB(UnitCtrl PKJKLDAJCBA, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ) { }
+	public virtual void BMNEADLCKPB(UnitCtrl unitCtrl, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ) { }
 
 	// RVA: 0x36BB7FC Offset: 0x36BB7FC VA: 0x36BB7FC
 	public List<NormalSkillEffect> ENNDPKEPKIP() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB804 Offset: 0x36BB804 VA: 0x36BB804
-	public void LBPIMFLEKKL(List<NormalSkillEffect> JKECHLFMLEI) { }
+	public void LBPIMFLEKKL(List<NormalSkillEffect> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB80C Offset: 0x36BB80C VA: 0x36BB80C
@@ -455,7 +441,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BB814 Offset: 0x36BB814 VA: 0x36BB814
-	public void KBIMPIDFHKH(float JKECHLFMLEI) { }
+	public void KBIMPIDFHKH(float param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB81C Offset: 0x36BB81C VA: 0x36BB81C
@@ -466,18 +452,18 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public int NNHKENLKAFM() { }
 
 	// RVA: 0x36BB82C Offset: 0x36BB82C VA: 0x36BB82C Slot: 7
-	public virtual void ExecActionOnStart(Skill JEAKGDPMIMJ, UnitCtrl PKJKLDAJCBA, UnitActionController FGOOFCFHNGI) { }
+	public virtual void ExecActionOnStart(Skill JEAKGDPMIMJ, UnitCtrl unitCtrl, UnitActionController FGOOFCFHNGI) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB830 Offset: 0x36BB830 VA: 0x36BB830
-	public void FLAOEBPHBMF(bool JKECHLFMLEI) { }
+	public void FLAOEBPHBMF(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BB838 Offset: 0x36BB838 VA: 0x36BB838
 	public bool JDLEOCFIALA() { }
 
 	// RVA: 0x36BB840 Offset: 0x36BB840 VA: 0x36BB840
-	public void JIIGBALFEEI(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void JIIGBALFEEI(Dictionary<eActionValue, double> param) { }
 
 	// RVA: 0x36BB850 Offset: 0x36BB850 VA: 0x36BB850
 	public int MKHOGEHCHHB() { }
@@ -487,10 +473,10 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public int EKFEBAAHJLN() { }
 
 	// RVA: 0x36BB860 Offset: 0x36BB860 VA: 0x36BB860
-	public void GGFJJBBOJDF(int JKECHLFMLEI) { }
+	public void GGFJJBBOJDF(int param) { }
 
 	// RVA: 0x36BB868 Offset: 0x36BB868 VA: 0x36BB868 Slot: 8
-	public virtual void CKIAPLKIKGE(Skill JEAKGDPMIMJ, UnitCtrl PKJKLDAJCBA, UnitActionController FGOOFCFHNGI) { }
+	public virtual void CKIAPLKIKGE(Skill JEAKGDPMIMJ, UnitCtrl unitCtrl, UnitActionController FGOOFCFHNGI) { }
 
 	// RVA: 0x36BB86C Offset: 0x36BB86C VA: 0x36BB86C
 	public List<BasePartsData> MPIAAFANDEH() { }
@@ -500,7 +486,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public Dictionary<UnitCtrl, List<int>> CBHIALPMKJH() { }
 
 	// RVA: 0x36BB87C Offset: 0x36BB87C VA: 0x36BB87C
-	public void AAJEKJHJLGK(float JKECHLFMLEI) { }
+	public void AAJEKJHJLGK(float param) { }
 
 	// RVA: 0x36BB884 Offset: 0x36BB884 VA: 0x36BB884 Slot: 9
 	public virtual void OPOEDGKNIEA(UnitCtrl NIOEPBALBCG) { }
@@ -517,14 +503,14 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBA10 Offset: 0x36BBA10 VA: 0x36BBA10
-	public void BNINFFDLMCG(bool JKECHLFMLEI) { }
+	public void BNINFFDLMCG(bool param) { }
 
 	// RVA: 0x36BBA18 Offset: 0x36BBA18 VA: 0x36BBA18
 	public void GFAPBEAEEOH(UnitCtrl BEBLHLKLOPK, int FCEMMMPDGCC) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBABC Offset: 0x36BBABC VA: 0x36BBABC
-	public void FBIGLAOIIJG(bool JKECHLFMLEI) { }
+	public void FBIGLAOIIJG(bool param) { }
 
 	// RVA: 0x36BBAC4 Offset: 0x36BBAC4 VA: 0x36BBAC4
 	public int PJKLGFGIPMB() { }
@@ -535,15 +521,15 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBAD4 Offset: 0x36BBAD4 VA: 0x36BBAD4
-	public void LCOGBDPBKHO(int JKECHLFMLEI) { }
+	public void LCOGBDPBKHO(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBADC Offset: 0x36BBADC VA: 0x36BBADC
-	public Dictionary<NFJKJOOIFBO, double> DIGNNBOMJBN() { }
+	public Dictionary<eActionValue, double> DIGNNBOMJBN() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBAE4 Offset: 0x36BBAE4 VA: 0x36BBAE4
-	public void GJECDIJEPGN(PDBLHMLEOHA.FHHCALPOPAK JKECHLFMLEI) { }
+	public void GJECDIJEPGN(PDBLHMLEOHA.FHHCALPOPAK param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBAF4 Offset: 0x36BBAF4 VA: 0x36BBAF4
@@ -561,32 +547,32 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBCE0 Offset: 0x36BBCE0 VA: 0x36BBCE0
-	public void AFBDNHEBKFL(List<NormalSkillEffect> JKECHLFMLEI) { }
+	public void AFBDNHEBKFL(List<NormalSkillEffect> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBCE8 Offset: 0x36BBCE8 VA: 0x36BBCE8
-	public void MACOAIJNCPG(bool JKECHLFMLEI) { }
+	public void MACOAIJNCPG(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBCF0 Offset: 0x36BBCF0 VA: 0x36BBCF0
-	public void EGPHCMKIIME(bool JKECHLFMLEI) { }
+	public void EGPHCMKIIME(bool param) { }
 
 	// RVA: 0x36BBCF8 Offset: 0x36BBCF8 VA: 0x36BBCF8
-	public Dictionary<NFJKJOOIFBO, double> NEKPLNLFIJM() { }
+	public Dictionary<eActionValue, double> NEKPLNLFIJM() { }
 
 	// RVA: 0x36BBD00 Offset: 0x36BBD00 VA: 0x36BBD00 Slot: 12
-	public virtual void DIEEPOHHJHP(UnitCtrl PKJKLDAJCBA, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ) { }
+	public virtual void DIEEPOHHJHP(UnitCtrl unitCtrl, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ) { }
 
 	// RVA: 0x36BBDA8 Offset: 0x36BBDA8 VA: 0x36BBDA8
-	public void GCBKILMCJDM(AnimationCurve JKECHLFMLEI) { }
+	public void GCBKILMCJDM(AnimationCurve param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDB0 Offset: 0x36BBDB0 VA: 0x36BBDB0
-	public void CKDMNMHBHJI(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void SetActionValue(Dictionary<eActionValue, double> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDB8 Offset: 0x36BBDB8 VA: 0x36BBDB8
-	public void BCCOLCELKDI(Dictionary<UnitCtrl, List<int>> JKECHLFMLEI) { }
+	public void BCCOLCELKDI(Dictionary<UnitCtrl, List<int>> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDC8 Offset: 0x36BBDC8 VA: 0x36BBDC8
@@ -594,11 +580,11 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDD0 Offset: 0x36BBDD0 VA: 0x36BBDD0
-	public void MDOPBIFFFHG(List<BasePartsData> JKECHLFMLEI) { }
+	public void MDOPBIFFFHG(List<BasePartsData> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDD8 Offset: 0x36BBDD8 VA: 0x36BBDD8
-	public void FDDEEEGPMHI(Dictionary<BasePartsData, long> JKECHLFMLEI) { }
+	public void FDDEEEGPMHI(Dictionary<BasePartsData, long> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBDE8 Offset: 0x36BBDE8 VA: 0x36BBDE8
@@ -613,11 +599,11 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBE5C Offset: 0x36BBE5C VA: 0x36BBE5C
-	public void APLBKMHMMHB(float[] JKECHLFMLEI) { }
+	public void APLBKMHMMHB(float[] param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBE64 Offset: 0x36BBE64 VA: 0x36BBE64
-	public Dictionary<NFJKJOOIFBO, double> PJJKKGKHAHD() { }
+	public Dictionary<eActionValue, double> PJJKKGKHAHD() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBE6C Offset: 0x36BBE6C VA: 0x36BBE6C
@@ -625,7 +611,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBE74 Offset: 0x36BBE74 VA: 0x36BBE74
-	public void OPOHIPJKEPE(float JKECHLFMLEI) { }
+	public void OPOHIPJKEPE(float param) { }
 
 	// RVA: 0x36BBE7C Offset: 0x36BBE7C VA: 0x36BBE7C
 	public HBLIDNMCGII DFLNNBIBOFH() { }
@@ -636,14 +622,14 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFA4 Offset: 0x36BBFA4 VA: 0x36BBFA4
-	public void NIAOMGONCOL(Action JKECHLFMLEI) { }
+	public void NIAOMGONCOL(Action param) { }
 
 	// RVA: 0x36BBFAC Offset: 0x36BBFAC VA: 0x36BBFAC
 	public ActionParameter.BIOHAHKMJDF LBBIKCEBCNF() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFB4 Offset: 0x36BBFB4 VA: 0x36BBFB4
-	public void MINOFHFGNEN(bool JKECHLFMLEI) { }
+	public void MINOFHFGNEN(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFBC Offset: 0x36BBFBC VA: 0x36BBFBC
@@ -651,7 +637,7 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFC4 Offset: 0x36BBFC4 VA: 0x36BBFC4
-	public void FGHDAOIIGCC(List<UnitCtrl> JKECHLFMLEI) { }
+	public void FGHDAOIIGCC(List<UnitCtrl> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFD4 Offset: 0x36BBFD4 VA: 0x36BBFD4
@@ -659,11 +645,11 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFDC Offset: 0x36BBFDC VA: 0x36BBFDC
-	public void OFMMGAPMNHP(Dictionary<UnitCtrl, double> JKECHLFMLEI) { }
+	public void OFMMGAPMNHP(Dictionary<UnitCtrl, double> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFEC Offset: 0x36BBFEC VA: 0x36BBFEC
-	public void CKGPDGDCFKD(BasePartsData JKECHLFMLEI) { }
+	public void CKGPDGDCFKD(BasePartsData param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BBFFC Offset: 0x36BBFFC VA: 0x36BBFFC
@@ -671,14 +657,14 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BC004 Offset: 0x36BC004 VA: 0x36BC004
-	public void MEJBBPAANHJ(eEffectType JKECHLFMLEI) { }
+	public void MEJBBPAANHJ(eEffectType param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC00C Offset: 0x36BC00C VA: 0x36BC00C
 	public List<NormalSkillEffect> EMAEOILBBFL() { }
 
 	// RVA: 0x36BC014 Offset: 0x36BC014 VA: 0x36BC014
-	public void GJDCLDMPHKM(ActionParameter.BIOHAHKMJDF JKECHLFMLEI) { }
+	public void GJDCLDMPHKM(ActionParameter.BIOHAHKMJDF param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC01C Offset: 0x36BC01C VA: 0x36BC01C
@@ -690,26 +676,26 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 
 	[CompilerGenerated]
 	// RVA: 0x36BC02C Offset: 0x36BC02C VA: 0x36BC02C
-	public void JKBDINNFAHP(Dictionary<BasePartsData, List<CriticalData>> JKECHLFMLEI) { }
+	public void JKBDINNFAHP(Dictionary<BasePartsData, List<CriticalData>> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC03C Offset: 0x36BC03C VA: 0x36BC03C
-	public void PDJBBKOIGOB(Dictionary<UnitCtrl, Dictionary<int, ActionExecedData>> JKECHLFMLEI) { }
+	public void PDJBBKOIGOB(Dictionary<UnitCtrl, Dictionary<int, ActionExecedData>> param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC04C Offset: 0x36BC04C VA: 0x36BC04C
-	public void GKLFGLHOMJK(bool JKECHLFMLEI) { }
+	public void GKLFGLHOMJK(bool param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC054 Offset: 0x36BC054 VA: 0x36BC054
-	public void MIKMLCOAEAF(Dictionary<NFJKJOOIFBO, double> JKECHLFMLEI) { }
+	public void MIKMLCOAEAF(Dictionary<eActionValue, double> param) { }
 
 	// RVA: 0x36BC064 Offset: 0x36BC064 VA: 0x36BC064
 	public List<NormalSkillEffect> MOFBBPPLNFG() { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC06C Offset: 0x36BC06C VA: 0x36BC06C
-	public void MBJMGIGNGHO(int JKECHLFMLEI) { }
+	public void MBJMGIGNGHO(int param) { }
 
 	[CompilerGenerated]
 	// RVA: 0x36BC074 Offset: 0x36BC074 VA: 0x36BC074
@@ -720,5 +706,5 @@ public class ActionParameter : ISingletonField // TypeDefIndex: 18094
 	public FLJOBLLDDNF HNMFIIAHBAF() { }
 
 	// RVA: 0x36BC084 Offset: 0x36BC084 VA: 0x36BC084 Slot: 13
-	public virtual void ExecAction(UnitCtrl PKJKLDAJCBA, BasePartsData BEBLHLKLOPK, int FCEMMMPDGCC, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ, float BENNEEONMBO, Dictionary<int, bool> FLOGCBFIMPC, Dictionary<NFJKJOOIFBO, double> DNODKADFNCO) { }
+	public virtual void ExecAction(UnitCtrl unitCtrl, BasePartsData BEBLHLKLOPK, int FCEMMMPDGCC, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ, float BENNEEONMBO, Dictionary<int, bool> FLOGCBFIMPC, Dictionary<eActionValue, double> DNODKADFNCO) { }
 }

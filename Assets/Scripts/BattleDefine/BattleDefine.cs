@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BattleDefine 
 {
-	// Fields
 	public const string BATTLE_LOGIC_VERSION = "4";
 	public const int ARENA_BG_ID = 100001;
 	public const int GRANDARENA_BG_ID = 100002;
@@ -151,4 +151,73 @@ public class BattleDefine
 
 	// RVA: 0x2FBBA1C Offset: 0x2FBBA1C VA: 0x2FBBA1C
 	private static void BattleDefine() { }
+
+	[Serializable]
+	public class ZoomEffect 
+	{
+		public bool Enable; 
+		public bool ConsiderScreenSize; 
+		public float StartDelay; 
+		public float StartDuration; // 0x18
+		public float Duration; // 0x1C
+		public float EndDuration; // 0x20
+		public float To; // 0x24
+		public eZoomTarget ZoomTarget; // 0x28
+		public float OffsetY; // 0x2C
+		public float OffsetX; // 0x30
+		public bool UseYBottom; // 0x34
+		public CustomEasing StartEasing; // 0x38
+		public CustomEasing EndEasing; // 0x40
+		public CustomEasing StartPosXEasing; // 0x48
+		public CustomEasing EndPosXEasing; // 0x50
+		public CustomEasing StartPosYEasing; // 0x58
+		public CustomEasing EndPosYEasing; // 0x60
+		public List<BattleDefine.ZoomEffectPlual> ZoomEffectList; // 0x68
+		public CustomEasing.eType StartEasingType; // 0x70
+		public CustomEasing.eType EndEasingType;
+		public string BoneName; // 0x80
+
+		// Properties
+		public float ToPosX { get; set; }
+		public float ToPosY { get; set; }
+		public ZoomEffect() { }
+	}
+
+	[Serializable]
+	public class ZoomEffectPlual 
+	{
+		public float StartDuration; 
+		public float Duration; 
+		public float To;
+		public float OffsetX; 
+		public float OffsetY; 
+		public eZoomTarget ZoomTarget; 
+		public CustomEasing StartEasing; 
+		public CustomEasing StartPosXEasing; 
+		public CustomEasing StartPosYEasing; 
+		public CustomEasing.eType StartEasingType;
+		public bool UseYBottom;
+		public string BoneName; 
+
+		// Properties
+		public float ToPosX { get; set; }
+		public float ToPosY { get; set; }
+
+		public ZoomEffectPlual() { }
+	}
+
+	[Serializable]
+	public class SlowEffect 
+	{
+		public bool Enable; 
+		public float StartDelay; 
+		public float StartDuration; 
+		public float Duration; 
+		public float EndDuration; 
+		public float To; 
+		public CustomEasing StartEasing; 
+		public CustomEasing EndEasing; 
+
+		public SlowEffect() { }
+	}
 }

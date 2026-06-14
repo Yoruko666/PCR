@@ -1,3 +1,8 @@
+using System;
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1099
 {
 	// Fields
@@ -25,8 +30,6 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	private List<SkillEffectCtrl.DefenceModeTextureChange> defenceModeTextureSetting; // 0x68
 	private List<SkillEffectCtrl.BoneTimeLineData> boneTimeLine; // 0x70
 	private float boneTimeLineStartTime; // 0x78
-	[CompilerGenerated]
-	private UnitCtrl <Target>k__BackingField; // 0x90
 	protected bool timeToDie; // 0xA0
 	protected bool isPause; // 0xA1
 	private SoundManager soundManager; // 0xA8
@@ -102,28 +105,16 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	// RVA: 0x1D3BEEC Offset: 0x1D3BEEC VA: 0x1D3BEEC Slot: 8
 	public virtual void StartUpdateDisappear(bool _isUnionBurst, BasePartsData _target) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTarget>d__92))]
-	// RVA: 0x1D3BD44 Offset: 0x1D3BD44 VA: 0x1D3BD44
 	public IEnumerator TrackTarget(BasePartsData _trans, Vector3 _absolutePosition, bool _followX = true, bool _followY = true, Bone _bone, bool _trackRotation = false, SkillEffectCtrl.eToadTrackType _toadTrackType = 0) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<updateBoneTimeLine>d__93))]
-	// RVA: 0x1D3BE48 Offset: 0x1D3BE48 VA: 0x1D3BE48
 	private IEnumerator updateBoneTimeLine(BasePartsData _partsData, bool _trackRotation) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTarget>d__94))]
-	// RVA: 0x1D3BF48 Offset: 0x1D3BF48 VA: 0x1D3BF48
 	public IEnumerator TrackTarget(BattleUnitBaseSpineController _spine, Vector3 _absolutePosition, bool _followX = true, bool _followY = true, Bone _bone, bool _trackRotation = false, Transform _traskScale, float _coefficient = 1, bool _callFromBossDialog = false) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTargetSort>d__95))]
-	// RVA: 0x1D3C094 Offset: 0x1D3C094 VA: 0x1D3C094
 	public IEnumerator TrackTargetSort(UnitCtrl _unit, bool _allowSortOrderFront = true) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<updateTimer>d__96))]
-	// RVA: 0x1D3BC3C Offset: 0x1D3BC3C VA: 0x1D3BC3C
 	private IEnumerator updateTimer(int _coroutineId) { }
 
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<UpdateTimerRepeat>d__97))]
-	// RVA: 0x1D3BCC4 Offset: 0x1D3BCC4 VA: 0x1D3BCC4
 	private IEnumerator UpdateTimerRepeat() { }
 
 	// RVA: 0x1D3C1BC Offset: 0x1D3C1BC VA: 0x1D3C1BC Slot: 9
@@ -164,9 +155,6 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 
 	// RVA: 0x1D3CE38 Offset: 0x1D3CE38 VA: 0x1D3CE38
 	public void PlaySe(eSE se, bool isEnemySide) { }
-
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<FadeoutSe>d__111))]
-	// RVA: 0x1D3CF98 Offset: 0x1D3CF98 VA: 0x1D3CF98
 	public IEnumerator FadeoutSe(Action _callback, float _fadeSec) { }
 
 	// RVA: 0x1D3C228 Offset: 0x1D3C228 VA: 0x1D3C228
@@ -189,9 +177,6 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 
 	// RVA: 0x1D3D180 Offset: 0x1D3D180 VA: 0x1D3D180
 	public void SetTimeToDie(bool value) { }
-
-	[IteratorStateMachine(typeof(SkillEffectCtrl.<TrackTargetSortForSummon>d__120))]
-	// RVA: 0x1D3D188 Offset: 0x1D3D188 VA: 0x1D3D188
 	public IEnumerator TrackTargetSortForSummon(UnitCtrl _unitCtrl) { }
 
 	// RVA: 0x1D3D248 Offset: 0x1D3D248 VA: 0x1D3D248 Slot: 17
