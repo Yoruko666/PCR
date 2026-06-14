@@ -10,7 +10,7 @@ public class FieldData : ISingletonField
 	private const float GLEINDMEACL = 1;
 	protected SkillEffectCtrl NKPJCNJCPCJ;
 
-	private static Yggdrasil<FieldData> CGADOKMOKLF;
+	private static StaticSingletonTree<FieldData> CGADOKMOKLF;
 	private static IBattleEffectPool battleEffectPool;
 
 	private const float EIJEIINJMJM = 350;

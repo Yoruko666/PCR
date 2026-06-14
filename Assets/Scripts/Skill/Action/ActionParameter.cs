@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class ActionParameter : ISingletonField 
 {
 	// Fields
-	private static Yggdrasil<ActionParameter> CGADOKMOKLF; // 0x0
+	private static StaticSingletonTree<ActionParameter> CGADOKMOKLF; // 0x0
 	private static IBattleManagerForActionParameter NCKEHKCEKEB; // 0x8
 	private static IBattleEffectPool battleEffectPool; // 0x10
 	private static IBattleLog CBEHNPBCALN; // 0x18
@@ -706,5 +706,8 @@ public class ActionParameter : ISingletonField
 	public FLJOBLLDDNF HNMFIIAHBAF() { }
 
 	// RVA: 0x36BC084 Offset: 0x36BC084 VA: 0x36BC084 Slot: 13
-	public virtual void ExecAction(UnitCtrl unitCtrl, BasePartsData BEBLHLKLOPK, int FCEMMMPDGCC, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ, float BENNEEONMBO, Dictionary<int, bool> FLOGCBFIMPC, Dictionary<eActionValue, double> DNODKADFNCO) { }
+	public virtual void ExecAction(UnitCtrl unitCtrl, BasePartsData BEBLHLKLOPK, int FCEMMMPDGCC, UnitActionController FGOOFCFHNGI, Skill JEAKGDPMIMJ, float BENNEEONMBO, Dictionary<int, bool> FLOGCBFIMPC, Dictionary<eActionValue, double> DNODKADFNCO)
+	{
+		
+	}
 }

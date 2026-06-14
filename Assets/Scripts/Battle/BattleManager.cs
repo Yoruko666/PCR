@@ -333,7 +333,7 @@ public class BattleManager : MonoBehaviour, ISingletonField,
 	public long AllLogBarrierStartValue { get; }
 	public bool IsReleaseSkillHasteLogic { get; }
 	public bool IsReleaseSlipDamageLogBarrier { get; }
-	private BattleManager.eWaveStartAdvState waveStartAdvPlayState { get; set; }
+	private eWaveStartAdvState waveStartAdvPlayState { get; set; }
 	private bool allStandByDone { get; set; }
 	private bool isPlayGuestCutin { get; set; }
 	public bool IsGuestCutinPlaying { get; set; }
@@ -831,9 +831,9 @@ public class BattleManager : MonoBehaviour, ISingletonField,
 
 	private void initializePrincessKnightEnhance() { }
 
-	public void InitializePassiveSkillUnitList(List<UnitParameter> _unitList, LIHFDEEMIFD _passiveInitType, int _waveNumber) { }
+	public void InitializePassiveSkillUnitList(List<UnitParameter> _unitList, ePassiveInitType _passiveInitType, int _waveNumber) { }
 
-	public void InitializeExAndFreeSkill(UnitData _unitData, LIHFDEEMIFD _passiveInitType, int _waveNumber, UnitCtrl _unitController) { }
+	public void InitializeExAndFreeSkill(UnitData _unitData, ePassiveInitType _passiveInitType, int _waveNumber, UnitCtrl _unitController) { }
 
 	public Dictionary<eParamType, COOGCCJIDLF> GetPassiveDictionaryByEnemy(bool _isOther) { }
 
@@ -948,6 +948,7 @@ public class BattleManager : MonoBehaviour, ISingletonField,
 	public bool IsVoiceDownLoad() { }
 
 	public BattleManager() { }
+	static BattleManager() { }
 
 	private Coroutine Elements.Battle.IBattleManagerForSkillEffectCtrl.StartCoroutine(IEnumerator _routine) { }
 
@@ -992,7 +993,7 @@ public class BattleManager : MonoBehaviour, ISingletonField,
 	{
 		NOT_RUNNING = 0,
 		RUNNING = 1,
-		STOP_PULSE = 2,
+		STOP_PULSE = 2
 	}
 
 	private enum eWaveStartAdvState 
@@ -1000,6 +1001,6 @@ public class BattleManager : MonoBehaviour, ISingletonField,
 		INVALID = 0,
 		STAND_BY = 1,
 		PLAYING = 2,
-		FINISHED = 3,
+		FINISHED = 3
 	}
 }

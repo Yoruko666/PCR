@@ -1,7 +1,10 @@
-public enum eTrackType
+namespace Elements
 {
-    Bone = 0,
-    Bottom = 1,
-    None = 2,
-    BoneTimeLine = 3
+    public enum eTrackType
+    {
+        Bone = 0,
+        Bottom = 1,
+        None = 2,
+        BoneTimeLine = 3
+    }
 }

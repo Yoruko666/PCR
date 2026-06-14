@@ -37,7 +37,7 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	private int currentCoroutineId; // 0xD4
 	private static readonly string LAYER_NAME; // 0x8
 	private const int SORT_ORDER_BOUNDARY = 1000;
-	private static Yggdrasil<SkillEffectCtrl> staticSingletonTree; // 0x10
+	private static StaticSingletonTree<SkillEffectCtrl> staticSingletonTree; // 0x10
 	private static IBattleManagerForSkillEffectCtrl staticBattleManager; // 0x18
 
 	// Properties
@@ -53,12 +53,12 @@ public class SkillEffectCtrl : MonoBehaviour, ISingletonField // TypeDefIndex: 1
 	protected ParticleSystem[] particles { get; set; }
 	private Dictionary<ParticleSystem, float> particleStartDelayDictionary { get; set; }
 	private float resumeTime { get; set; }
-	protected Yggdrasil<SkillEffectCtrl> singletonTree { get; }
+	protected StaticSingletonTree<SkillEffectCtrl> singletonTree { get; }
 	protected IBattleManagerForSkillEffectCtrl battleManager { get; }
 	public CriAtomSource SeSource { get; set; }
 
 	// RVA: 0x1D3B164 Offset: 0x1D3B164 VA: 0x1D3B164
-	protected Yggdrasil<SkillEffectCtrl> get_singletonTree() { }
+	protected StaticSingletonTree<SkillEffectCtrl> get_singletonTree() { }
 
 	// RVA: 0x1D3B1C0 Offset: 0x1D3B1C0 VA: 0x1D3B1C0
 	protected IBattleManagerForSkillEffectCtrl get_battleManager() { }

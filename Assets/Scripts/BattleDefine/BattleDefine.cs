@@ -176,8 +176,6 @@ public class BattleDefine
 		public CustomEasing.eType StartEasingType; // 0x70
 		public CustomEasing.eType EndEasingType;
 		public string BoneName; // 0x80
-
-		// Properties
 		public float ToPosX { get; set; }
 		public float ToPosY { get; set; }
 		public ZoomEffect() { }

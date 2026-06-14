@@ -72,14 +72,13 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	public List<VoiceDelayAndEnable> NormalCutInVoiceDelay;
 	public List<VoiceDelayAndEnable> SpeedUpCutInVoiceDelayWithCutIn;
 	public List<VoiceDelayAndEnable> NormalCutInVoiceDelayWithCutIn;
-	private static Yggdrasil<UnitCtrl> staticSingletonTree;
+	private static StaticSingletonTree<UnitCtrl> staticSingletonTree;
 	private static IBattleLog staticBattleLog;
 	private static IBattleCameraEffectForUnitCtrl staticBattleCameraEffect;
 	private static IBattleEffectPool staticBattleEffectPool;
 	private static IBattleTimeScaleForUnitCtrl staticBattleTimeScale;
 	private bool <IsMoveSpeedForceZero>k__BackingField;
 	private static BattleManager staticBattleManager;
-
 	public UnitActionController UnitActionController { get; set; }
 	public PrincessFormProcessor PrincessFormProcessor { get; set; }
 	public IComponentAbnormal ComponentAbnormal { get; set; }
@@ -183,7 +182,7 @@ public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitCompon
 	private bool isPaused { get; set; }
 	private Vector2 leftDirScale { get; set; }
 	private Vector2 rightDirScale { get; set; }
-	protected Yggdrasil<UnitCtrl> singletonTree { get; }
+	protected StaticSingletonTree<UnitCtrl> singletonTree { get; }
 	protected IBattleLog battleLog { get; }
 	protected IBattleCameraEffectForUnitCtrl battleCameraEffect { get; }
 	protected IBattleEffectPool battleEffectPool { get; }

@@ -1,5 +1,8 @@
-public enum eShakeType
+namespace Elements
 {
-    Normal = 0,
-    Random = 1
+    public enum eShakeType
+    {
+        Normal = 0,
+        Random = 1
+    }
 }

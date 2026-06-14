@@ -18,7 +18,7 @@ public class UnitActionController : MonoBehaviour, ISingletonField
 	public List<Skill> SubUnionBurstList; // 0x68
 	public Skill Annihilation; // 0x70
 	
-	private static Yggdrasil<UnitActionController> staticSingletonTree; // 0x0
+	private static StaticSingletonTree<UnitActionController> staticSingletonTree; // 0x0
 	private static IBattleManagerForUnitActionController staticBattleManager; // 0x8
 	private static IBattleCameraEffectForUnitActionController staticBattleCameraEffect; // 0x10
 	private static IBattleEffectPool staticBattleEffectPool; // 0x18
