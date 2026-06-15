@@ -9,7 +9,7 @@ public class IdleState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim(unit.GetAnimName("idle"), true);
+        unit.PlayAnim(unit.GetStateAnimName(StateType.Idle), true);
 
         if (unit.Skill.TryGetUbSkill())
         {

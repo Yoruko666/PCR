@@ -1,8 +1,6 @@
 using Spine;
 using Spine.Unity;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -71,19 +69,21 @@ public class UnitCtrl
 
         CampType = campType;
 
-        var rarityCfg = ConfigManager.Instance.GetUnitRarityConfig(id, Rarity);
-        if (rarityCfg != null)
+        var rarityConfig = ConfigManager.Instance.GetUnitRarityConfig(id, Rarity);
+        if (rarityConfig != null)
         {
-            MaxHP = Mathf.RoundToInt(rarityCfg.hp + rarityCfg.hp_growth * (Level - 1));
+            MaxHP = 99999999;
             HP = MaxHP;
-            PhysicalAttack = Mathf.RoundToInt(rarityCfg.atk + rarityCfg.atk_growth * (Level - 1));
-            MagicAttack = Mathf.RoundToInt(rarityCfg.magic_str + rarityCfg.magic_str_growth * (Level - 1));
+            PhysicalAttack = Mathf.FloorToInt(rarityConfig.atk + rarityConfig.atk_growth * (Level - 1));
+            MagicAttack = Mathf.FloorToInt(rarityConfig.magic_str + rarityConfig.magic_str_growth * (Level - 1));
         }
         else
         {
             Debug.LogWarning($"[UnitCtrl] 找不到稀有度数据: unit_id={id} rarity={Rarity}");
-            MaxHP = 1; HP = 1;
-            PhysicalAttack = 0; MagicAttack = 0;
+            MaxHP = 1; 
+            HP = 1;
+            PhysicalAttack = 0; 
+            MagicAttack = 0;
         }
 
         MaxTP = 1000;
@@ -112,6 +112,8 @@ public class UnitCtrl
             bubbleInstance.transform.localScale = new Vector3(XDir, 1, 1);
             bubbleInstance.SetActive(false);
         }
+
+        Debug.Log($"完成初始化 Id={Id}, HP={HP}, PhysicalAttack={PhysicalAttack}, MagicAttack={MagicAttack}");
     }
 
     public void Init(int orderNumber)
@@ -152,6 +154,45 @@ public class UnitCtrl
             "run"            => $"{se}_run",
             "idle"           => $"{se}_idle",
             _                => animKey,
+        };
+    }
+
+    public string GetStateAnimName(StateType state)
+    {
+        return state switch
+        {
+            StateType.RunGameStart => GetAnimName("run_game_start"),
+            StateType.StandBy      => GetAnimName("stand_by"),
+            StateType.Run          => GetAnimName("run"),
+            StateType.Idle         => GetAnimName("idle"),
+            StateType.Action       => Skill?.GetSkillAnimName(Skill.PendingSkill),
+            StateType.Ub           => Skill?.GetSkillAnimName(Skill.PendingSkill),
+            _                      => null,
+        };
+    }
+
+    public string GetStateSoundName(StateType state)
+    {
+        return state switch
+        {
+            StateType.Action => GetSkillSoundName(Skill.PendingSkill),
+            StateType.Ub     => GetSkillSoundName(Skill.PendingSkill),
+            _                => null,
+        };
+    }
+
+    public string GetSkillSoundName(Skill skill)
+    {
+        if (skill == null) return null;
+
+        string prefix = $"vo_btl_{Id:D6}";
+        return skill.Slot switch
+        {
+            1    => $"{prefix}_attack_001",
+            1001 => $"{prefix}_skill_100",
+            1002 => $"{prefix}_skill_200",
+            1000 => UnityEngine.Random.Range(0, 2) == 0 ? $"{prefix}_ub_100" : $"{prefix}_ub_200",
+            _    => $"{prefix}_skill_100",
         };
     }
 
@@ -244,6 +285,8 @@ public class UnitCtrl
         HP = Mathf.Max(0, HP - damage);
         Skill?.OnHit();
 
+        Debug.Log($"TakeDamage:{Id}, HP={HP}");
+
         if (showVisual)
         {
             Vector3 popupPos = new Vector3(
@@ -269,11 +312,13 @@ public class UnitCtrl
     public void Heal(int amount)
     {
         HP = Mathf.Min(MaxHP, HP + amount);
+        Debug.Log($"Heal:{Id}, HP={HP}");
     }
 
     public void AddTP(int amount)
     {
         TP = Mathf.Min(MaxTP, TP + amount);
+        Debug.Log($"AddTP:{Id}, TP={TP}");
     }
 
     public void SpendTP(int amount)

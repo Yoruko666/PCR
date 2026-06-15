@@ -17,24 +17,19 @@ public class SkillManager
 
     public Skill PendingSkill { get; set; }
 
-    /// <summary>普攻 Skill。</summary>
     public Skill Attack => skillMap.GetValueOrDefault(1);
-    /// <summary>UB Skill。</summary>
     public Skill UB => skillMap.GetValueOrDefault(1000);
 
     public SkillManager(UnitCtrl owner, UnitSkillDataConfig skillMapData)
     {
         this.owner = owner;
 
-        // 加载普攻
         skillMap[1] = CreateAttackSkill();
 
-        // 加载技能（skill_data）
         TryAddSkill(1001, skillMapData?.main_skill_1 ?? 0, $"{owner.Id}_skill1");
         TryAddSkill(1002, skillMapData?.main_skill_2 ?? 0, $"{owner.Id}_skill2");
         TryAddSkill(1000, skillMapData?.union_burst ?? 0, $"{owner.Id}_skill0");
 
-        // 从 unit_attack_pattern 加载攻击序列
         var pattern = ConfigManager.Instance.GetAttackPatternByUnitId(owner.Id);
         if (pattern != null)
         {
@@ -63,11 +58,12 @@ public class SkillManager
         }
         skillMap[patternKey] = new Skill
         {
+            Slot = patternKey,
             SkillId = skillId,
             SkillNum = 0,
             Data = data,
             AnimName = animName,
-            SoundName = animName,
+            SkillName = data.name,
         };
     }
 
@@ -76,11 +72,11 @@ public class SkillManager
         string se = owner.SeType.ToString("D2");
         var skill = new Skill
         {
+            Slot = 1,
             SkillId = 0,
             SkillNum = -1,
             Data = null,
             AnimName = $"{se}_attack",
-            SoundName = $"{se}_attack",
         };
         if (owner.DataConfig != null)
             skill.CastTime = owner.DataConfig.normal_atk_cast_time;
@@ -147,8 +143,6 @@ public class SkillManager
             if (ubSrc != null)
             {
                 ub.ActionParametersOnPrefab = ubSrc.ActionParametersOnPrefab;
-                ub.AnimName = ubSrc.AnimName;
-                ub.SoundName = ubSrc.SoundName;
             }
         }
 
@@ -163,8 +157,6 @@ public class SkillManager
                 if (src != null)
                 {
                     kv.Value.ActionParametersOnPrefab = src.ActionParametersOnPrefab;
-                    kv.Value.AnimName = src.AnimName;
-                    kv.Value.SoundName = src.SoundName;
                 }
                 mainIdx++;
             }
@@ -180,36 +172,32 @@ public class SkillManager
         popupIndex = 0;
     }
 
-    public void ApplyPendingEffects(Skill skill, int elapsedFrames)
+    /// <summary>按 actionId 触发单个效果。</summary>
+    public void ApplyAction(Skill skill, int actionId)
     {
-        if (skill.Data != null)
-        {
-            var actions = ConfigManager.Instance.GetSkillActions(skill.SkillId);
-            ApplySkillActions(actions);
-        }
-        else if (skill == Attack && !appliedActionIds.Contains(-1))
+        if (appliedActionIds.Contains(actionId))
+            return;
+        appliedActionIds.Add(actionId);
+
+        if (actionId == -1)
         {
             // 普攻：对最近敌人造成一次伤害
             var target = GetSingleEnemy();
             if (target != null)
             {
                 int atk = owner.PhysicalAttack;
-                int damage = Mathf.Max(1, (int)(atk * 1.0f + owner.SkillLevel * 0.5f));
+                int damage = Mathf.Max(1, Mathf.FloorToInt(atk * 1.0f + owner.SkillLevel * 0.5f));
                 target.TakeDamage(damage, popupIndex, true);
             }
-            appliedActionIds.Add(-1);
             popupIndex++;
+            return;
         }
-    }
 
-    private void ApplySkillActions(List<SkillActionConfig> actions)
-    {
+        var actions = ConfigManager.Instance.GetSkillActions(skill.SkillId);
         foreach (var action in actions)
         {
-            if (appliedActionIds.Contains(action.action_id))
+            if (action.action_id != actionId)
                 continue;
-
-            appliedActionIds.Add(action.action_id);
 
             var targetType = (eTargetType)action.target_type;
             var targets = GetTargets(targetType, action.target_count, action.target_range);
@@ -219,7 +207,7 @@ public class SkillManager
                 case eActionType.Attack:
                 {
                     int atk = action.action_detail_2 == 2 ? owner.MagicAttack : owner.PhysicalAttack;
-                    int damage = (int)(atk * action.action_value_1 + action.action_value_2 + owner.SkillLevel * action.action_value_3);
+                    int damage = Mathf.FloorToInt(atk * action.action_value_1 + action.action_value_2 + owner.SkillLevel * action.action_value_3);
                     foreach (var t in targets)
                         t.TakeDamage(damage, popupIndex, true);
                     break;
@@ -227,7 +215,7 @@ public class SkillManager
                 case eActionType.Heal:
                 {
                     int healAtk = action.action_detail_2 == 2 ? owner.MagicAttack : owner.PhysicalAttack;
-                    int healAmt = (int)(healAtk * action.action_value_1 + action.action_value_2);
+                    int healAmt = Mathf.FloorToInt(healAtk * action.action_value_1 + action.action_value_2);
                     foreach (var t in targets)
                         t.Heal(healAmt);
                     break;
@@ -242,21 +230,35 @@ public class SkillManager
                         t.SetLogicPosition(t.LogicX + knockDist * owner.XDir);
                     }
                     break;
-                default:
-                    break;
             }
             popupIndex++;
+            return;
         }
     }
 
-    public bool AllEffectsApplied(Skill skill)
+    /// <summary>无 Prefab 数据时，从 CSV 动作列表按 cast_time 均匀分布生成调度表。</summary>
+    public List<(int frame, int actionId)> GetCsvExecSchedule(Skill skill)
     {
-        if (skill.Data != null)
+        var schedule = new List<(int frame, int actionId)>();
+        if (skill == Attack)
         {
-            var actions = ConfigManager.Instance.GetSkillActions(skill.SkillId);
-            return actions.All(a => appliedActionIds.Contains(a.action_id));
+            schedule.Add((0, -1));
+            return schedule;
         }
-        return skill == Attack && appliedActionIds.Contains(-1);
+
+        var actions = ConfigManager.Instance.GetSkillActions(skill.SkillId);
+        if (actions.Count == 0) return schedule;
+
+        float castTime = skill.DefaultCastTime;
+        if (castTime <= 0) castTime = 1f;
+
+        int totalFrames = Mathf.RoundToInt(castTime * 60f);
+        for (int i = 0; i < actions.Count; i++)
+        {
+            int frame = (i + 1) * totalFrames / actions.Count;
+            schedule.Add((frame, actions[i].action_id));
+        }
+        return schedule;
     }
 
     private List<UnitCtrl> GetTargets(eTargetType targetType, int targetCount, int range)

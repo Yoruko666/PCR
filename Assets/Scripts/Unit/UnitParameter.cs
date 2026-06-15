@@ -1,0 +1,26 @@
+public class UnitParameter 
+{
+	private int _enemyColor; 
+
+	public UnitData UniqueData { get; set; }
+	public UnitDataForView UniqueDataForView { get; set; }
+	public UnitData LimitedUnitData { get; set; }
+	public bool IsClanSupportOrReplay { get; set; }
+//	public OGHINKMFEML.BIDOEFJHJDC MasterData { get; set; }
+//	public MIGKKBOBFHE.FHGLDLHFPME SkillData { get; set; }
+	public int EnemyColor { get; set; }
+
+	public UnitParameter() { }
+
+	public UnitParameter(UnitData _unitData) { }
+
+	public UnitParameter(UnitDataForView _unitData) { }
+
+	public void SetMasterData() { }
+
+	public void SetMasterDataForView() { }
+
+	public void CalcUnitData() { }
+
+	public void UpdateLimitedUnitData(bool _calcLocalPower = true, bool _isSupportOrReplay = false) { }
+}

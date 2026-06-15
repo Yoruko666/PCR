@@ -14,7 +14,7 @@ public class StandByState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim(unit.GetAnimName("stand_by"), false);
+        unit.PlayAnim(unit.GetStateAnimName(StateType.StandBy), false);
         standByDone = false;
         unit.spine.AnimationState.Complete += OnStandByComplete;
     }
@@ -39,7 +39,7 @@ public class StandByState : BaseState
 
     private void OnStandByComplete(TrackEntry trackEntry)
     {
-        if (trackEntry.Animation.Name == unit.GetAnimName("stand_by"))
+        if (trackEntry.Animation.Name == unit.GetStateAnimName(StateType.StandBy))
         {
             standByDone = true;
         }

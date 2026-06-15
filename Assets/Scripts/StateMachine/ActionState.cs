@@ -1,18 +1,15 @@
 using Spine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class ActionState : BaseState
 {
     private Skill currentSkill;
-    private string animName;
     private int elapsedFrames;
     private bool effectsApplied;
     private bool animDone;
 
-    // Prefab 驱动的执行帧列表
-    private List<int> execFrames;
-    private int execFrameIndex;
+    private List<(int frame, int actionId)> execSchedule;
+    private int execIndex;
 
     public ActionState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
@@ -29,9 +26,8 @@ public class ActionState : BaseState
             return;
         }
 
-        animName = unit.Skill.GetSkillAnimName(currentSkill);
-        unit.PlayAnim(animName, false);
-        unit.PlaySound(currentSkill.SoundName);
+        unit.PlayAnim(unit.GetStateAnimName(StateType.Action), false);
+        unit.PlaySound(unit.GetStateSoundName(StateType.Action));
 
         string displayName = currentSkill.DisplayName;
         if (!unit.Skill.IsAttack(currentSkill) && !string.IsNullOrEmpty(displayName))
@@ -40,8 +36,13 @@ public class ActionState : BaseState
         elapsedFrames = 0;
         effectsApplied = false;
         animDone = false;
-        execFrames = currentSkill.GetExecFrames();
-        execFrameIndex = 0;
+
+        // Prefab 调度表优先，无数据时走 CSV 回退
+        execSchedule = currentSkill.GetExecSchedule();
+        if (execSchedule.Count == 0)
+            execSchedule = unit.Skill.GetCsvExecSchedule(currentSkill);
+        execIndex = 0;
+
         unit.spine.AnimationState.Complete += OnAnimComplete;
     }
 
@@ -53,24 +54,13 @@ public class ActionState : BaseState
 
         if (!effectsApplied)
         {
-            // 优先使用 Prefab 帧驱动
-            if (execFrames.Count > 0)
+            while (execIndex < execSchedule.Count && elapsedFrames >= execSchedule[execIndex].frame)
             {
-                while (execFrameIndex < execFrames.Count && elapsedFrames >= execFrames[execFrameIndex])
-                {
-                    unit.Skill.ApplyPendingEffects(currentSkill, execFrames[execFrameIndex]);
-                    execFrameIndex++;
-                }
-                if (execFrameIndex >= execFrames.Count)
-                    effectsApplied = true;
+                unit.Skill.ApplyAction(currentSkill, execSchedule[execIndex].actionId);
+                execIndex++;
             }
-            else
-            {
-                // 无 Prefab 数据时回退到 CSV 帧驱动
-                unit.Skill.ApplyPendingEffects(currentSkill, elapsedFrames);
-                if (unit.Skill.AllEffectsApplied(currentSkill))
-                    effectsApplied = true;
-            }
+            if (execIndex >= execSchedule.Count)
+                effectsApplied = true;
         }
     }
 
@@ -93,7 +83,7 @@ public class ActionState : BaseState
 
     private void OnAnimComplete(TrackEntry trackEntry)
     {
-        if (currentSkill != null && trackEntry.Animation.Name == animName)
+        if (currentSkill != null && trackEntry.Animation.Name == unit.GetStateAnimName(StateType.Action))
             animDone = true;
     }
 }

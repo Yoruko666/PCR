@@ -6,7 +6,7 @@ public class RunState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim(unit.GetAnimName("run"), true);
+        unit.PlayAnim(unit.GetStateAnimName(StateType.Run), true);
     }
 
     public override void OnTick()

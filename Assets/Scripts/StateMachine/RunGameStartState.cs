@@ -11,7 +11,7 @@ public class RunGameStartState : BaseState
 
     public override void OnEnter()
     {
-        unit.PlayAnim(unit.GetAnimName("run_game_start"), true);
+        unit.PlayAnim(unit.GetStateAnimName(StateType.RunGameStart), true);
     }
 
     public override void OnTick()

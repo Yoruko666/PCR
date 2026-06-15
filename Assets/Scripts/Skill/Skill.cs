@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 public class Skill
 {
-    // Fields
     public bool IsPrincessForm;
     private List<ActionParameter> actionParameters;
     public List<ActionParameterOnPrefab> ActionParametersOnPrefab;
@@ -34,11 +33,10 @@ public class Skill
     public string SkillName;
     public List<int> BranchIds;
     public List<Skill> OverrideSkillList;
-
-    // Properties
     public List<ActionParameter> ActionParameters { get; set; }
     public float CastTime { get; set; }
     public float UnionBurstCoolDownTime { get; set; }
+    public int Slot { get; set; }
     public int SkillNum { get; set; }
     public List<SkillEffectCtrl> EffectObjs { get; }
     public List<SkillEffectCtrl> LoopEffectObjs { get; }
@@ -64,18 +62,10 @@ public class Skill
     public long AbsorberValue { get; set; }
     public int BonusId { get; set; }
 
-    // ====== 新的 CSV 数据源 ======
-
-    /// <summary>对应的 skill_data.csv 数据。</summary>
     public SkillDataConfig Data { get; set; }
 
-    /// <summary>Spine 动画名，根据技能类型自动推断。</summary>
     public string AnimName { get; set; }
 
-    /// <summary>音效 key。</summary>
-    public string SoundName { get; set; }
-
-    /// <summary>显示名（优先用 SkillName，否则用 Data.name）。</summary>
     public string DisplayName => !string.IsNullOrEmpty(SkillName) ? SkillName : Data?.name;
 
     /// <summary>将 Data.skill_cast_time 作为默认 CastTime。</summary>
@@ -86,7 +76,6 @@ public class Skill
         Level = _level;
     }
 
-    /// <summary>从 ActionParametersOnPrefab 获取首次动作时间（秒）。</summary>
     public float GetFirstExecTime()
     {
         if (ActionParametersOnPrefab == null) return 0f;
@@ -103,11 +92,11 @@ public class Skill
         return 0f;
     }
 
-    /// <summary>从 ActionParametersOnPrefab 获取所有 ExecTime（秒），按帧对齐取整。</summary>
-    public List<int> GetExecFrames()
+    /// <summary>获取 (frame, actionId) 调度表。空列表 = 无 Prefab 数据，需走 CSV 回退。</summary>
+    public List<(int frame, int actionId)> GetExecSchedule()
     {
-        var frames = new List<int>();
-        if (ActionParametersOnPrefab == null) return frames;
+        var schedule = new List<(int frame, int actionId)>();
+        if (ActionParametersOnPrefab == null) return schedule;
 
         foreach (var action in ActionParametersOnPrefab)
         {
@@ -115,16 +104,16 @@ public class Skill
             foreach (var detail in action.Details)
             {
                 if (detail.ExecTimeForPrefab == null) continue;
+                int actionId = detail.ActionId;
                 foreach (var et in detail.ExecTimeForPrefab)
                 {
                     int frame = Mathf.RoundToInt(et.Time * 60f);
-                    if (!frames.Contains(frame))
-                        frames.Add(frame);
+                    schedule.Add((frame, actionId));
                 }
             }
         }
-        frames.Sort();
-        return frames;
+        schedule.Sort((a, b) => a.frame.CompareTo(b.frame));
+        return schedule;
     }
 
     public void ReadySkill() { }
