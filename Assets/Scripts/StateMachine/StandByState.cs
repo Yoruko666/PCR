@@ -7,7 +7,7 @@ public class StandByState : BaseState
 {
     private bool standByDone;
 
-    public StandByState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    public StandByState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
 
     }
@@ -25,7 +25,7 @@ public class StandByState : BaseState
 
     public override void OnExit()
     {
-
+        unit.spine.AnimationState.Complete -= OnStandByComplete;
     }
 
     public override void CheckSwitchState()

@@ -1,4 +1,6 @@
 using Spine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class UbState : BaseState
 {
@@ -7,7 +9,11 @@ public class UbState : BaseState
     private bool effectsApplied;
     private bool animDone;
 
-    public UbState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    // Prefab 驱动的执行帧列表
+    private List<int> execFrames;
+    private int execFrameIndex;
+
+    public UbState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
     }
 
@@ -24,15 +30,18 @@ public class UbState : BaseState
         }
 
         BattleManager.Instance.PauseAllExcept(unit);
-        unit.PlayAnim(ubSkill.Config.AnimName, false);
-        unit.PlaySound(ubSkill.Config.SoundName);
+        unit.PlayAnim(unit.Skill.GetSkillAnimName(ubSkill), false);
+        unit.PlaySound(ubSkill.SoundName);
 
-        if (!string.IsNullOrEmpty(ubSkill.Config.Name))
-            unit.ShowBubble(ubSkill.Config.Name);
+        string displayName = ubSkill.DisplayName;
+        if (!string.IsNullOrEmpty(displayName))
+            unit.ShowBubble(displayName);
 
         elapsedFrames = 0;
         effectsApplied = false;
         animDone = false;
+        execFrames = ubSkill.GetExecFrames();
+        execFrameIndex = 0;
         unit.spine.AnimationState.Complete += OnUbAnimComplete;
     }
 
@@ -44,12 +53,31 @@ public class UbState : BaseState
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(ubSkill, elapsedFrames);
-            if (unit.Skill.AllEffectsApplied(ubSkill))
+            // 优先使用 Prefab 帧驱动
+            if (execFrames.Count > 0)
             {
-                BattleManager.Instance.ResumeAll();
-                unit.SpendTP(1000);
-                effectsApplied = true;
+                while (execFrameIndex < execFrames.Count && elapsedFrames >= execFrames[execFrameIndex])
+                {
+                    unit.Skill.ApplyPendingEffects(ubSkill, execFrames[execFrameIndex]);
+                    execFrameIndex++;
+                }
+                if (execFrameIndex >= execFrames.Count)
+                {
+                    BattleManager.Instance.ResumeAll();
+                    unit.SpendTP(1000);
+                    effectsApplied = true;
+                }
+            }
+            else
+            {
+                // 无 Prefab 数据时回退到 CSV 帧驱动
+                unit.Skill.ApplyPendingEffects(ubSkill, elapsedFrames);
+                if (unit.Skill.AllEffectsApplied(ubSkill))
+                {
+                    BattleManager.Instance.ResumeAll();
+                    unit.SpendTP(1000);
+                    effectsApplied = true;
+                }
             }
         }
     }
@@ -73,7 +101,7 @@ public class UbState : BaseState
 
     private void OnUbAnimComplete(TrackEntry trackEntry)
     {
-        if (ubSkill != null && trackEntry.Animation.Name == ubSkill.Config.AnimName)
+        if (ubSkill != null && trackEntry.Animation.Name == ubSkill.AnimName)
             animDone = true;
     }
 }

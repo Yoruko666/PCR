@@ -512,12 +512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e8f54347baf0e4cadbbf33358e8f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FriendUnitsId:
-  - 1001
-  - 1010
-  EnemyUnitsId:
-  - 1002
-  - 1003
+  FriendUnitsId: 05870100898a0100
+  EnemyUnitsId: 69870100cd870100
 --- !u!114 &1993796359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,9 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2c1931186a52f4a90f2099f3768d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigPath: Assets/Configs/CharacterConfig.csv
-  SkillConfigPath: Assets/Configs/SkillConfig.csv
-  SkillEffectConfigPath: Assets/Configs/SkillEffectConfig.csv
 --- !u!1 &2022343526
 GameObject:
   m_ObjectHideFlags: 0

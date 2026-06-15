@@ -4,9 +4,9 @@ public class StateMachine
 {
     private BaseState currentState;
     private Dictionary<StateType, BaseState> states = new();
-    private BaseUnit unit;
+    private UnitCtrl unit;
 
-    public StateMachine(BaseUnit unit)
+    public StateMachine(UnitCtrl unit)
     {
         this.unit = unit;
         states.Add(StateType.RunGameStart, new RunGameStartState(this, unit));

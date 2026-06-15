@@ -9,14 +9,14 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
     public static float TickTime => 1 / 60f;
 
-    public List<string> FriendUnitsId = new();
-    public List<string> EnemyUnitsId = new();
+    public List<int> FriendUnitsId = new();
+    public List<int> EnemyUnitsId = new();
 
     private int tick = 0;
     private float timer = 0;
 
-    private List<BaseUnit> friendUnits = new();
-    private List<BaseUnit> enemyUnits = new();
+    private List<UnitCtrl> friendUnits = new();
+    private List<UnitCtrl> enemyUnits = new();
 
     private Canvas uiCanvas;
     private Canvas damageWorldCanvas;
@@ -137,10 +137,10 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < FriendUnitsId.Count; i++)
-            friendUnits.Add(new BaseUnit(FriendUnitsId[i], CampType.Friend));
+            friendUnits.Add(new UnitCtrl(FriendUnitsId[i], CampType.Friend));
 
         for (int i = 0; i < EnemyUnitsId.Count; i++)
-            enemyUnits.Add(new BaseUnit(EnemyUnitsId[i], CampType.Enemy));
+            enemyUnits.Add(new UnitCtrl(EnemyUnitsId[i], CampType.Enemy));
 
         friendUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
         enemyUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
@@ -172,17 +172,17 @@ public class BattleManager : MonoBehaviour
             unit.Tick();
     }
 
-    public List<BaseUnit> GetOppositeUnits(CampType campType)
+    public List<UnitCtrl> GetOppositeUnits(CampType campType)
     {
         return campType == CampType.Friend ? enemyUnits : friendUnits;
     }
 
-    public List<BaseUnit> GetAllies(CampType campType)
+    public List<UnitCtrl> GetAllies(CampType campType)
     {
         return campType == CampType.Friend ? friendUnits : enemyUnits;
     }
 
-    public void PauseAllExcept(BaseUnit activeUnit)
+    public void PauseAllExcept(UnitCtrl activeUnit)
     {
         foreach (var u in friendUnits)
             if (u != activeUnit) u.IsPaused = true;

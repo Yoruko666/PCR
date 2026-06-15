@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RunGameStartState : BaseState
 {
-    public RunGameStartState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    public RunGameStartState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
 
     }

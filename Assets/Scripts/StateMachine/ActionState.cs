@@ -1,4 +1,6 @@
 using Spine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ActionState : BaseState
 {
@@ -8,7 +10,11 @@ public class ActionState : BaseState
     private bool effectsApplied;
     private bool animDone;
 
-    public ActionState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    // Prefab 驱动的执行帧列表
+    private List<int> execFrames;
+    private int execFrameIndex;
+
+    public ActionState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
     }
 
@@ -23,16 +29,19 @@ public class ActionState : BaseState
             return;
         }
 
-        animName = currentSkill.Config.AnimName;
+        animName = unit.Skill.GetSkillAnimName(currentSkill);
         unit.PlayAnim(animName, false);
-        unit.PlaySound(currentSkill.Config.SoundName);
+        unit.PlaySound(currentSkill.SoundName);
 
-        if (!unit.Skill.IsAttack(currentSkill) && !string.IsNullOrEmpty(currentSkill.Config.Name))
-            unit.ShowBubble(currentSkill.Config.Name);
+        string displayName = currentSkill.DisplayName;
+        if (!unit.Skill.IsAttack(currentSkill) && !string.IsNullOrEmpty(displayName))
+            unit.ShowBubble(displayName);
 
         elapsedFrames = 0;
         effectsApplied = false;
         animDone = false;
+        execFrames = currentSkill.GetExecFrames();
+        execFrameIndex = 0;
         unit.spine.AnimationState.Complete += OnAnimComplete;
     }
 
@@ -44,9 +53,24 @@ public class ActionState : BaseState
 
         if (!effectsApplied)
         {
-            unit.Skill.ApplyPendingEffects(currentSkill, elapsedFrames);
-            if (unit.Skill.AllEffectsApplied(currentSkill))
-                effectsApplied = true;
+            // 优先使用 Prefab 帧驱动
+            if (execFrames.Count > 0)
+            {
+                while (execFrameIndex < execFrames.Count && elapsedFrames >= execFrames[execFrameIndex])
+                {
+                    unit.Skill.ApplyPendingEffects(currentSkill, execFrames[execFrameIndex]);
+                    execFrameIndex++;
+                }
+                if (execFrameIndex >= execFrames.Count)
+                    effectsApplied = true;
+            }
+            else
+            {
+                // 无 Prefab 数据时回退到 CSV 帧驱动
+                unit.Skill.ApplyPendingEffects(currentSkill, elapsedFrames);
+                if (unit.Skill.AllEffectsApplied(currentSkill))
+                    effectsApplied = true;
+            }
         }
     }
 

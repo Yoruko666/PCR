@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class BaseState
 {
     protected StateMachine stateMachine;
-    protected BaseUnit unit;
+    protected UnitCtrl unit;
 
-    public BaseState(StateMachine stateMachine, BaseUnit unit)
+    public BaseState(StateMachine stateMachine, UnitCtrl unit)
     {
         this.stateMachine = stateMachine;
         this.unit = unit;

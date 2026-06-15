@@ -1,6 +1,6 @@
 public class RunState : BaseState
 {
-    public RunState(StateMachine stateMachine, BaseUnit unit) : base(stateMachine, unit)
+    public RunState(StateMachine stateMachine, UnitCtrl unit) : base(stateMachine, unit)
     {
     }
 
