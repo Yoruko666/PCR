@@ -68,8 +68,8 @@ public class Skill
 
     public string DisplayName => !string.IsNullOrEmpty(SkillName) ? SkillName : Data?.name;
 
-    /// <summary>将 Data.skill_cast_time 作为默认 CastTime。</summary>
-    public float DefaultCastTime => Data?.skill_cast_time ?? 0f;
+    /// <summary>优先取 Data.skill_cast_time，若 Data 为 null（如普攻）则回退到 CastTime（来自 normal_atk_cast_time）。</summary>
+    public float DefaultCastTime => Data?.skill_cast_time ?? CastTime;
 
     public void SetLevel(int _level)
     {

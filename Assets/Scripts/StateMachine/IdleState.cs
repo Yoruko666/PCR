@@ -25,7 +25,7 @@ public class IdleState : BaseState
 
     public override void OnTick()
     {
-        waitTimer -= BattleManager.TickTime;
+        waitTimer -= BattleManager.TimePerFrame;
     }
 
     public override void OnExit()

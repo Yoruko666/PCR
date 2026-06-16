@@ -1,13 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using TMPro;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : MonoBehaviour, IBattleManagerForBaseBattleProcessor
 {
     public static BattleManager Instance;
-    public static float TickTime => 1 / 60f;
+
+    private static int LogicFrameRate = 60;
+    public static float TimePerFrame => 1f / LogicFrameRate;
 
     public List<int> FriendUnitsId = new();
     public List<int> EnemyUnitsId = new();
@@ -15,8 +20,12 @@ public class BattleManager : MonoBehaviour
     private int tick = 0;
     private float timer = 0;
 
-    private List<UnitCtrl> friendUnits = new();
-    private List<UnitCtrl> enemyUnits = new();
+    public UnitCtrl BossUnit;
+
+    public List<UnitCtrl> UnitList { get; set; } = new();
+    private List<UnitCtrl> EnemyList { get; set; } = new();
+    public eBattleResult BattleResult { get; }
+    public float TimeLimit { get; set; }
 
     private Canvas uiCanvas;
     private Canvas damageWorldCanvas;
@@ -35,9 +44,14 @@ public class BattleManager : MonoBehaviour
     private const float SpringDamping = 20f;
     private const float ShakeImpulse = 10f;
 
+    public void CreateUnit(int _unitId, Action<UnitCtrl> _callback, bool _addUnitList = true)
+    {
+
+    }
+
     public void ShakeCamera()
     {
-        float dir = Random.value > 0.5f ? -1f : 1f;
+        float dir = UnityEngine.Random.value > 0.5f ? -1f : 1f;
         shakeVelocity += ShakeImpulse * dir;
     }
 
@@ -74,6 +88,45 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        for (int i = 0; i < FriendUnitsId.Count; i++)
+            UnitList.Add(new UnitCtrl(FriendUnitsId[i]));
+
+        for (int i = 0; i < EnemyUnitsId.Count; i++)
+            EnemyList.Add(new UnitCtrl(EnemyUnitsId[i]));
+
+        UnitList.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
+        EnemyList.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
+
+        for (int i = 0; i < UnitList.Count; i++)
+            UnitList[i].Init(i);
+        for (int i = 0; i < EnemyList.Count; i++)
+            EnemyList[i].Init(i);
+    }
+
+    private void Update()
+    {
+        UpdateSpringShake();
+
+        timer += Time.deltaTime;
+        while (timer > TimePerFrame)
+        {
+            timer -= TimePerFrame;
+            tick++;
+            UpdateFrame();
+        }
+    }
+
+    private void UpdateFrame()
+    {
+        foreach (var unit in UnitList)
+            unit.UpdateFrame();
+        foreach (var unit in EnemyList)
+            unit.UpdateFrame();
+    }
+
+
     private Canvas GetOrCreateDamageWorldCanvas()
     {
         if (damageWorldCanvas != null) return damageWorldCanvas;
@@ -87,14 +140,14 @@ public class BattleManager : MonoBehaviour
         return damageWorldCanvas;
     }
 
-    public void ShowDamagePopup(Vector3 worldPosition, int damage, int popupIndex)
+    public void ShowDamagePopup(Vector3 worldPosition, long damage, int popupIndex)
     {
         if (damagePopupPrefab == null)
             damagePopupPrefab = Addressables.LoadAssetAsync<GameObject>(DamagePopupKey).WaitForCompletion();
         if (damagePopupPrefab == null) return;
 
         var canvas = GetOrCreateDamageWorldCanvas();
-        var popup = Object.Instantiate(damagePopupPrefab, canvas.transform);
+        var popup = GameObject.Instantiate(damagePopupPrefab, canvas.transform);
 
         string damageStr = damage.ToString();
         string spriteText = "";
@@ -131,68 +184,95 @@ public class BattleManager : MonoBehaviour
             yield return null;
         }
 
-        Object.Destroy(popup);
-    }
-
-    private void Start()
-    {
-        for (int i = 0; i < FriendUnitsId.Count; i++)
-            friendUnits.Add(new UnitCtrl(FriendUnitsId[i], CampType.Friend));
-
-        for (int i = 0; i < EnemyUnitsId.Count; i++)
-            enemyUnits.Add(new UnitCtrl(EnemyUnitsId[i], CampType.Enemy));
-
-        friendUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
-        enemyUnits.Sort((x, y) => x.AttackRange.CompareTo(y.AttackRange));
-
-        for (int i = 0; i < friendUnits.Count; i++)
-            friendUnits[i].Init(i);
-        for (int i = 0; i < enemyUnits.Count; i++)
-            enemyUnits[i].Init(i);
-    }
-
-    private void Update()
-    {
-        UpdateSpringShake();
-
-        timer += Time.deltaTime;
-        while (timer > TickTime)
-        {
-            timer -= TickTime;
-            tick++;
-            Tick();
-        }
-    }
-
-    private void Tick()
-    {
-        foreach (var unit in friendUnits)
-            unit.Tick();
-        foreach (var unit in enemyUnits)
-            unit.Tick();
-    }
-
-    public List<UnitCtrl> GetOppositeUnits(CampType campType)
-    {
-        return campType == CampType.Friend ? enemyUnits : friendUnits;
-    }
-
-    public List<UnitCtrl> GetAllies(CampType campType)
-    {
-        return campType == CampType.Friend ? friendUnits : enemyUnits;
+        GameObject.Destroy(popup);
     }
 
     public void PauseAllExcept(UnitCtrl activeUnit)
     {
-        foreach (var u in friendUnits)
+        foreach (var u in UnitList)
             if (u != activeUnit) u.IsPaused = true;
-        foreach (var u in enemyUnits)
+        foreach (var u in EnemyList)
             if (u != activeUnit) u.IsPaused = true;
     }
 
     public void ResumeAll()
     {
-        foreach (var u in friendUnits) u.IsPaused = false;
-        foreach (var u in enemyUnits) u.IsPaused = false;
+        foreach (var u in UnitList) u.IsPaused = false;
+        foreach (var u in EnemyList) u.IsPaused = false;
     }
+    public List<UnitCtrl> BossList { get; set; }
+
+    public bool IsCurtain { get; set; }
+
+    public int GetMiliLimitTime() => (int)(TimeLimit * 1000);
+
+    public void CallbackRequestFinishBattle() { }
+
+    public void ResultApiSendExec(Action _execCallback, Action<int> _errorCallback) { }
+
+    public int GetUnitCtrlLength()
+    {
+        if (UnitList == null) return -1;
+        return UnitList.Count;
+    }
+    public List<UnitCtrl> GetMyUnitList() => UnitList;
+
+    public UnitCtrl GetUnitCtrl(int _idx)
+    {
+        if (UnitList == null) return null;
+        if (_idx < 0 || _idx >= UnitList.Count) return null;
+        return UnitList[_idx];
+    }
+
+    public UnitCtrl FindUnit(int _id)
+    {
+        if (UnitList == null) return null;
+        return UnitList.FirstOrDefault(unit => unit.Id == _id);
+    }
+
+    public int GetEnemyCtrlLength()
+    {
+        if (EnemyList == null) return -1;
+        return EnemyList.Count;
+    }
+
+    public List<UnitCtrl> GetEnemyUnitList() => EnemyList;
+
+    public UnitCtrl GetEnemyCtrl(int _idx)
+    {
+        if (EnemyList == null) return null;
+        if (_idx < 0 || _idx >= EnemyList.Count) return null;
+        return EnemyList[_idx];
+    }
+
+    public UnitCtrl FindEnemy(int _id)
+    {
+        if (EnemyList == null) return null;
+        return EnemyList.FirstOrDefault(enemy => enemy.Id == _id);
+    }
+
+    public UnitCtrl GetBossUnit() => BossUnit;
+    public IEnumerator RecreateDeadUnits(Action _callback, eBattleResult _battleResult)
+    {
+        return null;
+    }
+    public void RevivalAtFinishBattle() { }
+    public List<UnitHpInfo> CreateUnitHpInfoList(int _enemyViewerId, int _myViewerId)
+    {
+        return new List<UnitHpInfo>();
+    }
+    public List<UnitHpInfoForFriendBattle> CreateUnitHpInfoListForFriendBattle(int _enemyViewerId, int _myViewerId)
+    {
+        return new List<UnitHpInfoForFriendBattle>();
+    }
+    public void SetupLosePlayVoiceUnitId() { }
+    public void StartResult() { }
+    public IEnumerator UpdateBossIdleMotion(BattleSpineController _unitSpineController, int _motionPrefix)
+    {
+        return null;
+    }
+    public void TurnOffAllEffects() { }
+    public void OffSkillExeScreen() { }
+    public void ChangeAllUnitDefaultShader() { }
+    public void AppendCoroutine(IEnumerator cr, ePauseType pauseType, UnitCtrl unit) { }
 }

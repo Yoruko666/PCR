@@ -6,7 +6,6 @@ public class SkillManager
 {
     private UnitCtrl owner;
 
-    /// <summary>统一技能字典。key = pattern_value（1=普攻, 1001=skill1, 1002=skill2, 1000=UB）。</summary>
     private Dictionary<int, Skill> skillMap = new();
 
     // 攻击序列：存储 pattern_value
@@ -163,25 +162,18 @@ public class SkillManager
         }
     }
 
-    private HashSet<int> appliedActionIds = new();
     private int popupIndex;
 
     public void ResetAppliedEffects()
     {
-        appliedActionIds.Clear();
         popupIndex = 0;
     }
 
     /// <summary>按 actionId 触发单个效果。</summary>
     public void ApplyAction(Skill skill, int actionId)
     {
-        if (appliedActionIds.Contains(actionId))
-            return;
-        appliedActionIds.Add(actionId);
-
-        if (actionId == -1)
+        if (actionId == 0)
         {
-            // 普攻：对最近敌人造成一次伤害
             var target = GetSingleEnemy();
             if (target != null)
             {
@@ -242,7 +234,8 @@ public class SkillManager
         var schedule = new List<(int frame, int actionId)>();
         if (skill == Attack)
         {
-            schedule.Add((0, -1));
+            int frame = Mathf.RoundToInt(skill.DefaultCastTime * 60f);
+            schedule.Add((frame, 0));
             return schedule;
         }
 
@@ -277,7 +270,7 @@ public class SkillManager
             case eTargetType.Far:
             default:
                 return targetCount > 1
-                    ? BattleManager.Instance.GetOppositeUnits(owner.CampType)
+                    ? owner.GetEnemyList()
                         .Where(e => e.IsAlive)
                         .Take(targetCount)
                         .ToList()
@@ -287,7 +280,7 @@ public class SkillManager
 
     private UnitCtrl GetSingleEnemy()
     {
-        return BattleManager.Instance.GetOppositeUnits(owner.CampType)
+        return owner.GetEnemyList()
             .Where(e => e.IsAlive)
             .OrderBy(e => System.Math.Abs(e.LogicX - owner.LogicX))
             .FirstOrDefault();

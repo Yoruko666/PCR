@@ -1,5 +1,6 @@
 using Spine;
 using Spine.Unity;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,10 +13,10 @@ public class UnitCtrl
     public SkeletonAnimation spine;
 
     public UnitDataConfig DataConfig;
-    public CampType CampType;
     public int Number;
     public float LogicX;
-    public int XDir => CampType == CampType.Friend ? 1 : -1;
+    public bool IsFriend => battleManager.GetMyUnitList().Contains(this);
+    public int XDir => IsFriend ? 1 : -1;
 
     protected StateMachine stateMachine;
 
@@ -24,8 +25,8 @@ public class UnitCtrl
     public GameObject GameObject => gameObject;
     public Transform Transform => gameObject.transform;
 
-    public int HP { get; private set; }
-    public int MaxHP { get; private set; }
+    public long HP { get; private set; }
+    public long MaxHP { get; private set; }
     public bool IsDead => HP <= 0;
     public bool IsAlive => HP > 0;
     public int TP { get; private set; }
@@ -33,7 +34,6 @@ public class UnitCtrl
     public int PhysicalAttack { get; private set; }
     public int MagicAttack { get; private set; }
     public int SkillLevel { get; set; }
-    public int Rarity { get; set; } = 1;
     public int Level { get; set; } = 300;
     public float AttackRange { get; private set; }
     public readonly float HitRange = 112;
@@ -49,8 +49,231 @@ public class UnitCtrl
     private Spine.Bone headBone;
     private const string BubblePrefabKey = "fx_skill_bubble";
 
-    public UnitCtrl(int id, CampType campType)
+    private const float START_CAST_TIME = 0.3f;
+    private const float START_CAST_TIME_STAND_BY = 2.5f;
+
+    [SerializeField]
+    private List<ShakeEffect> gameStartShakes;
+    [SerializeField]
+    private List<PrefabWithTime> gameStartEffects;
+    [SerializeField]
+    private List<PrefabWithTime> dieEffects;
+    [SerializeField]
+    private List<ShakeEffect> dieShakes;
+    [SerializeField]
+    private List<PrefabWithTime> damageEffects;
+    [SerializeField]
+    private List<ShakeEffect> damageShakes;
+    public List<PrefabWithTime> SummonEffects;
+    [SerializeField]
+    private List<PrefabWithTime> idleEffects;
+    [SerializeField]
+    private List<PrefabWithTime> auraEffects;
+    public float ShowTitleDelay;
+    public float UnitAppearDelay;
+    public float BossAppearDelay;
+    public float BattleCameraSize;
+    public float Scale;
+    public float BossDeltaX;
+    public float BossDeltaY;
+    public float AllUnitCenter;
+    public float BossBodyWidthOffset;
+    public string SummonTargetAttachmentName;
+    public string SummonAppliedAttachmentName;
+    public bool IsGameStartDepthBack;
+    public bool BossSortIsBack;
+    public bool DisableFlash;
+//  public List<AttachmentChangeData> SortFrontDiappearAttachmentChangeDataList;
+    public bool IsForceLeftDir;
+//  public List<PartsData> BossPartsList;
+    public bool UseTargetCursorOver;
+    public bool OneRemainingDisableEffect;
+    public float OverCursorSize;
+    [SerializeField]
+    private bool damageNumCenterBone;
+    public bool UseUbVoice3and4;
+    public List<SkillEffectCtrl> HideOtherAuraEffect;
+    /*
+    public VoiceTimingGroup UnionBurstPlusTimingWithCutin;
+    public VoiceTimingGroup UnionBurstPlusTimingNoCutin;
+    public List<VoiceDelayAndEnable> SpeedUpSkillNameVoiceDelayWithCutIn;
+    public List<VoiceDelayAndEnable> NormalSkillNameVoiceDelay;
+    public List<VoiceDelayAndEnable> NormalSkillNameVoiceDelayWithCutIn;
+    public List<VoiceDelayAndEnable> SpeedUpSkillNameVoiceDelay;
+    public List<VoiceDelayAndEnable> NormalSkillVoiceDelay;
+    public List<VoiceDelayAndEnable> NormalSkillVoiceDelayWithCutIn;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoiceDelay;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoiceDelayWithCutIn;
+    public List<VoiceDelayAndEnable> NormalSkillVoice3Delay;
+    public List<VoiceDelayAndEnable> NormalSkillVoice3DelayWithCutIn;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoice3Delay;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoice3DelayWithCutIn;
+    public List<VoiceDelayAndEnable> NormalSkillVoice4Delay;
+    public List<VoiceDelayAndEnable> NormalSkillVoice4DelayWithCutIn;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoice4Delay;
+    public List<VoiceDelayAndEnable> SpeedUpSkillVoice4DelayWithCutIn;
+    public List<VoiceDelayAndEnable> SpeedUpCutInVoiceDelay;
+    public List<VoiceDelayAndEnable> NormalCutInVoiceDelay;
+    public List<VoiceDelayAndEnable> SpeedUpCutInVoiceDelayWithCutIn;
+    public List<VoiceDelayAndEnable> NormalCutInVoiceDelayWithCutIn;
+    private static StaticSingletonTree<UnitCtrl> staticSingletonTree;
+    private static IBattleLog staticBattleLog;
+    private static IBattleCameraEffectForUnitCtrl staticBattleCameraEffect;
+    private static IBattleEffectPool staticBattleEffectPool;
+    private static IBattleTimeScaleForUnitCtrl staticBattleTimeScale;
+    private bool <IsMoveSpeedForceZero>k__BackingField;
+    */
+
+	private static BattleManager staticBattleManager;
+    public UnitActionController UnitActionController { get; set; }
+    /*
+    public PrincessFormProcessor PrincessFormProcessor { get; set; }
+    public IComponentAbnormal ComponentAbnormal { get; set; }
+    public IComponentActionPattern ComponentActionPattern { get; set; }
+    public IComponentAnimation ComponentAnimation { get; set; }
+    public IComponentAnnihilation ComponentAnnihilation { get; set; }
+    public IComponentBattleResult ComponentBattleResult { get; set; }
+    public IComponentColor ComponentColor { get; set; }
+    public IComponentCompare ComponentCompare { get; set; }
+    public IComponentDamageControl ComponentDamageControl { get; set; }
+    public IComponentLog ComponentLog { get; set; }
+    public IComponentMultiPartsBoss ComponentMultiPartsBoss { get; set; }
+    public IComponentParameter ComponentParameter { get; set; }
+    public IComponentParameterClamped ComponentParameterClamped { get; set; }
+    public IComponentPassiveSkill ComponentPassiveSkill { get; set; }
+    public IComponentScaleChange ComponentScaleChange { get; set; }
+    public IComponentSearchArea ComponentSearchArea { get; set; }
+    public IComponentSortOrder ComponentSortOrder { get; set; }
+    public IComponentSound ComponentSound { get; set; }
+    public IComponentState ComponentState { get; set; }
+    public IComponentUnionBurst ComponentUnionBurst { get; set; }
+    */
+    public Bone StateBone { get; set; }
+    public Bone StateBoneModeChange { get; set; }
+    public Bone CenterBone { get; set; }
+    public Bone CenterBoneModeChange { get; set; }
+    public List<SkillEffectCtrl> RepeatEffectList { get; set; }
+    public List<SkillEffectCtrl> AuraEffectList { get; set; }
+    public Dictionary<int, List<ValueTuple<SkillEffectCtrl, string>>> DamagedHpEffectDictionary { get; set; }
+    public float BodyWidth { get; set; }
+//  public SystemIdDefine.eWeaponSeType WeaponSeType { get; set; }
+//  public SystemIdDefine.eWeaponMotionType WeaponMotionType { get; set; }
+    public BattleSpineController UnitSpineCtrl { get; set; }
+    public SkeletonRenderSeparator SkeletonRenderSeparator { get; set; }
+    public BattleSpineController UnitSpineCtrlModeChange { get; set; }
+//  public List<UnitUnionBurstTimeline> UnitUnionBurstTimelineList { get; set; }
+//  public List<CircleEffectController> CircleEffectList { get; set; }
+    public bool IsRecreated { get; set; }
+    public bool MainSkill1Evolved { get; set; }
+    public float DeltaTimeForPause { get; }
+    public int PrefabId { get; set; }
+    public int UnitInstanceId { get; set; }
+    public bool TimeToDie { get; set; }
+    public bool IsLeftDir { get; set; }
+    public eUnitRespawnPos RespawnPos { get; set; }
+    public eUnitRespawnPos SummonRespawnPos { get; set; }
+    public UnitParameter UnitParameter { get; set; }
+    public bool IsOther { get; set; }
+    public bool IsBonusEnemy { get; set; }
+    public bool IsPlayerUnit { get; }
+//  public OOHFDGDNJCE.IMDMLLPFLAD SummonType { get; set; }
+    public bool IsSummonOrPhantom { get; }
+    public bool IsGuest { get; set; }
+    public bool IsGuestFadeout { get; set; }
+    public bool IsDivision { get; }
+    public bool IsDivisionSourceForDamage { get; set; }
+    public bool IsDivisionSourceForDie { get; set; }
+    public bool IsPhantom { get; }
+    public bool IsShadow { get; set; }
+    public float OverlapPosX { get; set; }
+    public List<long> ActionsTargetOnMe { get; set; }
+//  public List<FirearmCtrl> FirearmCtrlsOnMe { get; set; }
+    private int motionPrefix { get; set; }
+    public int MotionPrefix { get; set; }
+    public int PartsMotionPrefix { get; set; }
+    public bool IsBoss { get; set; }
+    public bool IsClanBattleOrSekaiEnemy { get; set; }
+    public bool IsTrialBattleEnemy { get; set; }
+    public bool IsAbyssBossEnemy { get; set; }
+    public Dictionary<int, UnitCtrl> SummonUnitDictionary { get; set; }
+    public UnitCtrl SummonSource { get; set; }
+//  public JPEONCKFNEB CutInFrameSet { get; set; }
+    public int SkillEnableFrame { get; set; }
+    public Transform RotateCenter { get; set; }
+    public Vector3 FixedCenterPos { get; }
+    private Vector3 fixedCenterPos { get; set; }
+    public Vector3 FixedStatePos { get; set; }
+    public Vector3 ColliderCenter { get; set; }
+    public Vector3 ColliderSize { get; set; }
+    public int CurrentSkillId { get; set; }
+    public Action OnIsFrontfalse { get; set; }
+    public bool HasDieLoop { get; }
+//  public VoiceTimingData SpecialVoiceTimingData { get; set; }
+    public bool DisableSortOrderFrontOnBlackoutTarget { get; set; }
+    public int SkinRarity { get; set; }
+    public List<BattleSpineController> EffectSpineControllerList { get; set; }
+    public float BaseX { get; set; }
+//  public LifeGaugeController LifeGauge { get; set; }
+    public bool IsDepthBack { get; set; }
+    public bool IsForceLeftDirOrPartsBoss { get; }
+    public float CastTimer { get; set; }
+    public double SkillStackValDmg { get; set; }
+    public double SkillStackVal { get; set; }
+    public float MoveRate { get; set; }
+    public bool IsAwakeMotion { get; set; }
+    public bool StartDashDone { get; set; }
+    public bool IsStartSkillExeced { get; set; }
+//  public PrefabWithTime.eEffectDifficulty EffectDifficulty { get; set; }
+    public Action<UnitCtrl> OnInitCallbackForUi { get; set; }
+    public bool IsDamageNumCenterBoneEnable { get; }
+    private Transform bottomTransform { get; set; }
+    private bool isPaused { get; set; }
+    private Vector2 leftDirScale { get; set; }
+    private Vector2 rightDirScale { get; set; }
+//  protected StaticSingletonTree<UnitCtrl> singletonTree { get; }
+//  protected IBattleLog battleLog { get; }
+//  protected IBattleCameraEffectForUnitCtrl battleCameraEffect { get; }
+//  protected IBattleEffectPool battleEffectPool { get; }
+//  protected IBattleTimeScaleForUnitCtrl battleTimeScale { get; }
+    private float unionBurstSkillAreaWidth { get; set; }
+    private Dictionary<int, float> castTimeDictionary { get; set; }
+    public int Index { get; set; }
+    public int IdentifyNum { get; set; }
+    public int UnitId { get; set; }
+    public int CharacterUnitId { get; set; }
+    public int OriginalUnitId { get; set; }
+    public int SDSkin { get; set; }
+    public int IconSkin { get; set; }
+    public int Rarity { get; set; }
+    public int BattleRarity { get; set; }
+    public ePromotionLevel PromotionLevel { get; set; }
+    public int AtkType { get; set; }
+    public float AtkRecastTime { get; set; }
+    public int UnionBurstSkillId { get; set; }
+    public List<int> LevelFixedSpSkillIdList { get; set; }
+    public int Rupee { get; set; }
+    public int RewardCount { get; set; }
+    public List<int> TalentIds { get; set; }
+    public float StartHpPercent { get; set; }
+    public bool IsMoveSpeedForceZero { get; set; }
+    public Dictionary<int, int> SkillLevels { get; set; }
+    public Dictionary<int, eSpineCharacterAnimeId> AnimeIdDictionary { get; set; }
+    public List<int> MainSkillIdList { get; set; }
+    public List<int> SpecialSkillIdList { get; set; }
+    public List<int> MainSkillEvolutionIdList { get; set; }
+    public List<int> SpecialSkillEvolutionIdList { get; set; }
+    public List<int> SubUnionBurstIdList { get; set; }
+    public List<eSpineCharacterAnimeId> TreasureAnimeIdList { get; set; }
+    public bool IsDeadBySetCurrentHp { get; set; }
+    private BattleManager battleManager { get; }
+    public Transform BottomTransform { get; }
+    public bool Pause { get; set; }
+    public bool IsPartsBoss { get; }
+
+    public UnitCtrl(int id)
     {
+        battleManager = BattleManager.Instance;
+
         Id = id;
         DataConfig = ConfigManager.Instance.GetUnitDataConfig(id);
         if (DataConfig == null)
@@ -67,9 +290,9 @@ public class UnitCtrl
         spine.Initialize(true);
         headBone = spine.Skeleton.FindBone("head");
 
-        CampType = campType;
-
-        var rarityConfig = ConfigManager.Instance.GetUnitRarityConfig(id, Rarity);
+        int actualRarity = DataConfig.rarity;
+        Rarity = actualRarity;
+        var rarityConfig = ConfigManager.Instance.GetUnitRarityConfig(id, actualRarity);
         if (rarityConfig != null)
         {
             MaxHP = 99999999;
@@ -79,7 +302,7 @@ public class UnitCtrl
         }
         else
         {
-            Debug.LogWarning($"[UnitCtrl] 找不到稀有度数据: unit_id={id} rarity={Rarity}");
+            Debug.LogWarning($"[UnitCtrl] 找不到稀有度数据: unit_id={id} rarity={actualRarity}");
             MaxHP = 1; 
             HP = 1;
             PhysicalAttack = 0; 
@@ -109,7 +332,6 @@ public class UnitCtrl
         if (bubblePrefab != null)
         {
             bubbleInstance = GameObject.Instantiate(bubblePrefab, gameObject.transform);
-            bubbleInstance.transform.localScale = new Vector3(XDir, 1, 1);
             bubbleInstance.SetActive(false);
         }
 
@@ -123,7 +345,7 @@ public class UnitCtrl
         InitTransform();
     }
 
-    public void Tick()
+    public void UpdateFrame()
     {
         if (IsPaused || IsDead) return;
 
@@ -224,7 +446,7 @@ public class UnitCtrl
 
     public bool Detect()
     {
-        List<UnitCtrl> targets = BattleManager.Instance.GetOppositeUnits(CampType);
+        List<UnitCtrl> targets = GetEnemyList();
         foreach (UnitCtrl enemy in targets)
         {
             if (enemy.IsDead) continue;
@@ -268,7 +490,7 @@ public class UnitCtrl
         }
 
         bubbleInstance.SetActive(true);
-        BattleManager.Instance.StartCoroutine(HideBubble());
+        battleManager.StartCoroutine(HideBubble());
     }
 
     private System.Collections.IEnumerator HideBubble()
@@ -278,11 +500,11 @@ public class UnitCtrl
             bubbleInstance.SetActive(false);
     }
 
-    public void TakeDamage(int damage, int popupIndex, bool showVisual = true)
+    public void TakeDamage(long damage, int popupIndex, bool showVisual = true)
     {
         if (IsDead) return;
 
-        HP = Mathf.Max(0, HP - damage);
+        HP = Math.Max(0, HP - damage);
         Skill?.OnHit();
 
         Debug.Log($"TakeDamage:{Id}, HP={HP}");
@@ -294,8 +516,8 @@ public class UnitCtrl
                 gameObject.transform.position.y + 1.8f,
                 gameObject.transform.position.z
             );
-            BattleManager.Instance.ShowDamagePopup(popupPos, damage, popupIndex);
-            BattleManager.Instance.ShakeCamera();
+            battleManager.ShowDamagePopup(popupPos, damage, popupIndex);
+            battleManager.ShakeCamera();
         }
 
         if (IsDead)
@@ -311,19 +533,19 @@ public class UnitCtrl
 
     public void Heal(int amount)
     {
-        HP = Mathf.Min(MaxHP, HP + amount);
+        HP = Math.Min(MaxHP, HP + amount);
         Debug.Log($"Heal:{Id}, HP={HP}");
     }
 
     public void AddTP(int amount)
     {
-        TP = Mathf.Min(MaxTP, TP + amount);
+        TP = Math.Min(MaxTP, TP + amount);
         Debug.Log($"AddTP:{Id}, TP={TP}");
     }
 
     public void SpendTP(int amount)
     {
-        TP = Mathf.Max(0, TP - amount);
+        TP = Math.Max(0, TP - amount);
     }
 
     public void Dispose()
@@ -346,4 +568,8 @@ public class UnitCtrl
         stateMachine = null;
         Skill = null;
     }
+
+    public List<UnitCtrl> GetFriendList() => (battleManager.GetMyUnitList().Contains(this) ? battleManager.GetMyUnitList() : battleManager.GetEnemyUnitList());
+
+    public List<UnitCtrl> GetEnemyList() => (battleManager.GetMyUnitList().Contains(this) ? battleManager.GetEnemyUnitList() :battleManager.GetMyUnitList());
 }
