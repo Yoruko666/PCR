@@ -36,3 +36,4 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 Assets/Fonts/tengxiangqinyuanjian-W3[[:space:]]SDF.asset filter=lfs diff=lfs merge=lfs -text
+SourceCode/dump.cs filter=lfs diff=lfs merge=lfs -text
