@@ -7,11 +7,13 @@ public class CustomEasing
 	private float changeVal;
 	private float duration;
 	private float curTime;
-	private easingFunc func;
+
+    private delegate float easingFunc(float curTime);
+    private easingFunc func;
 
 	public bool IsMoving { get; set; }
 
-	public CustomEasing(eEasingType type, float beginValue, float endValue, float durationTime)
+	public CustomEasing(eType type, float beginValue, float endValue, float durationTime)
 	{
 		beginVal = beginValue;
 		endVal = endValue;
@@ -22,34 +24,34 @@ public class CustomEasing
 
 		switch (type)
 		{
-			case eEasingType.Linear: func = linear; break;
-			case eEasingType.InQuad: func = inQuad; break;
-			case eEasingType.OutQuad: func = outQuad; break;
-			case eEasingType.InOutQuad: func = inOutQuad; break;
-			case eEasingType.InCubic: func = inCubic; break;
-			case eEasingType.OutCubic: func = outCubic; break;
-			case eEasingType.InOutCubic: func = inOutCubic; break;
-			case eEasingType.InQuart: func = inQuart; break;
-			case eEasingType.OutQuart: func = outQuart; break;
-			case eEasingType.InOutQuart: func = inOutQuart; break;
-			case eEasingType.InSine: func = inSine; break;
-			case eEasingType.OutSine: func = outSine; break;
-			case eEasingType.InOutSine: func = inOutSine; break;
-			case eEasingType.InExpo: func = inExpo; break;
-			case eEasingType.OutExpo: func = outExpo; break;
-			case eEasingType.InOutExpo: func = inOutExpo; break;
-			case eEasingType.InCirc: func = inCirc; break;
-			case eEasingType.OutCirc: func = outCirc; break;
-			case eEasingType.InOutCirc: func = inOutCirc; break;
-			case eEasingType.InElastic: func = inElastic; break;
-			case eEasingType.OutElastic: func = outElastic; break;
-			case eEasingType.InOutElastic: func = inOutElastic; break;
-			case eEasingType.InBack: func = inBack; break;
-			case eEasingType.OutBack: func = outBack; break;
-			case eEasingType.InOutBack: func = inOutBack; break;
-			case eEasingType.InBounce: func = inBounce; break;
-			case eEasingType.OutBounce: func = outBounce; break;
-			case eEasingType.InOutBounce: func = inOutBounce; break;
+			case eType.Linear: func = linear; break;
+			case eType.InQuad: func = inQuad; break;
+			case eType.OutQuad: func = outQuad; break;
+			case eType.InOutQuad: func = inOutQuad; break;
+			case eType.InCubic: func = inCubic; break;
+			case eType.OutCubic: func = outCubic; break;
+			case eType.InOutCubic: func = inOutCubic; break;
+			case eType.InQuart: func = inQuart; break;
+			case eType.OutQuart: func = outQuart; break;
+			case eType.InOutQuart: func = inOutQuart; break;
+			case eType.InSine: func = inSine; break;
+			case eType.OutSine: func = outSine; break;
+			case eType.InOutSine: func = inOutSine; break;
+			case eType.InExpo: func = inExpo; break;
+			case eType.OutExpo: func = outExpo; break;
+			case eType.InOutExpo: func = inOutExpo; break;
+			case eType.InCirc: func = inCirc; break;
+			case eType.OutCirc: func = outCirc; break;
+			case eType.InOutCirc: func = inOutCirc; break;
+			case eType.InElastic: func = inElastic; break;
+			case eType.OutElastic: func = outElastic; break;
+			case eType.InOutElastic: func = inOutElastic; break;
+			case eType.InBack: func = inBack; break;
+			case eType.OutBack: func = outBack; break;
+			case eType.InOutBack: func = inOutBack; break;
+			case eType.InBounce: func = inBounce; break;
+			case eType.OutBounce: func = outBounce; break;
+			case eType.InOutBounce: func = inOutBounce; break;
 		}
 	}
 
@@ -223,9 +225,7 @@ public class CustomEasing
 		return outBounce(t * 2 - 1) / 2 + 0.5f;
 	}
 
-	private delegate float easingFunc(float curTime);
-
-	public enum eEasingType
+	public enum eType
 	{
 		Linear = 0,
 		InQuad = 1,

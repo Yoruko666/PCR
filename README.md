@@ -66,7 +66,7 @@ spine.Skeleton.SetToSetupPose();
 [蘭德索爾圖書館](https://pcredivewiki.tw)\
 [プリコネ Re:Dive Wiki](https://priconne_redive.rwiki.jp)\
 [干炸里脊资源（©Cygames）](https://redive.estertion.win/)\
-[公主连结数据库](https://github.com/wthee/pcr-tool-sql-diff)
+[公主连结数据库](https://github.com/wthee/pcr-tool-sql-diff)\
 [【公主连结Re:Dive】游戏站位机制](https://zhuanlan.zhihu.com/p/145043002)\
 [【公主连结Re:Dive】游戏机制之普攻和技能机制](https://zhuanlan.zhihu.com/p/148423807)\
 [【公主连结Re:Dive】游戏机制之公式整合](https://zhuanlan.zhihu.com/p/145042599)\
@@ -74,3 +74,5 @@ spine.Skeleton.SetToSetupPose();
 [【公主连结Re:Dive】游戏机制之先后手的机制](https://zhuanlan.zhihu.com/p/149200253)\
 [【公主连结/游戏机制】移动&站位机制·修正版](https://www.bilibili.com/opus/454873187389458535)\
 [【教程】如何提取公主连结游戏动画素材](https://www.bilibili.com/opus/801111052800491733)
+
+- 注：本项目含通过解包、反编译获取的代码及资源以供参考，仅供学习交流，严禁用于商业用途，后果自负。

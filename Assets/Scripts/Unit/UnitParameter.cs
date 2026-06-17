@@ -1,16 +1,14 @@
 public class UnitParameter 
 {
-	private int _enemyColor; 
+    public UnitData UniqueData { get; set; }
+    public UnitDataForView UniqueDataForView { get; set; }
+    public UnitData LimitedUnitData { get; set; }
+    public bool IsClanSupportOrReplay { get; set; }
+    public Elements.Data.MasterUnitData.UnitData MasterData { get; set; }
+    public Elements.Data.MasterUnitSkillData.UnitSkillData SkillData { get; set; }
+    public int EnemyColor { get; set; }
 
-	public UnitData UniqueData { get; set; }
-	public UnitDataForView UniqueDataForView { get; set; }
-	public UnitData LimitedUnitData { get; set; }
-	public bool IsClanSupportOrReplay { get; set; }
-//	public OGHINKMFEML.BIDOEFJHJDC MasterData { get; set; }
-//	public MIGKKBOBFHE.FHGLDLHFPME SkillData { get; set; }
-	public int EnemyColor { get; set; }
-
-	public UnitParameter() { }
+    public UnitParameter() { }
 
 	public UnitParameter(UnitData _unitData) { }
 

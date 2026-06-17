@@ -172,8 +172,8 @@ public class BattleDefine
 		public CustomEasing StartPosYEasing;
 		public CustomEasing EndPosYEasing; 
 		public List<ZoomEffectPlual> ZoomEffectList; 
-		public CustomEasing.eEasingType StartEasingType; 
-		public CustomEasing.eEasingType EndEasingType;
+		public CustomEasing.eType StartEasingType; 
+		public CustomEasing.eType EndEasingType;
 		public string BoneName; 
 		public float ToPosX { get; set; }
 		public float ToPosY { get; set; }
@@ -203,7 +203,7 @@ public class BattleDefine
 		public CustomEasing StartEasing; 
 		public CustomEasing StartPosXEasing; 
 		public CustomEasing StartPosYEasing; 
-		public CustomEasing.eEasingType StartEasingType;
+		public CustomEasing.eType StartEasingType;
 		public bool UseYBottom;
 		public string BoneName; 
 
