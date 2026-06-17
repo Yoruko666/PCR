@@ -2,7 +2,6 @@ namespace Elements.Battle.Core
 {
     public enum BuffParamKind
     {
-        Value__ = 0,
         Atk = 1,
         Def = 2,
         MagicStr = 3,

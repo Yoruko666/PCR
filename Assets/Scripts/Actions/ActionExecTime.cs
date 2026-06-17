@@ -1,10 +1,13 @@
 using System;
 
-[Serializable]
-public class ActionExecTime
+namespace Elements
 {
-    public float Time;
-    public eDamageEffectType DamageNumType;
-    public double Weight;
-    public float DamageNumScale;
+    [Serializable]
+    public class ActionExecTime
+    {
+        public float Time;
+        public eDamageEffectType DamageNumType;
+        public double Weight;
+        public float DamageNumScale;
+    }
 }

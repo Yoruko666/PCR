@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Elements.Battle.Core;
+using UnityEngine;
 
 namespace Elements 
 { 
+	/*
 	private sealed class UnitActionController.<>c
 	{
 		public static readonly UnitActionController.<>c <>9;
@@ -74,7 +77,7 @@ namespace Elements
 
 		public void .ctor() { }
 
-		internal double <ExecAction>b__0(Elements.Battle.Core.ActionParameter _targetAction, Elements.Battle.Core.eValueNumber _type) { }
+		internal double <ExecAction>b__0(ActionParameter _targetAction, eValueNumber _type) { }
 	}
 
 	[CompilerGenerated]
@@ -110,7 +113,7 @@ namespace Elements
 	[CompilerGenerated]
 	private sealed class UnitActionController.<>c__DisplayClass112_0
 	{
-		public Elements.Battle.Core.eAbnormalState targetAbnormalState;
+		public eAbnormalState targetAbnormalState;
 
 
 		public void .ctor() { }
@@ -184,15 +187,15 @@ namespace Elements
 
 		public void .ctor() { }
 
-		internal bool <UpdateEffectRunTimeData>b__0(Elements.Battle.Core.ActionParameter e) { }
+		internal bool <UpdateEffectRunTimeData>b__0(ActionParameter e) { }
 
-		internal bool <UpdateEffectRunTimeData>b__1(Elements.Battle.Core.ActionParameter e) { }
+		internal bool <UpdateEffectRunTimeData>b__1(ActionParameter e) { }
 	}
 
 	[CompilerGenerated]
 	private sealed class UnitActionController.<>c__DisplayClass88_0
 	{
-		public Elements.Battle.Core.ActionParameter actionParameter;
+		public ActionParameter actionParameter;
 
 
 		public void .ctor() { }
@@ -220,7 +223,7 @@ namespace Elements
 		private object <>2__current;
 		public BasePartsData _target;
 		public bool _boneCount;
-		public Elements.Battle.Core.ActionParameter _action;
+		public ActionParameter _action;
 		public bool _first;
 		public float _starttime;
 		public Skill _skill;
@@ -549,18 +552,20 @@ namespace Elements
 		private bool MoveNext() { }
 
 		[DebuggerHidden]
-		private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
+		private object IEnumerator<System.Object>.get_Current() { }
 
 		[DebuggerHidden]
-		private void System.Collections.IEnumerator.Reset() { }
+		private void IEnumerator.Reset() { }
 
 		[DebuggerHidden]
-		private object System.Collections.IEnumerator.get_Current() { }
+		private object IEnumerator.get_Current() { }
 	}
+
+	*/
 
 	public class UnitActionController : MonoBehaviour, ISingletonField
 	{
-		public FixedTransformMonoBehavior.FixedTransform transform;
+//		public FixedTransformMonoBehavior.FixedTransform transform;
 		public ActionParameterOnPrefabDetail AttackDetail;
 		public bool UseDefaultDelay;
 		public Skill Attack;
@@ -573,11 +578,11 @@ namespace Elements
 		public List<Skill> SubUnionBurstList;
 		public Skill Annihilation;
 
-		private static Yggdrasil<UnitActionController> staticSingletonTree;
-		private static IBattleManagerForUnitActionController staticBattleManager;
-		private static IBattleCameraEffectForUnitActionController staticBattleCameraEffect;
-		private static IBattleEffectPool staticBattleEffectPool;
-		private static IBattleTimeScaleForUnitActionController staticBattleTimeScale;
+//		private static Yggdrasil<UnitActionController> staticSingletonTree;
+//		private static IBattleManagerForUnitActionController staticBattleManager;
+//		private static IBattleCameraEffectForUnitActionController staticBattleCameraEffect;
+//		private static IBattleEffectPool staticBattleEffectPool;
+//		private static IBattleTimeScaleForUnitActionController staticBattleTimeScale;
 		public const long ACTION_ID_OFFSET = 100;
 		private const int ACTION_ID_OFFSET_FOR_CHARA_ID = 10000;
 		private const int DEFAULT_MOTION_NUMBER = 0;
@@ -596,22 +601,22 @@ namespace Elements
 		public bool ContinuousActionEndDone { get; set; }
 		private bool isUnionBurstOnlyOwner { get; set; }
 		private bool updateBranchMotionRunning { get; set; }
-		private IBattleManagerForUnitActionController battleManager { get; }
-		private IBattleCameraEffectForUnitActionController battleCameraEffect { get; }
-		private IBattleEffectPool battleEffectPool { get; }
-		private IBattleTimeScaleForUnitActionController battleTimeScale { get; }
+//		private IBattleManagerForUnitActionController battleManager { get; }
+//		private IBattleCameraEffectForUnitActionController battleCameraEffect { get; }
+//		private IBattleEffectPool battleEffectPool { get; }
+//		private IBattleTimeScaleForUnitActionController battleTimeScale { get; }
 
 		public static void StaticRelease() { }
 
 		private void OnDestroy() { }
 
-		public void Initialize(UnitCtrl _owner, UnitParameter _unitParameter, bool _initializeAttackOnly = False, UnitCtrl _seOwner) { }
+		public void Initialize(UnitCtrl _owner, UnitParameter _unitParameter, bool _initializeAttackOnly = false, UnitCtrl _seOwner) { }
 
 		private void setSkillParameter(Skill _skill, Elements.Data.MasterSkillData.SkillData _skillParameter, int _parentSkillId = -1) { }
 
 		private void dependActionSolve(Skill skill) { }
 
-		public void UpdateEffectRunTimeData(Skill _skill, List<NormalSkillEffect> _skillList, bool _resetflag = True) { }
+		public void UpdateEffectRunTimeData(Skill _skill, List<NormalSkillEffect> _skillList, bool _resetflag = true) { }
 
 		private void execActionOnStart(Skill _skill) { }
 
@@ -625,7 +630,7 @@ namespace Elements
 
 		private void actionStartFirstProcess(Skill _skill, out bool _hasNoTarget) { }
 
-		private void searchAndSortTarget(Skill _skill, Elements.Battle.Core.ActionParameter _action, Vector3 _basePosition, bool _quiet = False, bool _considerBodyWidth = True) { }
+		private void searchAndSortTarget(Skill _skill, ActionParameter _action, Vector3 _basePosition, bool _quiet = false, bool _considerBodyWidth = false) { }
 
 		private void setCutInSkipTimeForPrincessForm(int _skillId) { }
 
@@ -643,21 +648,21 @@ namespace Elements
 
 		private IEnumerator updateCoroutineWithOutCutIn(IEnumerator _coroutine) { }
 
-		public void CreateNormalPrefabWithTargetMotion(Skill _skill, int _targetmotion, bool _first, bool _useStartCoroutine = False, bool _modechangeEndEffect = False) { }
+		public void CreateNormalPrefabWithTargetMotion(Skill _skill, int _targetmotion, bool _first, bool _useStartCoroutine = false, bool _modechangeEndEffect = false) { }
 
-		public void ExecUnitActionWithDelay(Elements.Battle.Core.ActionParameter _action, Skill _skill, bool _first, bool _boneCount, bool _ignoreCancel = False) { }
+		public void ExecUnitActionWithDelay(ActionParameter _action, Skill _skill, bool _first, bool _boneCount, bool _ignoreCancel = false) { }
 
-		public void ExecUnitActionNoDelay(Elements.Battle.Core.ActionParameter _action, Skill _skill) { }
+		public void ExecUnitActionNoDelay(ActionParameter _action, Skill _skill) { }
 
-		public IEnumerator ExecActionWithDelayAndTarget(Elements.Battle.Core.ActionParameter _action, Skill _skill, BasePartsData _target, float _starttime, bool _first = False, bool _boneCount = True, bool _ignoreCancel = False, BasePartsData _protectedTarget) { }
+		public IEnumerator ExecActionWithDelayAndTarget(ActionParameter _action, Skill _skill, BasePartsData _target, float _starttime, bool _first = false, bool _boneCount = true, bool _ignoreCancel = false, BasePartsData _protectedTarget) { }
 
-		public void ExecAction(Elements.Battle.Core.ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, bool _execChildNoFrame = False, BasePartsData _protectedTarget, bool _ignoreProtect = False) { }
+		public void ExecAction(ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, bool _execChildNoFrame = false, BasePartsData _protectedTarget, bool _ignoreProtect = false) { }
 
-		public void ExecChildrenAction(Elements.Battle.Core.ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, Dictionary<int, bool> _enabledChildAction, bool _execNoFrame, BasePartsData _protectedTarget) { }
+		public void ExecChildrenAction(ActionParameter _action, Skill _skill, BasePartsData _target, int _num, float _starttime, Dictionary<int, bool> _enabledChildAction, bool _execNoFrame, BasePartsData _protectedTarget) { }
 
-		private void initWhenNoTarget(Elements.Battle.Core.ActionParameter _action, Skill _skill) { }
+		private void initWhenNoTarget(ActionParameter _action, Skill _skill) { }
 
-		private IEnumerator createNormalPrefabWithDelay(NormalSkillEffect _skilleffect, Skill _skill, bool _first = False, bool _skipCutIn = False, bool _isFirearmEndEffect = False, bool _modeChangeEndEffect = False) { }
+		private IEnumerator createNormalPrefabWithDelay(NormalSkillEffect _skilleffect, Skill _skill, bool _first = false, bool _skipCutIn = false, bool _isFirearmEndEffect = false, bool _modeChangeEndEffect = false) { }
 
 		private IEnumerator createNormalPrefabWithDelayAndTarget(NormalSkillEffect _skilleffect, Skill _skill, float _delay, BasePartsData _target, bool _first) { }
 
@@ -667,17 +672,17 @@ namespace Elements
 
 		private void onFirearmHit(FirearmCtrl firearmCtrl) { }
 
-		private void searchTargetUnit(Elements.Battle.Core.ActionParameter actionParameter, Vector3 basePosition, Skill skill, bool _considerBodyWidth) { }
+		private void searchTargetUnit(ActionParameter actionParameter, Vector3 basePosition, Skill skill, bool _considerBodyWidth) { }
 
-		private bool isInActionTargetArea(Skill _skill, Elements.Battle.Core.ActionParameter _action, Vector3 _basePosition, bool _considerBodyWidth, BasePartsData _checkUnitCtrl) { }
+		private bool isInActionTargetArea(Skill _skill, ActionParameter _action, Vector3 _basePosition, bool _considerBodyWidth, BasePartsData _checkUnitCtrl) { }
 
-		private bool judgeIsInTargetArea(Elements.Battle.Core.ActionParameter _actionParameter, Vector3 _basePosition, bool _considerBodyWidth, float _parentLossyScale, float _start, float _end, BasePartsData _unitCtrl) { }
+		private bool judgeIsInTargetArea(ActionParameter _actionParameter, Vector3 _basePosition, bool _considerBodyWidth, float _parentLossyScale, float _start, float _end, BasePartsData _unitCtrl) { }
 
-		private bool judgeIsTarget(UnitCtrl _unitCtrl, Elements.Battle.Core.ActionParameter _actionParameter) { }
+		private bool judgeIsTarget(UnitCtrl _unitCtrl, ActionParameter _actionParameter) { }
 
-		public static int GetAttackSide(Elements.Battle.Core.DirectionType _direction, UnitCtrl _owner) { }
+		public static int GetAttackSide(DirectionType _direction, UnitCtrl _owner) { }
 
-		private Elements.Battle.Core.PriorityPattern convertPriorityPattern(Elements.Battle.Core.PriorityPattern _pattern) { }
+		private PriorityPattern convertPriorityPattern(PriorityPattern _pattern) { }
 
 		private void sortTargetListByTargetPattern(ActionParameter _actionParameter, Transform _baseTransform, bool _quiet) { }
 
@@ -687,9 +692,9 @@ namespace Elements
 
 		public void CancelAction(int skillId) { }
 
-		public IEnumerator StartShakeWithDelay(ShakeEffect _shake, Skill _skill, bool _first = False) { }
+		public IEnumerator StartShakeWithDelay(ShakeEffect _shake, Skill _skill, bool _first = false) { }
 
-		private void startBlurEffects(Skill _skill, bool _first = False) { }
+		private void startBlurEffects(Skill _skill, bool _first = false) { }
 
 		private IEnumerator startBlurWithDelay(BlurEffect.BlurEffectData _blurData, Skill _skill, bool _first) { }
 
@@ -713,7 +718,7 @@ namespace Elements
 
 		public void ExecActionOnWaveStart() { }
 
-		public IEnumerator UpdateBranchMotion(Elements.Battle.Core.ActionParameter _action, Skill _skill) { }
+		public IEnumerator UpdateBranchMotion(ActionParameter _action, Skill _skill) { }
 
 		private bool actionCancelAndGetCancel(int _skillId) { }
 
@@ -733,11 +738,8 @@ namespace Elements
 
 		public void ExecSkillWithTargetParts(Skill _skill, BasePartsData _parts) { }
 
-		private Elements.Battle.Core.ActionParameter createActionParameter(Elements.Data.MasterSkillAction.SkillAction _action, ExSkillScriptable _exSkillScriptable, Elements.Battle.Core.ExSkillData _exSkillData) { }
+		private ActionParameter createActionParameter(Elements.Data.MasterSkillAction.SkillAction _action, ExSkillScriptable _exSkillScriptable, Elements.Battle.Core.ExSkillData _exSkillData) { }
 
 		public UnitActionController() { }
-
-		[CompilerGenerated]
-		private bool <searchTargetUnit>b__112_4(UnitCtrl e) { }
 	}
 }
