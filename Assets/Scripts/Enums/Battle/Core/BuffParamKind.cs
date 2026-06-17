@@ -1,0 +1,29 @@
+namespace Elements.Battle.Core
+{
+    public enum BuffParamKind
+    {
+        Value__ = 0,
+        Atk = 1,
+        Def = 2,
+        MagicStr = 3,
+        MagicDef = 4,
+        Dodge = 5,
+        PhysicalCritical = 6,
+        MagicCritical = 7,
+        EnergyRecoverRate = 8,
+        LifeSteal = 9,
+        MoveSpeed = 10,
+        PhysicalCriticalDamageRate = 11,
+        MagicCriticalDamageRate = 12,
+        Accuracy = 13,
+        ReceiveCriticalDamageRate = 14,
+        ReceivePhysicalAndMagicDamagePercent = 15,
+        ReceivePhysicalDamagePercent = 16,
+        ReceiveMagicDamagePercent = 17,
+        PhysicalDamageUpPercent = 18,
+        MagicDamageUpPercent = 19,
+        MaxHp = 100,
+        Num = 101,
+        None = 101
+    }
+}

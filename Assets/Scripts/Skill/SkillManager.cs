@@ -191,7 +191,7 @@ public class SkillManager
             if (action.action_id != actionId)
                 continue;
 
-            var targetType = (eTargetType)action.target_type;
+            var targetType = (PriorityPattern)action.target_type;
             var targets = GetTargets(targetType, action.target_count, action.target_range);
 
             switch ((eActionType)action.action_type)
@@ -254,20 +254,20 @@ public class SkillManager
         return schedule;
     }
 
-    private List<UnitCtrl> GetTargets(eTargetType targetType, int targetCount, int range)
+    private List<UnitCtrl> GetTargets(PriorityPattern targetType, int targetCount, int range)
     {
         switch (targetType)
         {
-            case eTargetType.Owner:
+            case PriorityPattern.Owner:
                 return new() { owner };
-            case eTargetType.Random:
-            case eTargetType.Near:
-            case eTargetType.Forward:
-            case eTargetType.Back:
+            case PriorityPattern.Random:
+            case PriorityPattern.Near:
+            case PriorityPattern.Forward:
+            case PriorityPattern.Back:
                 return new() { GetSingleEnemy() };
-            case eTargetType.HpAsc:
-            case eTargetType.HpDesc:
-            case eTargetType.Far:
+            case PriorityPattern.HpAsc:
+            case PriorityPattern.HpDesc:
+            case PriorityPattern.Far:
             default:
                 return targetCount > 1
                     ? owner.GetEnemyList()
