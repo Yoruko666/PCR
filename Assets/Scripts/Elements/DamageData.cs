@@ -1,5 +1,5 @@
 using System;
-using System.Runtime.CompilerServices;
+using Elements.Battle.Core;
 
 namespace Elements 
 { 
@@ -21,7 +21,7 @@ namespace Elements
         public eDamageType DamageType { get; set; }
         public eDamageEffectType DamegeEffectType { get; set; }
         public long DefPenetrate { get; set; }
-        public Elements.Battle.Core.eActionType ActionType { get; set; }
+        public eActionType ActionType { get; set; }
         public bool TargetIncludeMyTeam { get; set; }
         public bool IgnoreDef { get; set; }
         public bool IsDivisionDamage { get; set; }

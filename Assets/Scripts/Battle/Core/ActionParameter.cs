@@ -7,7 +7,7 @@ namespace Elements.Battle.Core
 {
     public class ActionParameter : ISingletonField 
     {
-        private static Yggdrasil<Elements.Battle.Core.ActionParameter> staticSingletonTree; 
+        private static Yggdrasil<ActionParameter> staticSingletonTree; 
         private static IBattleManagerForActionParameter staticBattleManager; 
         private static IBattleEffectPool staticBattleEffectPool; 
         private static IBattleLog staticBattleLog;
@@ -46,7 +46,7 @@ namespace Elements.Battle.Core
         public List<NormalSkillEffect> ActionEffectList { get; set; }
         public List<NormalSkillEffect> ActionSubEffectList { get; set; }
         public bool TriggerCall { get; set; }
-        public Elements.Battle.Core.AbnormalStateFieldAction AbnormalStateFieldAction { get; set; }
+        public AbnormalStateFieldAction AbnormalStateFieldAction { get; set; }
         public eAbnormalState EnvironmentTargetAbnormalState { get; set; }
         public bool IsEnvironmentAbnormalState { get; set; }
         public Action OnDefeatEnemy { get; set; }
@@ -96,7 +96,6 @@ namespace Elements.Battle.Core
 
         public bool IsChangeSpeedAction() { }
         public virtual void SetLevel(int _level) { }
-
 
         public virtual void Initialize(UnitCtrl _ownerUnitCtrl) { }
 
