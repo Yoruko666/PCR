@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Elements.Battle.Core 
 {
@@ -10,7 +9,6 @@ namespace Elements.Battle.Core
         private static Yggdrasil<ActionParameter> staticSingletonTree; 
         private static IBattleManagerForActionParameter staticBattleManager; 
         private static IBattleEffectPool staticBattleEffectPool; 
-        private static IBattleLog staticBattleLog;
         public eActionType ActionType; 
         public OnActionEndDelegate OnActionEnd;
         public Dictionary<int, GameObject> ToadPrefab; 

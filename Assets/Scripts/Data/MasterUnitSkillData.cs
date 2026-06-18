@@ -26,6 +26,12 @@ namespace Elements.Data
             return result;
         }
 
+        public MasterUnitSkillData(MasterUnitDatabase db) : base(db)
+        {
+            _db = db;
+            _lazyPrimaryKeyDictionary = new Dictionary<int, UnitSkillData>();
+        }
+
         public override void Unload()
         {
             _lazyPrimaryKeyDictionary.Clear();
@@ -34,12 +40,6 @@ namespace Elements.Data
         public bool HasKey(int unit_id)
         {
             return _lazyPrimaryKeyDictionary.ContainsKey(unit_id);
-        }
-
-        public MasterUnitSkillData(MasterUnitDatabase db) : base(db)
-        {
-            _db = db;
-            _lazyPrimaryKeyDictionary = new Dictionary<int, UnitSkillData>();
         }
         
         private UnitSkillData _CreateCachedOrmByQueryResult(Query query)
@@ -164,39 +164,39 @@ namespace Elements.Data
 
             public UnitSkillData(int unit_id = 0, int union_burst = 0, int main_skill_1 = 0, int main_skill_2 = 0, int main_skill_3 = 0, int main_skill_4 = 0, int main_skill_5 = 0, int main_skill_6 = 0, int main_skill_7 = 0, int main_skill_8 = 0, int main_skill_9 = 0, int main_skill_10 = 0, int ex_skill_1 = 0, int ex_skill_evolution_1 = 0, int ex_skill_2 = 0, int ex_skill_evolution_2 = 0, int ex_skill_3 = 0, int ex_skill_evolution_3 = 0, int ex_skill_4 = 0, int ex_skill_evolution_4 = 0, int ex_skill_5 = 0, int ex_skill_evolution_5 = 0, int sp_union_burst = 0, int sp_skill_1 = 0, int sp_skill_2 = 0, int sp_skill_3 = 0, int sp_skill_4 = 0, int sp_skill_5 = 0, int union_burst_evolution = 0, int main_skill_evolution_1 = 0, int main_skill_evolution_2 = 0, int sp_skill_evolution_1 = 0, int sp_skill_evolution_2 = 0)
             {
-                this._unit_id = unit_id;
-                this._union_burst = union_burst;
-                this._main_skill_1 = main_skill_1;
-                this._main_skill_2 = main_skill_2;
-                this._main_skill_3 = main_skill_3;
-                this._main_skill_4 = main_skill_4;
-                this._main_skill_5 = main_skill_5;
-                this._main_skill_6 = main_skill_6;
-                this._main_skill_7 = main_skill_7;
-                this._main_skill_8 = main_skill_8;
-                this._main_skill_9 = main_skill_9;
-                this._main_skill_10 = main_skill_10;
-                this._ex_skill_1 = ex_skill_1;
-                this._ex_skill_evolution_1 = ex_skill_evolution_1;
-                this._ex_skill_2 = ex_skill_2;
-                this._ex_skill_evolution_2 = ex_skill_evolution_2;
-                this._ex_skill_3 = ex_skill_3;
-                this._ex_skill_evolution_3 = ex_skill_evolution_3;
-                this._ex_skill_4 = ex_skill_4;
-                this._ex_skill_evolution_4 = ex_skill_evolution_4;
-                this._ex_skill_5 = ex_skill_5;
-                this._ex_skill_evolution_5 = ex_skill_evolution_5;
-                this._sp_union_burst = sp_union_burst;
-                this._sp_skill_1 = sp_skill_1;
-                this._sp_skill_2 = sp_skill_2;
-                this._sp_skill_3 = sp_skill_3;
-                this._sp_skill_4 = sp_skill_4;
-                this._sp_skill_5 = sp_skill_5;
-                this._union_burst_evolution = union_burst_evolution;
-                this._main_skill_evolution_1 = main_skill_evolution_1;
-                this._main_skill_evolution_2 = main_skill_evolution_2;
-                this._sp_skill_evolution_1 = sp_skill_evolution_1;
-                this._sp_skill_evolution_2 = sp_skill_evolution_2;
+                _unit_id = unit_id;
+                _union_burst = union_burst;
+                _main_skill_1 = main_skill_1;
+                _main_skill_2 = main_skill_2;
+                _main_skill_3 = main_skill_3;
+                _main_skill_4 = main_skill_4;
+                _main_skill_5 = main_skill_5;
+                _main_skill_6 = main_skill_6;
+                _main_skill_7 = main_skill_7;
+                _main_skill_8 = main_skill_8;
+                _main_skill_9 = main_skill_9;
+                _main_skill_10 = main_skill_10;
+                _ex_skill_1 = ex_skill_1;
+                _ex_skill_evolution_1 = ex_skill_evolution_1;
+                _ex_skill_2 = ex_skill_2;
+                _ex_skill_evolution_2 = ex_skill_evolution_2;
+                _ex_skill_3 = ex_skill_3;
+                _ex_skill_evolution_3 = ex_skill_evolution_3;
+                _ex_skill_4 = ex_skill_4;
+                _ex_skill_evolution_4 = ex_skill_evolution_4;
+                _ex_skill_5 = ex_skill_5;
+                _ex_skill_evolution_5 = ex_skill_evolution_5;
+                _sp_union_burst = sp_union_burst;
+                _sp_skill_1 = sp_skill_1;
+                _sp_skill_2 = sp_skill_2;
+                _sp_skill_3 = sp_skill_3;
+                _sp_skill_4 = sp_skill_4;
+                _sp_skill_5 = sp_skill_5;
+                _union_burst_evolution = union_burst_evolution;
+                _main_skill_evolution_1 = main_skill_evolution_1;
+                _main_skill_evolution_2 = main_skill_evolution_2;
+                _sp_skill_evolution_1 = sp_skill_evolution_1;
+                _sp_skill_evolution_2 = sp_skill_evolution_2;
             }
             
             private static List<int> NonZero(params int[] values)

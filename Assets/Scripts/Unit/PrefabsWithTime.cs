@@ -12,5 +12,12 @@ public class PrefabWithTime
     public eEffectDifficulty EffectDifficlty;
     public bool IsTrackRotation;
 
-    public PrefabWithTime() { }
+    public enum eEffectDifficulty
+    {
+        All = 0,
+        Normal = 1,
+        Hard = 2,
+        VeryHard = 3,
+        AllForChara = 4,
+    }
 }

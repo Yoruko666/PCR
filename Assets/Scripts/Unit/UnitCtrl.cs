@@ -7,9 +7,10 @@ using Elements.Battle.Core;
 
 namespace Elements
 { 
-    public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitComponentContainer 
+    public class UnitCtrl : FixedTransformMonoBehavior, ISingletonField, IUnitComponentContainer
     {
-    
+        public int UnitId { get; set; }
+
         private const float START_CAST_TIME = 0.3f;
         private const float START_CAST_TIME_STAND_BY = 2.5f;
 	    public Dictionary<int, int> SkillUseCount; 
@@ -86,7 +87,6 @@ namespace Elements
         private static IBattleEffectPool staticBattleEffectPool; 
         private static IBattleTimeScaleForUnitCtrl staticBattleTimeScale; 
 	    private static BattleManager staticBattleManager; 
-
     
         public UnitActionController UnitActionController { get; set; }
         public Elements.Battle.Core.PrincessFormProcessor PrincessFormProcessor { get; set; }
@@ -138,7 +138,7 @@ namespace Elements
         public bool IsOther { get; set; }
         public bool IsBonusEnemy { get; set; }
         public bool IsPlayerUnit { get; }
-        public Elements.Battle.Core.SummonAction.eSummonType SummonType { get; set; }
+//      public Elements.Battle.Core.SummonAction.eSummonType SummonType { get; set; }
         public bool IsSummonOrPhantom { get; }
         public bool IsGuest { get; set; }
         public bool IsGuestFadeout { get; set; }
@@ -201,7 +201,6 @@ namespace Elements
         private Dictionary<int, float> castTimeDictionary { get; set; }
         public int Index { get; set; }
         public int IdentifyNum { get; set; }
-        public int UnitId { get; set; }
         public int CharacterUnitId { get; set; }
         public int OriginalUnitId { get; set; }
         public int SDSkin { get; set; }
@@ -244,6 +243,11 @@ namespace Elements
 
         public void DestroyAndCoroutineRemove() { }
 
+        /*
+        private void <instantiateResources>b__597_0(eStateIconType _iconType, bool _enable) { }
+        private void <instantiateResources>b__597_1(eStateIconType _iconType, int _num) { }
+        private void <instantiateResources>b__597_2(eStateIconType _iconType, bool _enable) { }
+        */
         private void instantiateResources() { }
 
         /*
@@ -710,9 +714,13 @@ namespace Elements
 
         public void FadeoutSe(float _fadeSec) { }
 
+        // private bool <PlayUbChainVoice>b__652_0(UnitCtrl unit) { }
+
         public void PlayUbChainVoice() { }
 
         public bool GetPlayNext() { }
+
+        // private bool <SearchContinuousUnit>b__654_0(ContinuousUnit e) { }
 
         public ContinuousUnit SearchContinuousUnit() { }
 
@@ -723,10 +731,10 @@ namespace Elements
         public void AppendBreakLog(UnitCtrl _source) { }
 
     
-        public Dictionary<eParamType, Elements.Battle.Core.PassiveActionValue> GetPassiveDictionaryByEnemy() { }
+        public Dictionary<eParamType, PassiveActionValue> GetPassiveDictionaryByEnemy() { }
 
     
-        public Dictionary<eParamType, Elements.Battle.Core.PassiveActionValue> GetPassiveDictionaryByUnit() { }
+        public Dictionary<eParamType, PassiveActionValue> GetPassiveDictionaryByUnit() { }
 
     
         public void ResetThanksTargetUnit() { }
@@ -755,25 +763,5 @@ namespace Elements
         public void SetSpineSortOrder(int _value) { }
 
         public UnitCtrl() { }
-
-        [CompilerGenerated]
-    
-        private void <instantiateResources>b__597_0(eStateIconType _iconType, bool _enable) { }
-
-        [CompilerGenerated]
-    
-        private void <instantiateResources>b__597_1(eStateIconType _iconType, int _num) { }
-
-        [CompilerGenerated]
-    
-        private void <instantiateResources>b__597_2(eStateIconType _iconType, bool _enable) { }
-
-        [CompilerGenerated]
-    
-        private bool <PlayUbChainVoice>b__652_0(UnitCtrl unit) { }
-
-        [CompilerGenerated]
-    
-        private bool <SearchContinuousUnit>b__654_0(ContinuousUnit e) { }
     }
 }

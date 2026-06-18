@@ -2,80 +2,80 @@ using Sqlite3Plugin;
 
 namespace Elements.Data
 {
-    public class MasterUnitDatabase : AbstractMasterDatabase // TypeDefIndex: 17181
+    public class MasterUnitDatabase : AbstractMasterDatabase 
     {
-        private PreparedQuery _selectQuery_masterUnitComments; // 0x1A0
-        private PreparedQuery _selectQuery_masterUnitData; // 0x1A8
-        private PreparedQuery _selectQuery_masterCharaIdentity; // 0x1B0
-        private PreparedQuery _selectQuery_masterUnitEnemyData; // 0x1B8
-        private PreparedQuery _selectQuery_masterUnitSkillData; // 0x1C0
-        private PreparedQuery _selectQuery_masterUnitAttackPattern; // 0x1C8
-        private PreparedQuery _selectQuery_masterUnitRarity; // 0x1D0
-        private PreparedQuery _selectQuery_masterUnitPromotion; // 0x1D8
-        private PreparedQuery _selectQuery_masterUnitPromotionStatus; // 0x1E0
-        private PreparedQuery _selectQuery_masterUnlockSkillData; // 0x1E8
-        private PreparedQuery _selectQuery_masterUnlockUnitCondition; // 0x1F0
-        private PreparedQuery _selectQuery_masterUnitMypagePos; // 0x1F8
-        private PreparedQuery _selectQuery_masterUnitProfile; // 0x200
-        private PreparedQuery _selectQuery_masterNaviComment; // 0x208
-        private PreparedQuery _selectQuery_masterEventNaviComment; // 0x210
-        private PreparedQuery _selectQuery_masterSdNaviComment; // 0x218
-        private PreparedQuery _selectQuery_masterUnitBackground; // 0x220
-        private PreparedQuery _selectQuery_masterGuild; // 0x228
-        private PreparedQuery _selectQuery_masterGuildAdditionalMember; // 0x230
-        private PreparedQuery _selectQuery_masterUnitStatusCoefficient; // 0x238
-        private PreparedQuery _selectQuery_masterPositionSetting; // 0x240
-        private PreparedQuery _selectQuery_masterUnitIntroduction; // 0x248
-        private PreparedQuery _selectQuery_masterUnitMotionList; // 0x250
-        private PreparedQuery _selectQuery_masterVoiceGroup; // 0x258
-        private PreparedQuery _selectQuery_masterVoiceGroupChara; // 0x260
-        private PreparedQuery _selectQuery_masterUnitUniqueEquip; // 0x268
-        private PreparedQuery _selectQuery_masterUnitUniqueEquipment; // 0x270
-        private PreparedQuery _selectQuery_masterUnlockRarity6; // 0x278
-        private PreparedQuery _selectQuery_masterCombinedResultMotion; // 0x280
-        private PreparedQuery _selectQuery_masterGrowthParameter; // 0x288
-        private PreparedQuery _selectQuery_masterGrowthRestrictionUnit; // 0x290
-        private PreparedQuery _selectQuery_masterGrowthParameterUnique; // 0x298
-        private PreparedQuery _selectQuery_masterPromotionBonus; // 0x2A0
-        private PreparedQuery _selectQuery_masterEReduction; // 0x2A8
-        private PreparedQuery _selectQuery_masterExceptEr; // 0x2B0
-        private PreparedQuery _selectQuery_masterUnitConversion; // 0x2B8
-        private PreparedQuery _selectQuery_masterLoveRankup; // 0x2C0
-        private PreparedQuery _selectQuery_masterUnitPosAdjustment; // 0x2C8
-        private PreparedQuery _selectQuery_masterSpLoseVoice; // 0x2D0
-        private PreparedQuery _selectQuery_masterSpLoseVoiceGroup; // 0x2D8
-        private PreparedQuery _selectQuery_masterUnitClipSetting; // 0x2E0
-        private PreparedQuery _selectQuery_masterSpBattleVoice; // 0x2E8
-        private PreparedQuery _selectQuery_masterRedeemUnit; // 0x2F0
-        private PreparedQuery _selectQuery_masterRedeemUnitBg; // 0x2F8
-        private PreparedQuery _selectQuery_masterRedeemStaticPriceGroup; // 0x300
-        private PreparedQuery _selectQuery_masterExceedLevelStage; // 0x308
-        private PreparedQuery _selectQuery_masterExceedLevelUnit; // 0x310
-        private PreparedQuery _selectQuery_masterUnitExEquipmentSlot; // 0x318
-        private PreparedQuery _selectQuery_masterExtraEffectUnitGroup; // 0x320
-        private PreparedQuery _selectQuery_masterExtraEffectTargetRange; // 0x328
-        private PreparedQuery _indexedSelectQuery_unitComments_unitId; // 0x330
-        private PreparedQuery _indexedSelectQuery_unitComments_unitId_useType; // 0x338
-        private PreparedQuery _indexedSelectQuery_unitData_originalUnitId; // 0x340
-        private PreparedQuery _indexedSelectQuery_unitRarity_unitId; // 0x348
-        private PreparedQuery _indexedSelectQuery_unitRarity_unitMaterialId; // 0x350
-        private PreparedQuery _indexedSelectQuery_unitPromotion_unitId; // 0x358
-        private PreparedQuery _indexedSelectQuery_unitIntroduction_gachaId; // 0x360
-        private PreparedQuery _indexedSelectQuery_unitUniqueEquipment_unitId; // 0x368
-        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId; // 0x370
-        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId_slotId; // 0x378
-        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId_unlockLevel; // 0x380
-        private PreparedQuery _indexedSelectQuery_unlockRarity6_materialId; // 0x388
-        private PreparedQuery _indexedSelectQuery_growthRestrictionUnit_growthId; // 0x390
-        private PreparedQuery _indexedSelectQuery_promotionBonus_unitId; // 0x398
-        private PreparedQuery _indexedSelectQuery_unitConversion_unitId; // 0x3A0
-        private PreparedQuery _indexedSelectQuery_loveRankup_unitId; // 0x3A8
-        private PreparedQuery _indexedSelectQuery_spBattleVoice_unitId; // 0x3B0
-        private PreparedQuery _indexedSelectQuery_redeemUnit_unitId; // 0x3B8
-        private PreparedQuery _indexedSelectQuery_exceedLevelUnit_unitId; // 0x3C0
-        private PreparedQuery _indexedSelectQuery_extraEffectUnitGroup_groupId; // 0x3C8
-        private PreparedQuery _indexedSelectQuery_extraEffectTargetRange_setId; // 0x3D0
-        private DBProxy _dbProxy; // 0x3D8
+        private PreparedQuery _selectQuery_masterUnitComments; 
+        private PreparedQuery _selectQuery_masterUnitData; 
+        private PreparedQuery _selectQuery_masterCharaIdentity; 
+        private PreparedQuery _selectQuery_masterUnitEnemyData; 
+        private PreparedQuery _selectQuery_masterUnitSkillData;
+        private PreparedQuery _selectQuery_masterUnitAttackPattern; 
+        private PreparedQuery _selectQuery_masterUnitRarity; 
+        private PreparedQuery _selectQuery_masterUnitPromotion; 
+        private PreparedQuery _selectQuery_masterUnitPromotionStatus; 
+        private PreparedQuery _selectQuery_masterUnlockSkillData; 
+        private PreparedQuery _selectQuery_masterUnlockUnitCondition; 
+        private PreparedQuery _selectQuery_masterUnitMypagePos; 
+        private PreparedQuery _selectQuery_masterUnitProfile; 
+        private PreparedQuery _selectQuery_masterNaviComment; 
+        private PreparedQuery _selectQuery_masterEventNaviComment; 
+        private PreparedQuery _selectQuery_masterSdNaviComment; 
+        private PreparedQuery _selectQuery_masterUnitBackground; 
+        private PreparedQuery _selectQuery_masterGuild; 
+        private PreparedQuery _selectQuery_masterGuildAdditionalMember; 
+        private PreparedQuery _selectQuery_masterUnitStatusCoefficient; 
+        private PreparedQuery _selectQuery_masterPositionSetting; 
+        private PreparedQuery _selectQuery_masterUnitIntroduction; 
+        private PreparedQuery _selectQuery_masterUnitMotionList; 
+        private PreparedQuery _selectQuery_masterVoiceGroup; 
+        private PreparedQuery _selectQuery_masterVoiceGroupChara; 
+        private PreparedQuery _selectQuery_masterUnitUniqueEquip; 
+        private PreparedQuery _selectQuery_masterUnitUniqueEquipment; 
+        private PreparedQuery _selectQuery_masterUnlockRarity6; 
+        private PreparedQuery _selectQuery_masterCombinedResultMotion; 
+        private PreparedQuery _selectQuery_masterGrowthParameter; 
+        private PreparedQuery _selectQuery_masterGrowthRestrictionUnit; 
+        private PreparedQuery _selectQuery_masterGrowthParameterUnique; 
+        private PreparedQuery _selectQuery_masterPromotionBonus; 
+        private PreparedQuery _selectQuery_masterEReduction; 
+        private PreparedQuery _selectQuery_masterExceptEr; 
+        private PreparedQuery _selectQuery_masterUnitConversion; 
+        private PreparedQuery _selectQuery_masterLoveRankup; 
+        private PreparedQuery _selectQuery_masterUnitPosAdjustment; 
+        private PreparedQuery _selectQuery_masterSpLoseVoice; 
+        private PreparedQuery _selectQuery_masterSpLoseVoiceGroup; 
+        private PreparedQuery _selectQuery_masterUnitClipSetting; 
+        private PreparedQuery _selectQuery_masterSpBattleVoice; 
+        private PreparedQuery _selectQuery_masterRedeemUnit; 
+        private PreparedQuery _selectQuery_masterRedeemUnitBg; 
+        private PreparedQuery _selectQuery_masterRedeemStaticPriceGroup; 
+        private PreparedQuery _selectQuery_masterExceedLevelStage; 
+        private PreparedQuery _selectQuery_masterExceedLevelUnit; 
+        private PreparedQuery _selectQuery_masterUnitExEquipmentSlot; 
+        private PreparedQuery _selectQuery_masterExtraEffectUnitGroup; 
+        private PreparedQuery _selectQuery_masterExtraEffectTargetRange; 
+        private PreparedQuery _indexedSelectQuery_unitComments_unitId; 
+        private PreparedQuery _indexedSelectQuery_unitComments_unitId_useType; 
+        private PreparedQuery _indexedSelectQuery_unitData_originalUnitId; 
+        private PreparedQuery _indexedSelectQuery_unitRarity_unitId; 
+        private PreparedQuery _indexedSelectQuery_unitRarity_unitMaterialId; 
+        private PreparedQuery _indexedSelectQuery_unitPromotion_unitId; 
+        private PreparedQuery _indexedSelectQuery_unitIntroduction_gachaId; 
+        private PreparedQuery _indexedSelectQuery_unitUniqueEquipment_unitId; 
+        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId; 
+        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId_slotId; 
+        private PreparedQuery _indexedSelectQuery_unlockRarity6_unitId_unlockLevel; 
+        private PreparedQuery _indexedSelectQuery_unlockRarity6_materialId; 
+        private PreparedQuery _indexedSelectQuery_growthRestrictionUnit_growthId; 
+        private PreparedQuery _indexedSelectQuery_promotionBonus_unitId; 
+        private PreparedQuery _indexedSelectQuery_unitConversion_unitId; 
+        private PreparedQuery _indexedSelectQuery_loveRankup_unitId; 
+        private PreparedQuery _indexedSelectQuery_spBattleVoice_unitId; 
+        private PreparedQuery _indexedSelectQuery_redeemUnit_unitId; 
+        private PreparedQuery _indexedSelectQuery_exceedLevelUnit_unitId; 
+        private PreparedQuery _indexedSelectQuery_extraEffectUnitGroup_groupId; 
+        private PreparedQuery _indexedSelectQuery_extraEffectTargetRange_setId; 
+        private DBProxy _dbProxy; 
         private const string _commonSelectPrefixUnitComments = "SELECT `fe1cc801b9e4bc268715f5642432d438389230caa7f4ab414e3bbeba1803bbdb`,`cc71acf0ca9f2ec9bc919003ebcf070643c3c4e880b4270b64f82c3961797f64`,`e3fa30ccb1e81e4b6ac79758c18e7f6cf7ace2c43d1b69ffaa45c9008f36d9e6`,`f4f20da579913fd731c252dc8f561e63354d1ad6a70118b2812f088ce6571520`,`17ec030e56d3df29fda59891aa5d4675f1b48e7c7858c97da4a24f7749789c35`,`c2108673d37941518df8ac0f2695445e12f5ed5831b816f52bbff4d692d6e42d`,`7878006a6c691f234144b5b4f15fc5e60ec6d1e83b97a3825a4598890005ed59`,`12285a1510b5935b875ecca814e2644266be4718663dd1c779557e291de3f947`,`da8cee058419e66e46208ce1985457c6ebf6262cf6e9ea2f497247ec6bfc2d60`,`4d13f795cc90dd1522bfef7a7e8a55b8cb4fe7613bece8f7f267844874ab497f`,`6459caf47f7de8a20db28489ada54945c5ab7b776ce24b6b10b9932a91396ff4`,`0b75e730df9262c2878afb67a388b81a4dfce96d54ceb3e3100ad8c2763c7ff7`,`5e523897ba0bc2df5e4fe7478083135ca490ad3c86221ce31e67b375e5c5f379`,`8225fad541056a1740a795394427280e8488b45990dcd4e165103ae613a9b901`,`ebf48800e2f526e9b89bfd54b3ecbeea9ba8d8c34781cad64f5a81b6e262061a`,`7dbfad204be320a43853b319a24d0c13de8015dec5f77e5f403f6a3f967eec79` FROM `v1_a2c67ca1c632c0aac6fae418490c2d1d4c961f9f64a78d403fe30e73124bc470`";
         private const string _commonSelectPrefixUnitData = "SELECT `14d89915288175bb041b3d9ceac2270c2995d3f2567eb9c0c856f8574d2f2601`,`309cc5b2eb67170335eb458793179d920061e5966a40f28b54540ebcffa4a9d0`,`815f30683e6802866fcf2c0449b6d59e5637da3cc08627aad1cc55501e1ea106`,`43bb59d1c47567adc33664494c1d05eee1f54dd77755970944891aa77b8b25fb`,`cacc71fe59fbbab7748b8111d6e8071701cff2d82ef55f4093689ee8303090c8`,`223859082dbe39395095092517253b0393c793fa9f70a9501bea1eab8bce45e2`,`998285b1dc45dede9dd7be374e55091033c0b564f2a4d61808ca6e06decd482b`,`2da71f05acc399a89139ff502f20d602dec6bb379723df2570a978abddca46dc`,`efdb05eca0c4086188144c52bb6a1bd4494fb5446655f7c12e1e18968b3c4d92`,`d994bb7fd25269c678dd52e2f309b1298016465cd6a498f5d6a673136b625e9d`,`9467132b8342eee18e06b00ad6454c035a4131803b4e8cfd8a54da922d830991`,`c76226b0df3056c37c21ae2f4897664d063a53bdc3819f209f4fc97d15500d8e`,`9cd91ea1dd8808fe066b630c5db1d23b3673d570d346c330f67ca1302748efaf`,`c29e7f27ae240490866a94b618ba42f57d2c4227f9b900e95303771bb47ebfd4`,`95ad1eac806b17d4d5d676dcd47a45884125fbb94121f7d640e09a3323b8096d`,`c7bb1fc44015ef71e5e4fc57f263eab7c46361dd3133cbb1a97829b2793f4e8a`,`9680bd8f600c9cf2977b881de3a0f5c3af2f172ce5e5f13ba53ce3c39bc70023`,`34d9a073c6e042fa1394bec35f85db530a039e37acac585c21b36447e94afd29`,`dc964540b35fbc443516192a5e70f1466d896ae3e8d3aa166300f6ef120e2d87`,`226bea4bd27124a6878fefbad4fa2f47d7869633eaa7cececdb456c48e30b231`,`4170ceb892da5eafc39cd4905675b1505a09d7a0eea9d73184d687460cc2e6d0`,`e9cafe14b34fa0ee953da2359909f5b8c6191fd06e39332150d78024316991ec`,`f841ec09f23bae271df99bf24364e4d72280f5df9ec2be56d2ef6c8dfb0a5a25`,`9a01c440c474864f98868a4dffe7a3456a592b0c89849293cce7b83a8b556d5d` FROM `v1_80fa0c4f23d6912828eb7c3c6c727fe14e1f3133a968284109eab3c667986ae7`";
         private const string _commonSelectPrefixCharaIdentity = "SELECT `d3d15f5d5754c340eebdad3482fd50646b36df9106b4be55fa4690550f5855b8`,`986be72fda78f58ee38d3ea899efff13840ed0b78e61857fa2a7073740c1c54f`,`b71b238dd83938664abaabbc4f8996512aeb53adbcd6ed7b43027e25589e71c0`,`7e341c50278268cd7d6b9817dcb6d4dc164ef146b2f2c7758cd553de9830236c` FROM `v1_7e3120dc934977757fb05d1f5093d7618304f718deb79390773ed60d16f512b7`";
@@ -130,7 +130,7 @@ namespace Elements.Data
         public Elements.Data.MasterUnitData masterUnitData { get; set; }
         public Elements.Data.MasterCharaIdentity masterCharaIdentity { get; set; }
         public Elements.Data.MasterUnitEnemyData masterUnitEnemyData { get; set; }
-        public Elements.Data.MasterUnitSkillData masterUnitSkillData { get; set; }
+        public MasterUnitSkillData masterUnitSkillData { get; set; }
         public Elements.Data.MasterUnitAttackPattern masterUnitAttackPattern { get; set; }
         public Elements.Data.MasterUnitRarity masterUnitRarity { get; set; }
         public Elements.Data.MasterUnitPromotion masterUnitPromotion { get; set; }
@@ -182,213 +182,433 @@ namespace Elements.Data
             _dbProxy = dbProxy;
         }
 
-        public Query GetSelectAllQuery_UnitMotionList() { }
-
-        public PreparedQuery GetSelectQuery_SpLoseVoiceGroup() { }
-
-        public PreparedQuery GetSelectQuery_GrowthParameter() { }
-
-        public Query GetSelectAllQuery_UnitIntroduction() { }
-
-        public Query GetSelectAllQuery_UnitComments() { }
-
-        public PreparedQuery GetSelectQuery_UnitRarity() { }
-
-        public PreparedQuery GetSelectQuery_UnitPromotion() { }
-
-        public PreparedQuery GetSelectQuery_UnitComments() { }
-
-        public Query GetSelectAllQuery_UnitMypagePos() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId_SlotId() { }
-
-        public PreparedQuery GetSelectQuery_PositionSetting() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitData_OriginalUnitId() { }
-
-        public Query GetSelectAllQuery_UnitEnemyData() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitUniqueEquipment_UnitId() { }
-
-        public Query GetSelectAllQuery_UnitUniqueEquipment() { }
-
-        public PreparedQuery GetSelectQuery_ExceedLevelStage() { }
-
-        public PreparedQuery GetSelectQuery_UnlockUnitCondition() { }
-
-        public PreparedQuery GetSelectQuery_CharaIdentity() { }
-
-        public Query GetSelectAllQuery_VoiceGroup() { }
-
-        public PreparedQuery GetSelectQuery_UnitStatusCoefficient() { }
-
-        public Query GetSelectAllQuery_PositionSetting() { }
-
-        public Query GetSelectAllQuery_UnitData() { }
-
-        public PreparedQuery GetSelectQuery_ExceptEr() { }
-
-        public PreparedQuery GetSelectQuery_UnlockSkillData() { }
-
-        public PreparedQuery GetSelectQuery_EReduction() { }
-
-        public PreparedQuery GetSelectQuery_RedeemStaticPriceGroup() { }
-
-        public Query GetSelectAllQuery_UnitStatusCoefficient() { }
-
-        public Query GetSelectAllQuery_NaviComment() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_SpBattleVoice_UnitId() { }
-
-        public Query GetSelectAllQuery_ExceedLevelStage() { }
-
-        public Query GetSelectAllQuery_GrowthRestrictionUnit() { }
-
-        public PreparedQuery GetSelectQuery_UnitClipSetting() { }
-
-        public Query GetSelectAllQuery_UnitUniqueEquip() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitIntroduction_GachaId() { }
-
-        public PreparedQuery GetSelectQuery_VoiceGroupChara() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_RedeemUnit_UnitId() { }
-
-        public override void Unload() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_ExtraEffectUnitGroup_GroupId() { }
-
-        public PreparedQuery GetSelectQuery_RedeemUnit() { }
-
-        public PreparedQuery GetSelectQuery_ExtraEffectTargetRange() { }
-
-        public PreparedQuery GetSelectQuery_UnitExEquipmentSlot() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitRarity_UnitMaterialId() { }
-
-        public Query GetSelectAllQuery_SpLoseVoice() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitPromotion_UnitId() { }
-
-        public PreparedQuery GetSelectQuery_LoveRankup() { }
-
-        public PreparedQuery GetSelectQuery_UnitIntroduction() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_LoveRankup_UnitId() { }
-
         public override Query Query(string sql)
         {
             return _dbProxy.Query(sql);
         }
+        public override void Unload() { }
 
-        public PreparedQuery GetSelectQueryWithIndex_ExtraEffectTargetRange_SetId() { }
+        public Query GetSelectAllQuery_UnitMotionList()
+        {
+            return Query(_commonSelectPrefixUnitMotionList);
+        }
 
-        public PreparedQuery GetSelectQuery_NaviComment() { }
+        public PreparedQuery GetSelectQuery_SpLoseVoiceGroup()
+        {
+            if (_selectQuery_masterSpLoseVoiceGroup == null)
+                _selectQuery_masterSpLoseVoiceGroup = _dbProxy.PreparedQuery(_commonSelectPrefixSpLoseVoiceGroup + " WHERE `91552ff39b8f5d90fb83aaf6f73773f8c2b260f9aabb893da3019764b3e111a2` = ?");
+            return _selectQuery_masterSpLoseVoiceGroup;
+        }
 
-        public PreparedQuery GetSelectQueryWithIndex_GrowthRestrictionUnit_GrowthId() { }
+        public PreparedQuery GetSelectQuery_GrowthParameter()
+        {
+            if (_selectQuery_masterGrowthParameter == null)
+                _selectQuery_masterGrowthParameter = _dbProxy.PreparedQuery(_commonSelectPrefixGrowthParameter + " WHERE `e14cf720c7868748ff4857da8d1267f73d1c0f0d5e8cd6fdb38621d9c295aea3` = ?");
+            return _selectQuery_masterGrowthParameter;
+        }
 
-        public Query GetSelectAllQuery_UnlockUnitCondition() { }
+        public Query GetSelectAllQuery_UnitIntroduction()
+        {
+            return Query(_commonSelectPrefixUnitIntroduction);
+        }
 
-        public Query GetSelectAllQuery_CombinedResultMotion() { }
+        public Query GetSelectAllQuery_UnitComments()
+        {
+            return Query(_commonSelectPrefixUnitComments);
+        }
 
-        public Query GetSelectAllQuery_SdNaviComment() { }
+        public PreparedQuery GetSelectQuery_UnitRarity()
+        {
+            if (_selectQuery_masterUnitRarity == null)
+                _selectQuery_masterUnitRarity = _dbProxy.PreparedQuery(_commonSelectPrefixUnitRarity + " WHERE `45f08119b58503b7c5d9c3de352d3d6a05993d304dfb47affdc6bd67cac275af` = ?");
+            return _selectQuery_masterUnitRarity;
+        }
 
-        public PreparedQuery GetSelectQuery_ExtraEffectUnitGroup() { }
+        public PreparedQuery GetSelectQuery_UnitPromotion()
+        {
+            if (_selectQuery_masterUnitPromotion == null)
+                _selectQuery_masterUnitPromotion = _dbProxy.PreparedQuery(_commonSelectPrefixUnitPromotion + " WHERE `90f2996c4cce2bb0b3225af60db0840b3ea1da88ca88b9af36f0ae26e0c5cd50` = ?");
+            return _selectQuery_masterUnitPromotion;
+        }
 
-        public PreparedQuery GetSelectQuery_UnitUniqueEquip() { }
+        public PreparedQuery GetSelectQuery_UnitComments()
+        {
+            if (_selectQuery_masterUnitComments == null)
+                _selectQuery_masterUnitComments = _dbProxy.PreparedQuery(_commonSelectPrefixUnitComments + " WHERE `fe1cc801b9e4bc268715f5642432d438389230caa7f4ab414e3bbeba1803bbdb` = ?");
+            return _selectQuery_masterUnitComments;
+        }
 
-        public Query GetSelectAllQuery_Guild() { }
+        public Query GetSelectAllQuery_UnitMypagePos()
+        {
+            return Query(_commonSelectPrefixUnitMypagePos);
+        }
 
-        public Query GetSelectAllQuery_UnitConversion() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId_SlotId()
+        {
+            if (_indexedSelectQuery_unlockRarity6_unitId_slotId == null)
+                _indexedSelectQuery_unlockRarity6_unitId_slotId = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockRarity6 + " WHERE `7f6ce2f0afcc6f69efaa6049cc5d4685c5206fbdaef1465eaa808b986eda011f` = ? AND `d9c030f4a5a75a28d266a9afa508e06395ed483e952915998f2ca480638b6fad` = ?");
+            return _indexedSelectQuery_unlockRarity6_unitId_slotId;
+        }
 
-        public Query GetSelectAllQuery_UnitPromotionStatus() { }
+        public PreparedQuery GetSelectQuery_PositionSetting()
+        {
+            if (_selectQuery_masterPositionSetting == null)
+                _selectQuery_masterPositionSetting = _dbProxy.PreparedQuery(_commonSelectPrefixPositionSetting + " WHERE `71715518580739c8e0fbcf1c59a892f809a2b05028950326d432dc8fad564ae1` = ?");
+            return _selectQuery_masterPositionSetting;
+        }
 
-        public PreparedQuery GetSelectQuery_SpLoseVoice() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnitData_OriginalUnitId()
+        {
+            if (_indexedSelectQuery_unitData_originalUnitId == null)
+                _indexedSelectQuery_unitData_originalUnitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitData + " WHERE `309cc5b2eb67170335eb458793179d920061e5966a40f28b54540ebcffa4a9d0` = ?");
+            return _indexedSelectQuery_unitData_originalUnitId;
+        }
 
-        public PreparedQuery GetSelectQuery_UnitConversion() { }
+        public Query GetSelectAllQuery_UnitEnemyData()
+        {
+            return Query(_commonSelectPrefixUnitEnemyData);
+        }
 
-        public PreparedQuery GetSelectQuery_CombinedResultMotion() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnitUniqueEquipment_UnitId()
+        {
+            if (_indexedSelectQuery_unitUniqueEquipment_unitId == null)
+                _indexedSelectQuery_unitUniqueEquipment_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitUniqueEquipment + " WHERE `d2d46cdaf1d2c6953b6b3884f155684c353f227d53c9cde9c9ecafc3381a18d9` = ?");
+            return _indexedSelectQuery_unitUniqueEquipment_unitId;
+        }
 
-        public Query GetSelectAllQuery_UnitClipSetting() { }
+        public Query GetSelectAllQuery_UnitUniqueEquipment()
+        {
+            return Query(_commonSelectPrefixUnitUniqueEquipment);
+        }
 
-        public PreparedQuery GetSelectQuery_EventNaviComment() { }
+        public PreparedQuery GetSelectQuery_ExceedLevelStage()
+        {
+            if (_selectQuery_masterExceedLevelStage == null)
+                _selectQuery_masterExceedLevelStage = _dbProxy.PreparedQuery(_commonSelectPrefixExceedLevelStage + " WHERE `844b3a54d1d378405692404acfcda4d69f66a1227d20e9b017f2a9d1032aea76` = ?");
+            return _selectQuery_masterExceedLevelStage;
+        }
 
-        public Query GetSelectAllQuery_SpLoseVoiceGroup() { }
+        public PreparedQuery GetSelectQuery_UnlockUnitCondition()
+        {
+            if (_selectQuery_masterUnlockUnitCondition == null)
+                _selectQuery_masterUnlockUnitCondition = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockUnitCondition + " WHERE `92a55602b9c047e708b01a9e154d5e672378364d21bba8c70038a9aeac41702a` = ?");
+            return _selectQuery_masterUnlockUnitCondition;
+        }
 
-        public PreparedQuery GetSelectQuery_Guild() { }
+        public PreparedQuery GetSelectQuery_CharaIdentity()
+        {
+            if (_selectQuery_masterCharaIdentity == null)
+                _selectQuery_masterCharaIdentity = _dbProxy.PreparedQuery(_commonSelectPrefixCharaIdentity + " WHERE `d3d15f5d5754c340eebdad3482fd50646b36df9106b4be55fa4690550f5855b8` = ?");
+            return _selectQuery_masterCharaIdentity;
+        }
 
-        public Query GetSelectAllQuery_ExtraEffectUnitGroup() { }
+        public Query GetSelectAllQuery_VoiceGroup()
+        {
+            return Query(_commonSelectPrefixVoiceGroup);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitStatusCoefficient()
+        {
+            if (_selectQuery_masterUnitStatusCoefficient == null)
+                _selectQuery_masterUnitStatusCoefficient = _dbProxy.PreparedQuery(_commonSelectPrefixUnitStatusCoefficient + " WHERE `4afdf2555ba9cc0172fa155e3994eb45cd62fafaca641c953e6b35e8b80fabb2` = ?");
+            return _selectQuery_masterUnitStatusCoefficient;
+        }
+
+        public Query GetSelectAllQuery_PositionSetting()
+        {
+            return Query(_commonSelectPrefixPositionSetting);
+        }
+
+        public Query GetSelectAllQuery_UnitData()
+        {
+            return Query(_commonSelectPrefixUnitData);
+        }
+
+        public PreparedQuery GetSelectQuery_ExceptEr()
+        {
+            if (_selectQuery_masterExceptEr == null)
+                _selectQuery_masterExceptEr = _dbProxy.PreparedQuery(_commonSelectPrefixExceptEr + " WHERE `1c5c4797c4205d105bbf6cda37b6e6193f01fca6e98974d9539d2f32e28fc1b9` = ?");
+            return _selectQuery_masterExceptEr;
+        }
+
+        public PreparedQuery GetSelectQuery_UnlockSkillData()
+        {
+            if (_selectQuery_masterUnlockSkillData == null)
+                _selectQuery_masterUnlockSkillData = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockSkillData + " WHERE `ae5979253881c8dde0824f7a9a3422cbb5bf4b0f0c91913477a748bee70599fe` = ?");
+            return _selectQuery_masterUnlockSkillData;
+        }
+
+        public PreparedQuery GetSelectQuery_EReduction()
+        {
+            if (_selectQuery_masterEReduction == null)
+                _selectQuery_masterEReduction = _dbProxy.PreparedQuery(_commonSelectPrefixEReduction + " WHERE `f1c96c7f84c41606648d7d551eb4e287bcb7c9fd01f1fc47f17c11bdacab0942` = ?");
+            return _selectQuery_masterEReduction;
+        }
+
+        public PreparedQuery GetSelectQuery_RedeemStaticPriceGroup()
+        {
+            if (_selectQuery_masterRedeemStaticPriceGroup == null)
+                _selectQuery_masterRedeemStaticPriceGroup = _dbProxy.PreparedQuery(_commonSelectPrefixRedeemStaticPriceGroup + " WHERE `743b59183c838f7ae28ad5fd9508eaa6e35043bf04cdaaa217d3df34fb83dcb4` = ?");
+            return _selectQuery_masterRedeemStaticPriceGroup;
+        }
+
+        public Query GetSelectAllQuery_UnitStatusCoefficient()
+        {
+            return Query(_commonSelectPrefixUnitStatusCoefficient);
+        }
+
+        public Query GetSelectAllQuery_NaviComment()
+        {
+            return Query(_commonSelectPrefixNaviComment);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_SpBattleVoice_UnitId()
+        {
+            if (_indexedSelectQuery_spBattleVoice_unitId == null)
+                _indexedSelectQuery_spBattleVoice_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixSpBattleVoice + " WHERE `782db5cad46989ed84672bb73f294ca0934895e93cb47ecc4883b7dda12b4856` = ?");
+            return _indexedSelectQuery_spBattleVoice_unitId;
+        }
+
+        public Query GetSelectAllQuery_ExceedLevelStage()
+        {
+            return Query(_commonSelectPrefixExceedLevelStage);
+        }
+
+        public Query GetSelectAllQuery_GrowthRestrictionUnit()
+        {
+            return Query(_commonSelectPrefixGrowthRestrictionUnit);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitClipSetting()
+        {
+            if (_selectQuery_masterUnitClipSetting == null)
+                _selectQuery_masterUnitClipSetting = _dbProxy.PreparedQuery(_commonSelectPrefixUnitClipSetting + " WHERE `5e7a2ca4beaeba51c4de6a5d7d5a9f0db0627af002269b929f3fb75c8a121d4d` = ?");
+            return _selectQuery_masterUnitClipSetting;
+        }
+
+        public Query GetSelectAllQuery_UnitUniqueEquip()
+        {
+            return Query(_commonSelectPrefixUnitUniqueEquip);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_UnitIntroduction_GachaId()
+        {
+            if (_indexedSelectQuery_unitIntroduction_gachaId == null)
+                _indexedSelectQuery_unitIntroduction_gachaId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitIntroduction + " WHERE `597d249ec4a704e8cb160774e8397a158e4855fd693fe69ec116ab4892451a3b` = ?");
+            return _indexedSelectQuery_unitIntroduction_gachaId;
+        }
+
+        public PreparedQuery GetSelectQuery_VoiceGroupChara()
+        {
+            if (_selectQuery_masterVoiceGroupChara == null)
+                _selectQuery_masterVoiceGroupChara = _dbProxy.PreparedQuery(_commonSelectPrefixVoiceGroupChara + " WHERE `bb80ec0e4adb523772f36b820adf4ff91e1482b594b2758795522850e2748b9c` = ?");
+            return _selectQuery_masterVoiceGroupChara;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_RedeemUnit_UnitId()
+        {
+            if (_indexedSelectQuery_redeemUnit_unitId == null)
+                _indexedSelectQuery_redeemUnit_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixRedeemUnit + " WHERE `e7c845575e07d0fbb853fbf9058fd4441cca77647b69da57e511b554330d5daf` = ?");
+            return _indexedSelectQuery_redeemUnit_unitId;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_ExtraEffectUnitGroup_GroupId()
+        {
+            if (_indexedSelectQuery_extraEffectUnitGroup_groupId == null)
+                _indexedSelectQuery_extraEffectUnitGroup_groupId = _dbProxy.PreparedQuery(_commonSelectPrefixExtraEffectUnitGroup + " WHERE `19cc8ef35d39f5f8cdd8896670b6eff4b50db96ba3f8c729f94d7cca4abcafd0` = ?");
+            return _indexedSelectQuery_extraEffectUnitGroup_groupId;
+        }
+
+        public PreparedQuery GetSelectQuery_RedeemUnit()
+        {
+            if (_selectQuery_masterRedeemUnit == null)
+                _selectQuery_masterRedeemUnit = _dbProxy.PreparedQuery(_commonSelectPrefixRedeemUnit + " WHERE `2a135af77357c12153a8c50387a9dd154687ded2c013a1d26b14f042b626cfe0` = ?");
+            return _selectQuery_masterRedeemUnit;
+        }
+
+        public PreparedQuery GetSelectQuery_ExtraEffectTargetRange()
+        {
+            if (_selectQuery_masterExtraEffectTargetRange == null)
+                _selectQuery_masterExtraEffectTargetRange = _dbProxy.PreparedQuery(_commonSelectPrefixExtraEffectTargetRange + " WHERE `c27e077096cfef6cb5d9b5a0d5282828de9dae98f9271c1c045de4f813133d6f` = ?");
+            return _selectQuery_masterExtraEffectTargetRange;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitExEquipmentSlot()
+        {
+            if (_selectQuery_masterUnitExEquipmentSlot == null)
+                _selectQuery_masterUnitExEquipmentSlot = _dbProxy.PreparedQuery(_commonSelectPrefixUnitExEquipmentSlot + " WHERE `32e95c569fb2a1d6e921077a9366635c3ecda0435a4c18decb3d03eb6de2180c` = ?");
+            return _selectQuery_masterUnitExEquipmentSlot;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_UnitRarity_UnitMaterialId()
+        {
+            if (_indexedSelectQuery_unitRarity_unitMaterialId == null)
+                _indexedSelectQuery_unitRarity_unitMaterialId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitRarity + " WHERE `8de072aad7ba9acafd306d3aaaa745a16eaf13530bc0ec836448fa0bdf5fda08` = ?");
+            return _indexedSelectQuery_unitRarity_unitMaterialId;
+        }
+
+        public Query GetSelectAllQuery_SpLoseVoice()
+        {
+            return Query(_commonSelectPrefixSpLoseVoice);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_UnitPromotion_UnitId()
+        {
+            if (_indexedSelectQuery_unitPromotion_unitId == null)
+                _indexedSelectQuery_unitPromotion_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitPromotion + " WHERE `391dd3d36c4bcd066cf11f99af157d5dc07ed8b669543135b7656aeda2d0cfc2` = ?");
+            return _indexedSelectQuery_unitPromotion_unitId;
+        }
+
+        public PreparedQuery GetSelectQuery_LoveRankup()
+        {
+            if (_selectQuery_masterLoveRankup == null)
+                _selectQuery_masterLoveRankup = _dbProxy.PreparedQuery(_commonSelectPrefixLoveRankup + " WHERE `033dd903fe416b3d2cebffb80965b9321d014a045c6af072b7dd5b8669b2ea87` = ?");
+            return _selectQuery_masterLoveRankup;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitIntroduction()
+        {
+            if (_selectQuery_masterUnitIntroduction == null)
+                _selectQuery_masterUnitIntroduction = _dbProxy.PreparedQuery(_commonSelectPrefixUnitIntroduction + " WHERE `14a0e390bcb76e8114e3a480cf7161ea60274400e79a988586fa59209c5ca278` = ?");
+            return _selectQuery_masterUnitIntroduction;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_LoveRankup_UnitId()
+        {
+            if (_indexedSelectQuery_loveRankup_unitId == null)
+                _indexedSelectQuery_loveRankup_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixLoveRankup + " WHERE `5116f68816b683aca2257e62d899605c71579a7c9641d496e25df2856a9d8979` = ?");
+            return _indexedSelectQuery_loveRankup_unitId;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_ExtraEffectTargetRange_SetId()
+        {
+            if (_indexedSelectQuery_extraEffectTargetRange_setId == null)
+                _indexedSelectQuery_extraEffectTargetRange_setId = _dbProxy.PreparedQuery(_commonSelectPrefixExtraEffectTargetRange + " WHERE `38e1c25951d07847c9c8062f8eb69d1dd328339e5c715ce3f3058cee32f3b3a2` = ?");
+            return _indexedSelectQuery_extraEffectTargetRange_setId;
+        }
+
+        public PreparedQuery GetSelectQuery_NaviComment()
+        {
+            if (_selectQuery_masterNaviComment == null)
+                _selectQuery_masterNaviComment = _dbProxy.PreparedQuery(_commonSelectPrefixNaviComment + " WHERE `e1e4aade6dce305b70633b01f5d36f7df85c6c21fc476f18717b7451b2d98ff9` = ?");
+            return _selectQuery_masterNaviComment;
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_GrowthRestrictionUnit_GrowthId()
+        {
+            if (_indexedSelectQuery_growthRestrictionUnit_growthId == null)
+                _indexedSelectQuery_growthRestrictionUnit_growthId = _dbProxy.PreparedQuery(_commonSelectPrefixGrowthRestrictionUnit + " WHERE `d33e6a1eceeda62b7e09a83d4a05f280b369d59dda8d332b639e8442c42187bb` = ?");
+            return _indexedSelectQuery_growthRestrictionUnit_growthId;
+        }
+
+        public Query GetSelectAllQuery_UnlockUnitCondition()
+        {
+            return Query(_commonSelectPrefixUnlockUnitCondition);
+        }
+
+        public Query GetSelectAllQuery_CombinedResultMotion()
+        {
+            return Query(_commonSelectPrefixCombinedResultMotion);
+        }
+
+        public Query GetSelectAllQuery_SdNaviComment()
+        {
+            return Query(_commonSelectPrefixSdNaviComment);
+        }
+
+        public PreparedQuery GetSelectQuery_ExtraEffectUnitGroup()
+        {
+            if (_selectQuery_masterExtraEffectUnitGroup == null)
+                _selectQuery_masterExtraEffectUnitGroup = _dbProxy.PreparedQuery(_commonSelectPrefixExtraEffectUnitGroup + " WHERE `9c5e74db7f98216fb70b16073e9498f2b4b126880e40551ba6a05fda08a29dc7` = ?");
+            return _selectQuery_masterExtraEffectUnitGroup;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitUniqueEquip()
+        {
+            if (_selectQuery_masterUnitUniqueEquip == null)
+                _selectQuery_masterUnitUniqueEquip = _dbProxy.PreparedQuery(_commonSelectPrefixUnitUniqueEquip + " WHERE `e50f6d6cf9428da3bab7f044198497da81d442be7e64d014c8e1798fd67155cc` = ?");
+            return _selectQuery_masterUnitUniqueEquip;
+        }
+
+        public Query GetSelectAllQuery_Guild()
+        {
+            return Query(_commonSelectPrefixGuild);
+        }
+
+        public Query GetSelectAllQuery_UnitConversion()
+        {
+            return Query(_commonSelectPrefixUnitConversion);
+        }
+
+        public Query GetSelectAllQuery_UnitPromotionStatus()
+        {
+            return Query(_commonSelectPrefixUnitPromotionStatus);
+        }
+
+        public PreparedQuery GetSelectQuery_SpLoseVoice()
+        {
+            if (_selectQuery_masterSpLoseVoice == null)
+                _selectQuery_masterSpLoseVoice = _dbProxy.PreparedQuery(_commonSelectPrefixSpLoseVoice + " WHERE `e7a664370679d7cf4e25af20188ac70fd8edf2dffc99926d50467bf69a331ba5` = ?");
+            return _selectQuery_masterSpLoseVoice;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitConversion()
+        {
+            if (_selectQuery_masterUnitConversion == null)
+                _selectQuery_masterUnitConversion = _dbProxy.PreparedQuery(_commonSelectPrefixUnitConversion + " WHERE `6b8c8952ba81a36f5ee6290c2d0a36ea6fcf12af322572453241f763e081c3bc` = ?");
+            return _selectQuery_masterUnitConversion;
+        }
+
+        public PreparedQuery GetSelectQuery_CombinedResultMotion()
+        {
+            if (_selectQuery_masterCombinedResultMotion == null)
+                _selectQuery_masterCombinedResultMotion = _dbProxy.PreparedQuery(_commonSelectPrefixCombinedResultMotion + " WHERE `fe77d122a7cb14c4df4b0ac0f8dc87fe88cebdf40cb03db4d9ab628f66407afc` = ?");
+            return _selectQuery_masterCombinedResultMotion;
+        }
+
+        public Query GetSelectAllQuery_UnitClipSetting()
+        {
+            return Query(_commonSelectPrefixUnitClipSetting);
+        }
+
+        public PreparedQuery GetSelectQuery_EventNaviComment()
+        {
+            if (_selectQuery_masterEventNaviComment == null)
+                _selectQuery_masterEventNaviComment = _dbProxy.PreparedQuery(_commonSelectPrefixEventNaviComment + " WHERE `b4a7d09ba6b665195f616a1e58c71075b3933832abe72ff16d09b1f2cd4f776f` = ?");
+            return _selectQuery_masterEventNaviComment;
+        }
+
+        public Query GetSelectAllQuery_SpLoseVoiceGroup()
+        {
+            return Query(_commonSelectPrefixSpLoseVoiceGroup);
+        }
+
+        public PreparedQuery GetSelectQuery_Guild()
+        {
+            if (_selectQuery_masterGuild == null)
+                _selectQuery_masterGuild = _dbProxy.PreparedQuery(_commonSelectPrefixGuild + " WHERE `70992144cb3f0a605664d58c56b7fc04bf24911f2d6b899d40cd4946b72ab632` = ?");
+            return _selectQuery_masterGuild;
+        }
+
+        public Query GetSelectAllQuery_ExtraEffectUnitGroup()
+        {
+            return Query(_commonSelectPrefixExtraEffectUnitGroup);
+        }
+
+        public Query GetSelectAllQuery_UnitExEquipmentSlot()
+        {
+            return Query(_commonSelectPrefixUnitExEquipmentSlot);
+        }
+
+        public Query GetSelectAllQuery_UnitRarity()
+        {
+            return Query(_commonSelectPrefixUnitRarity);
+        }
 
         public Query GetSelectAllQuery_UnitSkillData()
         {
             return Query(_commonSelectPrefixUnitSkillData);
         }
-
-        public Query GetSelectAllQuery_UnitExEquipmentSlot() { }
-
-        public Query GetSelectAllQuery_UnitRarity() { }
-
-        public Query GetSelectAllQuery_RedeemUnitBg() { }
-
-        public PreparedQuery GetSelectQuery_UnitProfile() { }
-
-        public PreparedQuery GetSelectQuery_UnitUniqueEquipment() => _selectQuery_masterUnitAttackPattern;
-
-        public Query GetSelectAllQuery_ExceptEr() { }
-
-        public Query GetSelectAllQuery_UnitPosAdjustment() { }
-
-        public Query GetSelectAllQuery_RedeemStaticPriceGroup() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitComments_UnitId() { }
-
-        public Query GetSelectAllQuery_EReduction() { }
-
-        public PreparedQuery GetSelectQuery_GrowthRestrictionUnit() { }
-
-        public PreparedQuery GetSelectQuery_UnitData() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_ExceedLevelUnit_UnitId() { }
-
-        public PreparedQuery GetSelectQuery_UnitEnemyData() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_MaterialId() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId() { }
-
-        public PreparedQuery GetSelectQuery_ExceedLevelUnit() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId_UnlockLevel() { }
-
-        public Query GetSelectAllQuery_UnitAttackPattern() { }
-
-        public PreparedQuery GetSelectQuery_UnlockRarity6() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitConversion_UnitId() { }
-
-        public Query GetSelectAllQuery_PromotionBonus() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_UnitRarity_UnitId() { }
-
-        public Query GetSelectAllQuery_UnitPromotion() { }
-
-        public PreparedQuery GetSelectQuery_UnitPromotionStatus() { }
-
-        public Query GetSelectAllQuery_UnitBackground() { }
-
-        public Query GetSelectAllQuery_CharaIdentity() { }
-
-        public Query GetSelectAllQuery_GuildAdditionalMember() { }
-
-        public PreparedQuery GetSelectQueryWithIndex_PromotionBonus_UnitId() { }
-
-        public Query GetSelectAllQuery_VoiceGroupChara() { }
-
-        public PreparedQuery GetSelectQuery_UnitBackground() { }
-
-        public Query GetSelectAllQuery_GrowthParameter() { }
-
-        public PreparedQuery GetSelectQuery_RedeemUnitBg() { }
 
         public PreparedQuery GetSelectQuery_UnitSkillData()
         {
@@ -397,45 +617,322 @@ namespace Elements.Data
             return _selectQuery_masterUnitSkillData;
         }
 
-        public PreparedQuery GetSelectQuery_VoiceGroup() { }
+        public Query GetSelectAllQuery_RedeemUnitBg()
+        {
+            return Query(_commonSelectPrefixRedeemUnitBg);
+        }
 
-        public Query GetSelectAllQuery_RedeemUnit() { }
+        public PreparedQuery GetSelectQuery_UnitProfile()
+        {
+            if (_selectQuery_masterUnitProfile == null)
+                _selectQuery_masterUnitProfile = _dbProxy.PreparedQuery(_commonSelectPrefixUnitProfile + " WHERE `1ce17ac67f13be032a53b0d0f1fab8fa1cc4766c4a257e87600e5cff7c644dad` = ?");
+            return _selectQuery_masterUnitProfile;
+        }
 
-        public PreparedQuery GetSelectQueryWithIndex_UnitComments_UnitId_UseType() { }
+        public PreparedQuery GetSelectQuery_UnitUniqueEquipment()
+        {
+            if (_selectQuery_masterUnitUniqueEquipment == null)
+                _selectQuery_masterUnitUniqueEquipment = _dbProxy.PreparedQuery(_commonSelectPrefixUnitUniqueEquipment + " WHERE `981012f7b5d41a492799a34701ed2835a1f4c379e19bfd3e28c4236255c83b5b` = ?");
+            return _selectQuery_masterUnitUniqueEquipment;
+        }
 
-        public PreparedQuery GetSelectQuery_PromotionBonus() { }
+        public Query GetSelectAllQuery_ExceptEr()
+        {
+            return Query(_commonSelectPrefixExceptEr);
+        }
 
-        public PreparedQuery GetSelectQuery_UnitMotionList() { }
+        public Query GetSelectAllQuery_UnitPosAdjustment()
+        {
+            return Query(_commonSelectPrefixUnitPosAdjustment);
+        }
 
-        public Query GetSelectAllQuery_UnlockRarity6() { }
+        public Query GetSelectAllQuery_RedeemStaticPriceGroup()
+        {
+            return Query(_commonSelectPrefixRedeemStaticPriceGroup);
+        }
 
-        public PreparedQuery GetSelectQuery_UnitPosAdjustment() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnitComments_UnitId()
+        {
+            if (_indexedSelectQuery_unitComments_unitId == null)
+                _indexedSelectQuery_unitComments_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitComments + " WHERE `cc71acf0ca9f2ec9bc919003ebcf070643c3c4e880b4270b64f82c3961797f64` = ?");
+            return _indexedSelectQuery_unitComments_unitId;
+        }
 
-        public Query GetSelectAllQuery_SpBattleVoice() { }
+        public Query GetSelectAllQuery_EReduction()
+        {
+            return Query(_commonSelectPrefixEReduction);
+        }
 
-        public PreparedQuery GetSelectQuery_UnitAttackPattern() { }
+        public PreparedQuery GetSelectQuery_GrowthRestrictionUnit()
+        {
+            if (_selectQuery_masterGrowthRestrictionUnit == null)
+                _selectQuery_masterGrowthRestrictionUnit = _dbProxy.PreparedQuery(_commonSelectPrefixGrowthRestrictionUnit + " WHERE `a5792d8c5d94fd8b57277b0a60a5195073315726e3c66fea74dbfd2389a8b480` = ?");
+            return _selectQuery_masterGrowthRestrictionUnit;
+        }
 
-        public PreparedQuery GetSelectQuery_UnitMypagePos() { }
+        public PreparedQuery GetSelectQuery_UnitData()
+        {
+            if (_selectQuery_masterUnitData == null)
+                _selectQuery_masterUnitData = _dbProxy.PreparedQuery(_commonSelectPrefixUnitData + " WHERE `14d89915288175bb041b3d9ceac2270c2995d3f2567eb9c0c856f8574d2f2601` = ?");
+            return _selectQuery_masterUnitData;
+        }
 
-        public Query GetSelectAllQuery_EventNaviComment() { }
+        public PreparedQuery GetSelectQueryWithIndex_ExceedLevelUnit_UnitId()
+        {
+            if (_indexedSelectQuery_exceedLevelUnit_unitId == null)
+                _indexedSelectQuery_exceedLevelUnit_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixExceedLevelUnit + " WHERE `1d6afd50ab9825124097ce2f86d1f5cd930d93ae8f59e068a9d7f3afd16013aa` = ?");
+            return _indexedSelectQuery_exceedLevelUnit_unitId;
+        }
 
-        public PreparedQuery GetSelectQuery_GrowthParameterUnique() { }
+        public PreparedQuery GetSelectQuery_UnitEnemyData()
+        {
+            if (_selectQuery_masterUnitEnemyData == null)
+                _selectQuery_masterUnitEnemyData = _dbProxy.PreparedQuery(_commonSelectPrefixUnitEnemyData + " WHERE `497afbbb9294e3238297a9e8983161a7386f4eec530d069329a9284e4dbad888` = ?");
+            return _selectQuery_masterUnitEnemyData;
+        }
 
-        public Query GetSelectAllQuery_ExceedLevelUnit() { }
-        public Query GetSelectAllQuery_LoveRankup() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_MaterialId()
+        {
+            if (_indexedSelectQuery_unlockRarity6_materialId == null)
+                _indexedSelectQuery_unlockRarity6_materialId = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockRarity6 + " WHERE `7f6ce2f0afcc6f69efaa6049cc5d4685c5206fbdaef1465eaa808b986eda011f` = ?");
+            return _indexedSelectQuery_unlockRarity6_materialId;
+        }
 
-        public Query GetSelectAllQuery_ExtraEffectTargetRange() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId()
+        {
+            if (_indexedSelectQuery_unlockRarity6_unitId == null)
+                _indexedSelectQuery_unlockRarity6_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockRarity6 + " WHERE `d5e5049b2226e441c20c10a5029667b8b9e2a6964668e64d65d377c6bbc3cc8b` = ?");
+            return _indexedSelectQuery_unlockRarity6_unitId;
+        }
 
-        public Query GetSelectAllQuery_UnitProfile() { }
+        public PreparedQuery GetSelectQuery_ExceedLevelUnit()
+        {
+            if (_selectQuery_masterExceedLevelUnit == null)
+                _selectQuery_masterExceedLevelUnit = _dbProxy.PreparedQuery(_commonSelectPrefixExceedLevelUnit + " WHERE `8475ddb0c7baca9bbbd4cfe0096b448caaaa135c04ce9efb9e9bafdf795c5ead` = ?");
+            return _selectQuery_masterExceedLevelUnit;
+        }
 
-        public Query GetSelectAllQuery_UnlockSkillData() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnlockRarity6_UnitId_UnlockLevel()
+        {
+            if (_indexedSelectQuery_unlockRarity6_unitId_unlockLevel == null)
+                _indexedSelectQuery_unlockRarity6_unitId_unlockLevel = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockRarity6 + " WHERE `d5e5049b2226e441c20c10a5029667b8b9e2a6964668e64d65d377c6bbc3cc8b` = ? AND `5e774926c6f9fe49fb0d821b5c32339ea882ebb14945357dcee062367c916434` = ?");
+            return _indexedSelectQuery_unlockRarity6_unitId_unlockLevel;
+        }
 
-        public PreparedQuery GetSelectQuery_SdNaviComment() { }
+        public Query GetSelectAllQuery_UnitAttackPattern()
+        {
+            return Query(_commonSelectPrefixUnitAttackPattern);
+        }
 
-        public Query GetSelectAllQuery_GrowthParameterUnique() { }
+        public PreparedQuery GetSelectQuery_UnlockRarity6()
+        {
+            if (_selectQuery_masterUnlockRarity6 == null)
+                _selectQuery_masterUnlockRarity6 = _dbProxy.PreparedQuery(_commonSelectPrefixUnlockRarity6 + " WHERE `d5e5049b2226e441c20c10a5029667b8b9e2a6964668e64d65d377c6bbc3cc8b` = ?");
+            return _selectQuery_masterUnlockRarity6;
+        }
 
-        public PreparedQuery GetSelectQuery_GuildAdditionalMember() { }
+        public PreparedQuery GetSelectQueryWithIndex_UnitConversion_UnitId()
+        {
+            if (_indexedSelectQuery_unitConversion_unitId == null)
+                _indexedSelectQuery_unitConversion_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitConversion + " WHERE `fc473411185313863a5d71369da92eb394ff7bef14d1f9ebf08592eca6f93084` = ?");
+            return _indexedSelectQuery_unitConversion_unitId;
+        }
 
-        public PreparedQuery GetSelectQuery_SpBattleVoice() { }
+        public Query GetSelectAllQuery_PromotionBonus()
+        {
+            return Query(_commonSelectPrefixPromotionBonus);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_UnitRarity_UnitId()
+        {
+            if (_indexedSelectQuery_unitRarity_unitId == null)
+                _indexedSelectQuery_unitRarity_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixUnitRarity + " WHERE `45f08119b58503b7c5d9c3de352d3d6a05993d304dfb47affdc6bd67cac275af` = ?");
+            return _indexedSelectQuery_unitRarity_unitId;
+        }
+
+        public Query GetSelectAllQuery_UnitPromotion()
+        {
+            return Query(_commonSelectPrefixUnitPromotion);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitPromotionStatus()
+        {
+            if (_selectQuery_masterUnitPromotionStatus == null)
+                _selectQuery_masterUnitPromotionStatus = _dbProxy.PreparedQuery(_commonSelectPrefixUnitPromotionStatus + " WHERE `ef79ca5948b9adb9e6bfe673f4d821b3ddd13390c216739997e53ce6d3827ed9` = ?");
+            return _selectQuery_masterUnitPromotionStatus;
+        }
+
+        public Query GetSelectAllQuery_UnitBackground()
+        {
+            return Query(_commonSelectPrefixUnitBackground);
+        }
+
+        public Query GetSelectAllQuery_CharaIdentity()
+        {
+            return Query(_commonSelectPrefixCharaIdentity);
+        }
+
+        public Query GetSelectAllQuery_GuildAdditionalMember()
+        {
+            return Query(_commonSelectPrefixGuildAdditionalMember);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_PromotionBonus_UnitId()
+        {
+            if (_indexedSelectQuery_promotionBonus_unitId == null)
+                _indexedSelectQuery_promotionBonus_unitId = _dbProxy.PreparedQuery(_commonSelectPrefixPromotionBonus + " WHERE `56747e0f082724b39f1e07e6a148175138ad76135a2e023645361674dfd00321` = ?");
+            return _indexedSelectQuery_promotionBonus_unitId;
+        }
+
+        public Query GetSelectAllQuery_VoiceGroupChara()
+        {
+            return Query(_commonSelectPrefixVoiceGroupChara);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitBackground()
+        {
+            if (_selectQuery_masterUnitBackground == null)
+                _selectQuery_masterUnitBackground = _dbProxy.PreparedQuery(_commonSelectPrefixUnitBackground + " WHERE `ec6f766bb1744a4809841284de35aad1c340615ee0c32719b51906df20cf2cf2` = ?");
+            return _selectQuery_masterUnitBackground;
+        }
+
+        public Query GetSelectAllQuery_GrowthParameter()
+        {
+            return Query(_commonSelectPrefixGrowthParameter);
+        }
+
+        public PreparedQuery GetSelectQuery_RedeemUnitBg()
+        {
+            if (_selectQuery_masterRedeemUnitBg == null)
+                _selectQuery_masterRedeemUnitBg = _dbProxy.PreparedQuery(_commonSelectPrefixRedeemUnitBg + " WHERE `c97add359c2d72d76c07f4e9f552ada8dd573f87ab59713ce0ec4799299d7d45` = ?");
+            return _selectQuery_masterRedeemUnitBg;
+        }
+
+        public PreparedQuery GetSelectQuery_VoiceGroup()
+        {
+            if (_selectQuery_masterVoiceGroup == null)
+                _selectQuery_masterVoiceGroup = _dbProxy.PreparedQuery(_commonSelectPrefixVoiceGroup + " WHERE `baa5064177defaf52ab044816f433c2dad7c608590160f6328bffbf9f2acd8f0` = ?");
+            return _selectQuery_masterVoiceGroup;
+        }
+
+        public Query GetSelectAllQuery_RedeemUnit()
+        {
+            return Query(_commonSelectPrefixRedeemUnit);
+        }
+
+        public PreparedQuery GetSelectQueryWithIndex_UnitComments_UnitId_UseType()
+        {
+            if (_indexedSelectQuery_unitComments_unitId_useType == null)
+                _indexedSelectQuery_unitComments_unitId_useType = _dbProxy.PreparedQuery(_commonSelectPrefixUnitComments + " WHERE `cc71acf0ca9f2ec9bc919003ebcf070643c3c4e880b4270b64f82c3961797f64` = ? AND `e3fa30ccb1e81e4b6ac79758c18e7f6cf7ace2c43d1b69ffaa45c9008f36d9e6` = ?");
+            return _indexedSelectQuery_unitComments_unitId_useType;
+        }
+
+        public PreparedQuery GetSelectQuery_PromotionBonus()
+        {
+            if (_selectQuery_masterPromotionBonus == null)
+                _selectQuery_masterPromotionBonus = _dbProxy.PreparedQuery(_commonSelectPrefixPromotionBonus + " WHERE `defb644d31a2fadabd6a25ae542defb82d6e6daf5ebc9a29eba9d45e9d5309d5` = ?");
+            return _selectQuery_masterPromotionBonus;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitMotionList()
+        {
+            if (_selectQuery_masterUnitMotionList == null)
+                _selectQuery_masterUnitMotionList = _dbProxy.PreparedQuery(_commonSelectPrefixUnitMotionList + " WHERE `db1ac23caa9fabf1c65cd93a945e735aa857adc545f49cc4a87806397e9af9ae` = ?");
+            return _selectQuery_masterUnitMotionList;
+        }
+
+        public Query GetSelectAllQuery_UnlockRarity6()
+        {
+            return Query(_commonSelectPrefixUnlockRarity6);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitPosAdjustment()
+        {
+            if (_selectQuery_masterUnitPosAdjustment == null)
+                _selectQuery_masterUnitPosAdjustment = _dbProxy.PreparedQuery(_commonSelectPrefixUnitPosAdjustment + " WHERE `34b16f136c11a4dd7cb2ff61951ea492f04d88aaaa185b5c442ab6843bd76772` = ?");
+            return _selectQuery_masterUnitPosAdjustment;
+        }
+
+        public Query GetSelectAllQuery_SpBattleVoice()
+        {
+            return Query(_commonSelectPrefixSpBattleVoice);
+        }
+
+        public PreparedQuery GetSelectQuery_UnitAttackPattern()
+        {
+            if (_selectQuery_masterUnitAttackPattern == null)
+                _selectQuery_masterUnitAttackPattern = _dbProxy.PreparedQuery(_commonSelectPrefixUnitAttackPattern + " WHERE `0641c20b6bf5b38b1473d12e802de56c95f140930e79d49e2f40f1cf718c4531` = ?");
+            return _selectQuery_masterUnitAttackPattern;
+        }
+
+        public PreparedQuery GetSelectQuery_UnitMypagePos()
+        {
+            if (_selectQuery_masterUnitMypagePos == null)
+                _selectQuery_masterUnitMypagePos = _dbProxy.PreparedQuery(_commonSelectPrefixUnitMypagePos + " WHERE `f996be56065ef0cfd49cc7c771c520012b143333eff2cf7d8377f0b082094d48` = ?");
+            return _selectQuery_masterUnitMypagePos;
+        }
+
+        public Query GetSelectAllQuery_EventNaviComment()
+        {
+            return Query(_commonSelectPrefixEventNaviComment);
+        }
+
+        public PreparedQuery GetSelectQuery_GrowthParameterUnique()
+        {
+            if (_selectQuery_masterGrowthParameterUnique == null)
+                _selectQuery_masterGrowthParameterUnique = _dbProxy.PreparedQuery(_commonSelectPrefixGrowthParameterUnique + " WHERE `e5a3dd85054fc5b0d25f1ba23663c1b327965a69e67fa774a65bf4986d719575` = ?");
+            return _selectQuery_masterGrowthParameterUnique;
+        }
+
+        public Query GetSelectAllQuery_ExceedLevelUnit()
+        {
+            return Query(_commonSelectPrefixExceedLevelUnit);
+        }
+
+        public Query GetSelectAllQuery_LoveRankup()
+        {
+            return Query(_commonSelectPrefixLoveRankup);
+        }
+
+        public Query GetSelectAllQuery_ExtraEffectTargetRange()
+        {
+            return Query(_commonSelectPrefixExtraEffectTargetRange);
+        }
+
+        public Query GetSelectAllQuery_UnitProfile()
+        {
+            return Query(_commonSelectPrefixUnitProfile);
+        }
+
+        public Query GetSelectAllQuery_UnlockSkillData()
+        {
+            return Query(_commonSelectPrefixUnlockSkillData);
+        }
+
+        public PreparedQuery GetSelectQuery_SdNaviComment()
+        {
+            if (_selectQuery_masterSdNaviComment == null)
+                _selectQuery_masterSdNaviComment = _dbProxy.PreparedQuery(_commonSelectPrefixSdNaviComment + " WHERE `9637b3bb8d5dec421a267d330d6b8ba3762d65f5cd189f961cb36c1c8b26291a` = ?");
+            return _selectQuery_masterSdNaviComment;
+        }
+
+        public Query GetSelectAllQuery_GrowthParameterUnique()
+        {
+            return Query(_commonSelectPrefixGrowthParameterUnique);
+        }
+
+        public PreparedQuery GetSelectQuery_GuildAdditionalMember()
+        {
+            if (_selectQuery_masterGuildAdditionalMember == null)
+                _selectQuery_masterGuildAdditionalMember = _dbProxy.PreparedQuery(_commonSelectPrefixGuildAdditionalMember + " WHERE `821d61df2c8f0bc94705952c6b8a13e66a5fda414d30b1ed45ccfd49a6857790` = ?");
+            return _selectQuery_masterGuildAdditionalMember;
+        }
+
+        public PreparedQuery GetSelectQuery_SpBattleVoice()
+        {
+            if (_selectQuery_masterSpBattleVoice == null)
+                _selectQuery_masterSpBattleVoice = _dbProxy.PreparedQuery(_commonSelectPrefixSpBattleVoice + " WHERE `8f475ca9ea28ad19271d25fbbc3163307c11cfb4f0aeeccde268dfbbc2835b14` = ?");
+            return _selectQuery_masterSpBattleVoice;
+        }
     }
 }
