@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+// 玩家状态机
+
 namespace Elements.Battle.Core
 {
     public class UnitComponentState : UnitComponentBase, IUnitComponent
@@ -23,9 +25,10 @@ namespace Elements.Battle.Core
 
         private BattleManager battleManager { get; set; }
         private SoundManager soundManager { get; set; }
+        public ActionState CurrentState { get; set; }
         private Elements.Battle.Core.UnitComponentAbnormal componentAbnormal { get; set; }
-        private Elements.Battle.Core.UnitComponentAnimation componentAnimation { get; set; }
-        private Elements.Battle.Core.UnitComponentActionPattern componentAttackPattern { get; set; }
+        private UnitComponentAnimation componentAnimation { get; set; }
+        private UnitComponentActionPattern componentAttackPattern { get; set; }
         private Elements.Battle.Core.UnitComponentColor componentColor { get; set; }
         private Elements.Battle.Core.UnitComponentMultiPartsBoss componentMultiPartsBoss { get; set; }
         private Elements.Battle.Core.UnitComponentDamageControl componentDamageControl { get; set; }
@@ -33,11 +36,13 @@ namespace Elements.Battle.Core
         private Elements.Battle.Core.UnitComponentPassiveSkill componentPassiveSkill { get; set; }
         private Elements.Battle.Core.UnitComponentSearchArea componentSearchArea { get; set; }
         private Elements.Battle.Core.UnitComponentSortOrder componentSortOrder { get; set; }
-        private Elements.Battle.Core.UnitComponentSound componentSound { get; set; }
+        private UnitComponentSound componentSound { get; set; }
         private Elements.Battle.Core.UnitComponentUnionBurst componentUnionBurst { get; set; }
-        private Elements.Battle.Core.PresetBattleEffectData battleEffectData { get; set; }
-        public Elements.Battle.Core.ActionState CurrentState { get; set; }
+        private PresetBattleEffectData battleEffectData { get; set; }
 
+        private int dieCoroutineId { get; set; }
+        private int damageCoroutineId { get; set; }
+        private int walkCoroutineId { get; set; }
         public bool IdleOnly { get; set; }
         public bool IsDead { get; set; }
         public bool StartStateIsWalk { get; set; }
@@ -59,10 +64,7 @@ namespace Elements.Battle.Core
         public int CurrentTriggerSkillId { get; set; }
         public bool GameStartDone { get; set; }
         public bool IsStartActionForExtraEffect { get; set; }
-        private int dieCoroutineId { get; set; }
         public bool IsOnBreakAllCallWhenGameStartDone { get; set; }
-        private int damageCoroutineId { get; set; }
-        private int walkCoroutineId { get; set; }
         public bool EnemyPointDone { get; set; }
         public bool WasDefeatCount { get; set; }
         public bool RevivalFlagForEnvironment { get; set; }
@@ -83,9 +85,10 @@ namespace Elements.Battle.Core
         public Action OnBreakAll { get; set; }
         public Action OnMotionPrefixChanged { get; set; }
 
-        public UnitComponentState(UnitCtrl _unitCtrl, BattleManager _battleManager, Elements.Battle.Core.PresetBattleEffectData _battleEffectData)
+        public UnitComponentState(UnitCtrl _unitCtrl, BattleManager _battleManager, PresetBattleEffectData _battleEffectData): base(_unitCtrl)
         {
-
+            battleManager = _battleManager;
+            battleEffectData = _battleEffectData;
         }
 
         public void SetState(ActionState _state, int _nextSkillId = 0, int _skillId = 0, bool _quiet = false)
@@ -94,7 +97,7 @@ namespace Elements.Battle.Core
             //internal void <SetState>b__0() { }
         }
 
-        public IEnumerator SetStateWithDelayForRevival(float delay, Elements.Battle.Core.ActionState state, int nextSkillId = 0, int skillId = 0)
+        public IEnumerator SetStateWithDelayForRevival(float delay, ActionState state, int nextSkillId = 0, int skillId = 0)
         {
             float time = 0;
         }
@@ -202,9 +205,6 @@ namespace Elements.Battle.Core
         private void playSubUbVoiceWithDelay(Skill _skill) { }
 
 
-        private void playUbVoice3WithDelay() { }
-
-
         public void DisappearForDivision(bool _fadeOut, bool _useCoroutine) { }
 
         private bool judgeStateIsWalk()
@@ -213,9 +213,6 @@ namespace Elements.Battle.Core
         }
 
         private bool isMultiBossDestructionTarget(int _enemyId) { }
-
-
-        private void playUbVoice4WithDelay() { }
 
         private IEnumerator waitUndoMotionEnd(Action _callback, bool _isTimeOver) 
         {
@@ -226,7 +223,7 @@ namespace Elements.Battle.Core
 
         public void AddVoiceTypeAndSkillNumber(int _key, Elements.Battle.Core.VoiceTypeAndSkillNumber _data) { }
 
-        public void PlayDamageWhenIdle(bool _damageMotionWhenUnionBurst = False, bool _pauseStopState = False) { }
+        public void PlayDamageWhenIdle(bool _damageMotionWhenUnionBurst = false, bool _pauseStopState = false) { }
 
         private bool judgeWalkEnd(int _coroutineId) { }
 
@@ -255,7 +252,10 @@ namespace Elements.Battle.Core
 
         public void StartLoseMotion() { }
 
-        public void RegisterComponentSet(Elements.Battle.Core.IUnitComponentContainer _container) { }
+        public void RegisterComponentSet(IUnitComponentContainer _container) 
+        {
+
+        }
 
         private bool isPauseDamageMotion() { }
 
@@ -268,7 +268,10 @@ namespace Elements.Battle.Core
 
         private void playUbVoiceWithDelay() { }
 
-        private IEnumerator startShakeWithDelay(ShakeEffect shake, bool _ignorePause = False) 
+        private void playUbVoice3WithDelay() { }
+        private void playUbVoice4WithDelay() { }
+
+        private IEnumerator startShakeWithDelay(ShakeEffect shake, bool _ignorePause = false) 
         {
             float time = 0;
         }

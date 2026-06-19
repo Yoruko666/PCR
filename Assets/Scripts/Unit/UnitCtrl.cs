@@ -13,6 +13,7 @@ namespace Elements
 
         private const float START_CAST_TIME = 0.3f;
         private const float START_CAST_TIME_STAND_BY = 2.5f;
+
 	    public Dictionary<int, int> SkillUseCount; 
         public int CurrentRotateCoroutineId; 
 	    [SerializeField]
@@ -32,13 +33,9 @@ namespace Elements
         private List<PrefabWithTime> idleEffects; 
         [SerializeField]
         private List<PrefabWithTime> auraEffects; 
-        [SerializeField]
         public float ShowTitleDelay; 
-        [SerializeField]
         public float UnitAppearDelay; 
-        [SerializeField]
         public float BossAppearDelay; 
-        [SerializeField]
         public float BattleCameraSize; 
         public float Scale; 
         public float BossDeltaX; 
@@ -91,24 +88,23 @@ namespace Elements
         public UnitActionController UnitActionController { get; set; }
         public Elements.Battle.Core.PrincessFormProcessor PrincessFormProcessor { get; set; }
         public Elements.Battle.Core.UnitComponentAbnormal ComponentAbnormal { get; set; }
-        public Elements.Battle.Core.UnitComponentActionPattern ComponentActionPattern { get; set; }
-        public Elements.Battle.Core.UnitComponentAnimation ComponentAnimation { get; set; }
+        public UnitComponentActionPattern ComponentActionPattern { get; set; }
+        public UnitComponentAnimation ComponentAnimation { get; set; }
         public Elements.Battle.Core.UnitComponentAnnihilation ComponentAnnihilation { get; set; }
         public Elements.Battle.Core.UnitComponentBattleResult ComponentBattleResult { get; set; }
         public Elements.Battle.Core.UnitComponentColor ComponentColor { get; set; }
         public Elements.Battle.Core.UnitComponentCompare ComponentCompare { get; set; }
         public Elements.Battle.Core.UnitComponentDamageControl ComponentDamageControl { get; set; }
-        public Elements.Battle.Core.UnitComponentLog ComponentLog { get; set; }
         public Elements.Battle.Core.UnitComponentMultiPartsBoss ComponentMultiPartsBoss { get; set; }
         public UnitComponentParameter ComponentParameter { get; set; }
         public Elements.Battle.Core.UnitComponentParameterClamped ComponentParameterClamped { get; set; }
         public Elements.Battle.Core.UnitComponentPassiveSkill ComponentPassiveSkill { get; set; }
         public Elements.Battle.Core.UnitComponentChangeScale ComponentScaleChange { get; set; }
-        public Elements.Battle.Core.UnitComponentSearchArea ComponentSearchArea { get; set; }
+        public UnitComponentSearchArea ComponentSearchArea { get; set; }
         public Elements.Battle.Core.UnitComponentSortOrder ComponentSortOrder { get; set; }
-        public Elements.Battle.Core.UnitComponentSound ComponentSound { get; set; }
-        public Elements.Battle.Core.UnitComponentState ComponentState { get; set; }
-        public Elements.Battle.Core.UnitComponentUnionBurst ComponentUnionBurst { get; set; }
+        public UnitComponentSound ComponentSound { get; set; }
+        public UnitComponentState ComponentState { get; set; }
+        public UnitComponentUnionBurst ComponentUnionBurst { get; set; }
         public Bone StateBone { get; set; }
         public Bone StateBoneModeChange { get; set; }
         public Bone CenterBone { get; set; }
@@ -193,7 +189,6 @@ namespace Elements
         private Vector2 leftDirScale { get; set; }
         private Vector2 rightDirScale { get; set; }
         protected Yggdrasil<UnitCtrl> singletonTree { get; }
-        protected IBattleLog battleLog { get; }
         protected IBattleCameraEffectForUnitCtrl battleCameraEffect { get; }
         protected IBattleEffectPool battleEffectPool { get; }
         protected IBattleTimeScaleForUnitCtrl battleTimeScale { get; }
@@ -230,6 +225,13 @@ namespace Elements
         public Transform BottomTransform { get; }
         public bool Pause { get; set; }
         public bool IsPartsBoss { get; }
+        
+        private void Awake() { }
+        
+        public void Initialize(UnitParameter _data, bool _isOther, bool _isFirstWave, bool _isGaugeAlwaysVisible, Dictionary<int, int> _talentLevelParameter, Dictionary<int, Dictionary<eParamType, int>> _talentBuffParameter, BattleSpineController _battleSpineController, Elements.Battle.Core.SummonAction.eSummonType _summonType = 0)
+        {
+
+        }
     
         public static void StaticRelease() { }
 
@@ -237,7 +239,6 @@ namespace Elements
     
         public BattleSpineController GetCurrentSpineCtrl() { }
     
-        private void Awake() { }
     
         protected override void DestructByOnDestroy() { }
 
@@ -329,11 +330,6 @@ namespace Elements
 
         */
 
-        public void Initialize(UnitParameter _data, bool _isOther, bool _isFirstWave, bool _isGaugeAlwaysVisible, Dictionary<int, int> _talentLevelParameter, Dictionary<int, Dictionary<eParamType, int>> _talentBuffParameter, BattleSpineController _battleSpineController, Elements.Battle.Core.SummonAction.eSummonType _summonType = 0)
-        {
-
-        }
-
         private void registerAllComponentSet() { }
 
         /*
@@ -366,148 +362,54 @@ namespace Elements
 
         public void BattleStartProcess(eUnitRespawnPos respawnPos) { }
 
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< updateAttackTarget > d__605 : IEnumerator<object>, IEnumerator, IDisposable 
+        private IEnumerator updateAttackTarget()
         {
-    
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-            [DebuggerHidden]
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-            private void System.IDisposable.Dispose() { }
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-            private object System.Collections.IEnumerator.get_Current() { }
         }
-         */
-
-        private IEnumerator updateAttackTarget() { }
 
         public void WaveStartProcess(bool _first) { }
 
+        private void setIdleCastTime() { }
     
-        public void ResetCastTime() { }
+        public void ResetCastTime()
+        {
+            CastTimer = 0;
+        }
 
-    
+        public void SetRecastTime(int _skillId) { }
+
         public void ResetPosForUserUnit(int index) { }
 
     
         private void resetPosForEnemyUnit(eUnitRespawnPos pos) { }
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< waitShadowAppear > d__610 : IEnumerator<object>, IEnumerator, IDisposable 
+    
+        private IEnumerator waitShadowAppear(float _oldMoveSpeed) 
         {
-    
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-            public float _oldMoveSpeed; 
-            private float < time > 5__2; 
-            private float < appearTime > 5__3; 
-            private float < actionTime > 5__4; 
-
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-
-
-            [DebuggerHidden]
-
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-
-            private void System.IDisposable.Dispose() { }
-
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.IEnumerator.get_Current() { }
+            float time = 0;
+            float appearTime = 0;
+            float actionTime = 0;
         }
-        */
-    
-        private IEnumerator waitShadowAppear(float _oldMoveSpeed) { }
 
     
         public void SetInitialOrder(int _order) { }
 
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< waitBossMotionEnd > d__612 : IEnumerator<object>, IEnumerator, IDisposable 
+        private IEnumerator waitBossMotionEnd() 
         {
 
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-
-
-            [DebuggerHidden]
-
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-
-            private void System.IDisposable.Dispose() { }
-
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.IEnumerator.get_Current() { }
         }
-         */
-
-        private IEnumerator waitBossMotionEnd() { }
 
     
         public void SetOverlapPos(float overlapPosX) { }
 
     
-        public List<UnitCtrl> GetFriendList() { }
+        public List<UnitCtrl> GetFriendList()
+        {
+        }
 
     
-        public List<UnitCtrl> GetEnemyList() { }
+        public List<UnitCtrl> GetEnemyList()
+        {
+
+        }
 
     
         public void _Update() { }
@@ -518,47 +420,6 @@ namespace Elements
     
         public void MoveToNext() { }
 
-
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< waitCargeEnergy > d__619 : IEnumerator<object>, IEnumerator, IDisposable 
-        {
-    
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-            public double _recoveryRate; 
-
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-
-
-            [DebuggerHidden]
-
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-
-            private void System.IDisposable.Dispose() { }
-
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.IEnumerator.get_Current() { }
-        }
-        */
         private IEnumerator waitChargeEnergy(double _recoveryRate) { }
 
     
@@ -578,87 +439,18 @@ namespace Elements
     
         public void ChangeChargeSkill(int _skillNum, float _limitTime) { }
 
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< updateChangeSkillNum > d__629 : IEnumerator<object>, IEnumerator, IDisposable 
+        private IEnumerator updateChangeSkillNum(int oldChargeSkillNum, float limitTime) 
         {
-    
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-            public float limitTime; 
-            public int oldChargeSkillNum; 
-            private float < time > 5__2; 
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-            [DebuggerHidden]
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-            private void System.IDisposable.Dispose() { }
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-            private object System.Collections.IEnumerator.get_Current() { }
+            float time = 0;
         }
-        */
 
-        private IEnumerator updateChangeSkillNum(int oldChargeSkillNum, float limitTime) { }
-
-        /*
-        [CompilerGenerated]
-        private sealed class UnitCtrl.< UpdateSummon > d__630 : IEnumerator<object>, IEnumerator, IDisposable 
+        public IEnumerator UpdateSummon(int _skillNum, eUnitRespawnPos _respawnPos, Elements.Battle.Core.SummonAction.eMoveType _moveType, Vector3 _targetPosition, float _moveSpeed) 
         {
-    
-            private int <> 1__state; 
-            private object <> 2__current; 
-            public UnitCtrl<> 4__this; 
-            public eUnitRespawnPos _respawnPos; 
-            public Elements.Battle.Core.SummonAction.eMoveType _moveType; 
-            public int _skillNum; 
-            public Vector3 _targetPosition; 
-            public float _moveSpeed; 
-            private string < currentMotionName > 5__2; 
-            private Vector3<v> 5__3; 
-            private float < duration > 5__4; 
-            private float < time > 5__5; 
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.Current { get; }
-            private object System.Collections.IEnumerator.Current { get; }
-
-            [DebuggerHidden]
-
-            public void .ctor(int <> 1__state) { }
-
-            [DebuggerHidden]
-
-            private void System.IDisposable.Dispose() { }
-
-            private bool MoveNext() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.Generic.IEnumerator<System.Object>.get_Current() { }
-
-            [DebuggerHidden]
-
-            private void System.Collections.IEnumerator.Reset() { }
-
-            [DebuggerHidden]
-
-            private object System.Collections.IEnumerator.get_Current() { }
+            string currentMotionName = "";
+            Vector3 v = new Vector3();
+            float duration = 0;
+            float time = 0;
         }
-        */
-        public IEnumerator UpdateSummon(int _skillNum, eUnitRespawnPos _respawnPos, Elements.Battle.Core.SummonAction.eMoveType _moveType, Vector3 _targetPosition, float _moveSpeed) { }
 
     
         public void RestartPlayAnimeCoroutine(float _startTime, eSpineCharacterAnimeId _animeId, int _index, int _prefix) { }
@@ -756,12 +548,6 @@ namespace Elements
 
         public bool GetSpeedUpFlag() { }
 
-        public void SetRecastTime(int _skillId) { }
-
-        private void setIdleCastTime() { }
-
         public void SetSpineSortOrder(int _value) { }
-
-        public UnitCtrl() { }
     }
 }

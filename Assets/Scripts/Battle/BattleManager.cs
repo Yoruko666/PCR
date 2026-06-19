@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [CompilerGenerated]
@@ -14,7 +15,6 @@ private sealed class BattleManager.<< StartResult > g__execStartResult | 745_0 >
 [Serializable]
 private sealed class BattleManager.<> c 
 {
-    public static readonly BattleManager.<> c<>9; 
     public static Predicate<UnitCtrl> <> 9__181_1; 
     public static Func<KeyValuePair<int, long>, bool> <> 9__461_0; 
     public static Action<BattleSpineController> <> 9__481_0; 
@@ -56,7 +56,6 @@ private sealed class BattleManager.<> c
     public static Comparison<StoryBattleVoiceTimeLineData> <> 9__976_0; 
     public static Action<> 9__994_1; 
 
-    private static void .cctor() { }
 
     internal bool < FindUnit > b__181_1(UnitCtrl _unit) { }
 
@@ -313,32 +312,12 @@ private sealed class BattleManager.<> c__DisplayClass548_2
 }
 
 
-[CompilerGenerated]
-private sealed class BattleManager.<> c__DisplayClass560_0 
-{
-    
-    public int _soundUnitId; 
-
-    internal bool < FindUnitForSoundUnitId > b__0(UnitCtrl arg) { }
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.<> c__DisplayClass561_0 
-{
-    
-    public int _resourceId; 
-
-    internal bool < FindEnemyForResourceId > b__0(UnitCtrl arg) { }
-}
-
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass580_0 
 {
     
     public bool _isOther; 
-
 
     internal bool < ExistsField > b__0(Elements.Battle.Core.FieldDataBase e) { }
 }
@@ -370,10 +349,8 @@ private sealed class BattleManager.<> c__DisplayClass691_0
 {
     
     public BattleManager<> 4__this; 
-public List<BattleManager.BonusEnemyData> _bonusEnemyDatas; 
-
-
-internal void < startBonusEffectImpl > b__0() { }
+    public List<BattleManager.BonusEnemyData> _bonusEnemyDatas; 
+    internal void < startBonusEffectImpl > b__0() { }
 }
 
 
@@ -382,10 +359,8 @@ private sealed class BattleManager.<> c__DisplayClass695_0
 {
     
     public BattleManager<> 4__this; 
-public float tmpTimeScale; 
-
-
-internal void < OpenBonusDetailDialog > b__0() { }
+    public float tmpTimeScale; 
+    internal void < OpenBonusDetailDialog > b__0() { }
 }
 
 
@@ -394,9 +369,7 @@ private sealed class BattleManager.<> c__DisplayClass719_0
 {
     
     public List<UnitHpInfo> hpList; 
-
-
-internal void < CreateUnitHpInfoList > b__0(List < UnitCtrl > _list, int _viewerId) { }
+    internal void < CreateUnitHpInfoList > b__0(List < UnitCtrl > _list, int _viewerId) { }
 }
 
 
@@ -416,15 +389,15 @@ private sealed class BattleManager.<> c__DisplayClass721_0
 {
     
     public Action _execCallback; 
-public BattleManager<> 4__this; 
-public Action<int> _errorCallback; 
-public Action<> 9__1; 
+    public BattleManager<> 4__this; 
+    public Action<int> _errorCallback; 
+    public Action<> 9__1; 
 
 
-internal void < ResultApiSendExec > b__0() { }
+    internal void < ResultApiSendExec > b__0() { }
 
 
-internal void < ResultApiSendExec > b__1() { }
+    internal void < ResultApiSendExec > b__1() { }
 }
 
 
@@ -508,57 +481,41 @@ private sealed class BattleManager.<> c__DisplayClass793_0
 {
     
     public BattleManager<> 4__this; 
-public bool _win; 
-public Action<> 9__2; 
-
-
-internal bool < finishWave > b__0() { }
-
-
-internal void < finishWave > b__1() { }
-
-
-internal void < finishWave > b__2() { }
+    public bool _win; 
+    public Action<> 9__2; 
+    internal bool < finishWave > b__0() { }
+    internal void < finishWave > b__1() { }
+    internal void < finishWave > b__2() { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass890_0 
 {
-    
     public bool isResourceLoaded; 
-public int mainPlayerViewerId; 
-public BattleManager<> 4__this; 
+    public int mainPlayerViewerId; 
+    public BattleManager<> 4__this; 
+    internal void < coroutineStartProcess > b__0() { }
+    internal bool < coroutineStartProcess > b__1() { }
 
-
-internal void < coroutineStartProcess > b__0() { }
-
-
-internal bool < coroutineStartProcess > b__1() { }
-
-
-internal bool < coroutineStartProcess > b__3() { }
+    internal bool < coroutineStartProcess > b__3() { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass890_1 
 {
-    
     public int unitId; 
 
-
-internal bool < coroutineStartProcess > b__4(UnitDamageInfo e) { }
+    internal bool < coroutineStartProcess > b__4(UnitDamageInfo e) { }  
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass890_2 
 {
-    
     public UnitCtrl[] unitCtrlList; 
     public int i; 
-    public BattleManager.<> c__DisplayClass890_0 CS$<>8__locals1; 
     public Predicate<UnitDamageInfo> <> 9__5; 
 
 
@@ -569,7 +526,6 @@ internal bool < coroutineStartProcess > b__5(UnitDamageInfo a) { }
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass899_0 
 {
-    
     public bool isCallbackCalled; 
     internal void < InitializeEnemyFirst > b__0() { }
 }
@@ -578,7 +534,6 @@ private sealed class BattleManager.<> c__DisplayClass899_0
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_0 
 {
-    
     public List<int> enemyPrefabIdList; 
     public List<UnitParameter> convertedEnemyDeck; 
     public BattleManager<> 4__this; 
@@ -606,10 +561,8 @@ private sealed class BattleManager.<> c__DisplayClass903_0
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_1 
 {
-    
     public int enemyDeckIndex; 
     public int _enemyDeckIndex; 
-    public BattleManager.<> c__DisplayClass903_0 CS$<>8__locals1; 
 
     internal void < loadEnemyPrime > b__5(GameObject _loadedObject) { }
 }
@@ -618,9 +571,7 @@ private sealed class BattleManager.<> c__DisplayClass903_1
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_2 
 {
-    
     public UnitParameter _extraEnemy; 
-    public BattleManager.<> c__DisplayClass903_0 CS$<>8__locals2; 
 
     internal void < loadEnemyPrime > b__6(GameObject _loadedObject) { }
 }
@@ -629,21 +580,17 @@ private sealed class BattleManager.<> c__DisplayClass903_2
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_3 
 {
-    
     public int remainLoadSpineCount; 
-public BattleManager.<> c__DisplayClass903_0 CS$<>8__locals3; 
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_4 
 {
-    
     public UnitCtrl unit; 
     public UnitParameter unitParameter; 
     public int cutinId; 
     public ContinuousUnit continuousUnit; 
-    public BattleManager.<> c__DisplayClass903_3 CS$<>8__locals4; 
 
     internal void < loadEnemyPrime > b__8(BattleSpineController _obj) { }
 }
@@ -652,7 +599,6 @@ private sealed class BattleManager.<> c__DisplayClass903_4
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass903_5 
 {
-    
     public BattleSpineController _obj; 
 
     internal void < loadEnemyPrime > b__9() { }
@@ -662,24 +608,16 @@ private sealed class BattleManager.<> c__DisplayClass903_5
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass910_0 
 {
-    
     public float scale; 
-public BattleManager<> 4__this; 
-
-
-internal void < addLoadLandscapeResources > b__4(BattleSpineController unit) { }
+    internal void < addLoadLandscapeResources > b__4(BattleSpineController unit) { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass910_1 
 {
-    
     public float scale; 
-public BattleManager<> 4__this; 
-
-
-internal void < addLoadLandscapeResources > b__5(BattleSpineController unit) { }
+    internal void < addLoadLandscapeResources > b__5(BattleSpineController unit) { }
 }
 
 
@@ -688,15 +626,11 @@ private sealed class BattleManager.<> c__DisplayClass932_0
 {
     
     public Action _callback; 
-public BattleManager<> 4__this; 
-public int _storyId; 
-public bool _end; 
+    public int _storyId; 
+    public bool _end; 
 
-
-internal void < PlayStory > b__0() { }
-
-
-internal void < PlayStory > b__1() { }
+    internal void < PlayStory > b__0() { }
+    internal void < PlayStory > b__1() { }
 }
 
 
@@ -705,36 +639,27 @@ private sealed class BattleManager.<> c__DisplayClass933_0
 {
     
     public BattleManager<> 4__this; 
-public Action _callback; 
-
-
-internal void < playGuestBattle > b__1() { }
+    public Action _callback; 
+    internal void < playGuestBattle > b__1() { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass977_0 
 {
-    
     public BattleManager<> 4__this; 
-public StoryBattleTimeLineData _timeLineData; 
+    public StoryBattleTimeLineData _timeLineData; 
 
-
-internal void < execTimeLineData > b__0() { }
+    internal void < execTimeLineData > b__0() { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass978_0 
 {
-    
     public int _unitId; 
-
-
-internal bool < searchUnit > b__0(UnitCtrl e) { }
-
-
-internal bool < searchUnit > b__1(UnitCtrl e) { }
+    internal bool < searchUnit > b__0(UnitCtrl e) { }
+    internal bool < searchUnit > b__1(UnitCtrl e) { }
 }
 
 
@@ -743,38 +668,29 @@ private sealed class BattleManager.<> c__DisplayClass980_0
 {
     
     public UnitCtrl unitCtrl; 
-public SummonData _summonData; 
-public BattleManager<> 4__this; 
-public Elements.Battle.Core.SummonAction.eMoveType moveType; 
-public FixedTransformMonoBehavior.FixedTransform ucTransform; 
+    public SummonData _summonData; 
+    public BattleManager<> 4__this; 
+    public Elements.Battle.Core.SummonAction.eMoveType moveType; 
+    public FixedTransformMonoBehavior.FixedTransform ucTransform; 
 
-
-internal void < Summon > b__0(BattleSpineController _obj) { }
+    internal void < Summon > b__0(BattleSpineController _obj) { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass980_1 
 {
-    
     public BattleSpineController _obj; 
-
-
-internal void < Summon > b__1() { }
+    internal void < Summon > b__1() { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass981_0 
 {
-    
     public eUnitRespawnPos respawnPos; 
-
-
-internal bool < SearchRespawnPos > b__0(UnitCtrl x) { }
-
-
-internal bool < SearchRespawnPos > b__1(UnitCtrl x) { }
+    internal bool < SearchRespawnPos > b__0(UnitCtrl x) { }
+    internal bool < SearchRespawnPos > b__1(UnitCtrl x) { }
 }
 
 
@@ -783,249 +699,20 @@ private sealed class BattleManager.<> c__DisplayClass981_1
 {
     
     public eUnitRespawnPos evenRPos; 
-
-
-internal bool < SearchRespawnPos > b__2(UnitCtrl x) { }
-
-
-internal bool < SearchRespawnPos > b__3(UnitCtrl x) { }
-
-
-internal bool < SearchRespawnPos > b__4(UnitCtrl x) { }
+    internal bool < SearchRespawnPos > b__2(UnitCtrl x) { }
+    internal bool < SearchRespawnPos > b__3(UnitCtrl x) { }
+    internal bool < SearchRespawnPos > b__4(UnitCtrl x) { }
 }
 
 
 [CompilerGenerated]
 private sealed class BattleManager.<> c__DisplayClass994_0 
 {
-    
-    public BattleManager<> 4__this; 
-public GameObject _focus; 
+    public GameObject _focus; 
 
-
-internal void < TutorialSkillExec > b__0() { }
+    internal void < TutorialSkillExec > b__0() { }
 }
 
-
-[CompilerGenerated]
-private sealed class BattleManager.< InitializeAndUpdateWalkPlayer > d__735 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    public bool _isOutOfSystemUpdate; 
-    public Action _onWalkEnd; 
-    private float[][] < speedRandArray > 5__2; 
-    private float < guestSpeed > 5__3; 
-    private float < deltaTimeAccumulated > 5__4; 
-    private float < time > 5__5; 
-}
-
-[CompilerGenerated]
-private sealed class BattleManager.< RecreateDeadUnits > d__548 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    public eBattleResult _battleResult; 
-    public Action _callback; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< StoryBattleAnimationUpdate > d__975 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    private int < index > 5__2; 
-}
-
-[CompilerGenerated]
-private sealed class BattleManager.< cameraZoomReset > d__723 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    public Action _callback; 
-    private float < time > 5__2; 
-    private CustomEasing<easing> 5__3; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< coroutineStartProcess > d__890 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-public ViewBattle _viewBattle; 
-private BattleManager.<> c__DisplayClass890_0<>8__1; 
-private int < seed > 5__2; 
-private int < currentWave > 5__3; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< dropTreasureBox > d__534 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public UnitCtrl _unitCtrl; 
-public BattleManager<> 4__this; 
-private int < dropCount > 5__2; 
-private float < timer > 5__3; 
-private float < offsetY > 5__4; 
-private TreasureEffectController[] < treasureEffectControllers > 5__5; 
-private int < i > 5__6; 
-private float < dropInterval > 5__7; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< fadeOutSkillExeScreenWhenTimeUp > d__748 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< incrementWaveCoroutine > d__480 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-private BattleManager.<> c__DisplayClass480_0<>8__1; 
-public Action _finishCallback; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< playGoldEffectWithDelay > d__533 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-public UnitCtrl _unitCtrl; 
-private float < timer > 5__2; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< resumeFrameCount > d__490 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-}
-
-[CompilerGenerated]
-private sealed class BattleManager.< storyBattleVoiceTimeLineUpdate > d__976 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-private int < index > 5__2; 
-private List<StoryBattleVoiceTimeLineData> < timeLineData > 5__3; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< updateBlackOutFadeOut > d__663 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-public UnitCtrl _unitCtrl; 
-public bool _isForce; 
-private int < tmpUbUsedCount > 5__2; 
-private float < fadeoutTime > 5__3; 
-}
-
-[CompilerGenerated]
-private sealed class BattleManager.< updateIgnoreAllActionDoneCounter > d__789 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-private object <> 2__current; 
-public BattleManager<> 4__this; 
-private float < timer > 5__2; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< updateIgnoreFps > d__499 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public IEnumerator _coroutine; 
-    public BattleManager<> 4__this; 
-    private float < deltaTimeAccumulated > 5__2; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< updateNextBattleWalk > d__515 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    private float < time > 5__2; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< waitActionWhile > d__758 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public Func<bool> _condition; 
-    public Action _action; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< waitAndFinishBattle > d__964 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    floar timer;
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< waitMultiTargetAppearEnd > d__689 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    
-    private int <> 1__state; 
-    private object <> 2__current; 
-    public BattleManager<> 4__this; 
-    public List<BattleManager.BonusEnemyData> _bonusEnemyDatas; 
-}
-
-
-[CompilerGenerated]
-private sealed class BattleManager.< waitPlayFirstWaveStartStoryEnd > d__690 : IEnumerator<object>, IEnumerator, IDisposable 
-{
-    public BattleManager<> 4__this; 
-    public List<BattleManager.BonusEnemyData> _bonusEnemyDatas; 
-    private bool < isNeedWait > 5__2; 
-}
 
 namespace Elements.Battle
 { 
@@ -1107,7 +794,6 @@ namespace Elements.Battle
         private Random.State tempRandomState; 
         private Dictionary<int, UnitCtrl> currentEnemyUnitCtrlDictionary; 
         private List<UnitCtrl>[] allWaveEnemyUnitCtrlListArray; 
-        public UnitCtrl BossUnit; 
 	    private List<Vector2> questWinPositionList; 
         private List<BattleSpineController> unitSpineControllerList; 
         private bool isUpdateFrameExecuted; 
@@ -1144,7 +830,6 @@ namespace Elements.Battle
         private bool isDefeatBonusOnly; 
         private bool timeUpWin; 
         private BaseBattleProcessor battleProcessor; 
-        private BattleLog battleLog; 
         private BattleCameraEffect battleCameraEffect; 
         private BattleEffectPool battleEffectPool; 
         private BattleTimeScale battleTimeScale; 
@@ -1165,9 +850,19 @@ namespace Elements.Battle
         private CustomUIButton focusButton; 
         private List<EventDelegate> cacheEventDelegate; 
 
+        public int UnitCount { get; set; }
+
         public List<UnitCtrl> UnitList { get; set; }
         public List<UnitCtrl> EnemyList { get; set; }
         public List<UnitCtrl> BossList { get; set; }
+        public UnitCtrl BossUnit; 
+
+        public List<UnitCtrl> FadeOutUnitList { get; set; }
+        public List<UnitCtrl> BlackOutUnitList { get; set; }
+        
+        public Dictionary<int, int> PlayerHpDic { get; set; }
+        public Dictionary<int, int> EnemyHpDic { get; set; }
+
         public double EnergyGainValieSkillFront { get; }
         public double EnergyGainValieSkillMiddle { get; }
         public double EnergyGainValieSkillBack { get; }
@@ -1202,7 +897,6 @@ namespace Elements.Battle
         public bool IsShowBossGauge { get; }
         private bool isTimeUp { get; }
         public int CurrentWave { get; set; }
-        public List<UnitCtrl> FadeOutUnitList { get; set; }
         public Dictionary<int, long> UnitTalentFormationBonusDictionary { get; set; }
         public Dictionary<int, int> UnitTalentLevelDictionary { get; set; }
         public Dictionary<int, int> EnemyTalentLevelDictionary { get; set; }
@@ -1287,7 +981,6 @@ namespace Elements.Battle
         public bool IsReleasedKnightEnhance { get; set; }
         private bool enemySetUp { get; set; }
         public int FieldIndex { get; set; }
-        public List<UnitCtrl> BlackOutUnitList { get; set; }
         public UnitCtrl SkillReadyUnit { get; set; }
         public UnitCtrl ChainVoicePlayUnit { get; set; }
         public bool HideDamageNumFlag { get; set; }
@@ -1297,8 +990,6 @@ namespace Elements.Battle
         public bool IsMultiTargetAppearPlaying { get; set; }
         private Dictionary<int, int> bonusIdIconIndexPairsLeft { get; set; }
         private Dictionary<int, int> bonusIdIconIndexPairsRight { get; set; }
-        public Dictionary<int, int> PlayerHpDic { get; set; }
-        public Dictionary<int, int> EnemyHpDic { get; set; }
         public bool IsCurtain { get; set; }
         private bool isWinTeamFadeOutWaitMode { get; set; }
         private bool loseTeamfadeOutDone { get; set; }
@@ -1312,7 +1003,6 @@ namespace Elements.Battle
         public Dictionary<eDamageEffectType, Dictionary<eDamageEffctTypeDetail, GameObject>> DamageNumberEffectDictionary { get; set; }
         public GameObject TotalDamageEffectPrefabLarge { get; set; }
         public GameObject TotalDamageEffectPrefabSmall { get; set; }
-        public int UnitCount { get; set; }
         public bool BattleLogEnable { get; set; }
         public BattleVoiceFlagManager BattleVoiceFlagMgr { get; set; }
         public double DodgeTPRecoverRatio { get; set; }
@@ -1336,9 +1026,25 @@ namespace Elements.Battle
         private bool tutorialSkillExecDone { get; set; }
         public bool IsStartSkillExec { get; set; }
 
-        public void SetAdminChanging(bool _flag) { }
+        private void Awake() { }
 
-        public UnitCtrl GetBossUnit() { }
+        private void Update() { }
+
+        private void OnDestroy() { }
+
+        private void updateFrame() { }
+        
+        public void CreateUnit(int _unitId, Action<UnitCtrl> _callback, bool _addUnitList = true) 
+        {
+            
+        }
+    
+        public void CreateUnitSpine(UnitCtrl _unit, eUnitRespawnPos _respawnPos, UnitParameter _pParam, Action<UnitCtrl> _callback, bool _isOther = false) 
+        {
+
+        }
+
+        public void SetAdminChanging(bool _flag) { }
 
         public int GetStartRemainTime() { }
 
@@ -1350,13 +1056,20 @@ namespace Elements.Battle
 
         public void SetPauseTimeLimit(bool _flag) { }
 
-        public int GetUnitCtrlLength() { }
+        public int GetUnitCtrlLength() 
+        {
+            return UnitList.Count;
+        }
 
-        public UnitCtrl GetUnitCtrl(int _idx) { }
+        public UnitCtrl GetUnitCtrl(int _idx) 
+        {
+            return UnitList[_idx];
+        }
 
-        public UnitCtrl FindUnit(int _id) { }
-
-        public bool IsShowEffectiveIcon(int _unitId) { }
+        public UnitCtrl FindUnit(int _id) 
+        {
+            return UnitList.Find(unit => unit.UnitId == _id);
+        }
 
         public int GetEnemyCtrlLength()
         {
@@ -1372,6 +1085,13 @@ namespace Elements.Battle
         {
             return EnemyList.Find(enemy => enemy.UnitId == _id);
         }
+
+        public UnitCtrl GetBossUnit() 
+        {
+            return BossUnit;
+        }
+
+        public bool IsShowEffectiveIcon(int _unitId) { }
 
         public void SetPartsTalentWeakness(int _unitId, BasePartsData _partsData) { }
 
@@ -1399,10 +1119,6 @@ namespace Elements.Battle
     
         private IEnumerator incrementWaveCoroutine(Action _finishCallback) { }
 
-        private void Update() { }
-
-        private void updateFrame() { }
-
         private bool callStartCutIn() { }
 
         public void PauseAbnormalEffect() { }
@@ -1411,7 +1127,7 @@ namespace Elements.Battle
 
         public void SetSkillEffectSortOrderBack() { }
 
-        public void GamePause(bool _pause, bool _isBlackoutEnd = False) { }
+        public void GamePause(bool _pause, bool _isBlackoutEnd = false) { }
 
         public void PauseAllSe() { }
 
@@ -1435,15 +1151,18 @@ namespace Elements.Battle
     
         public void StartCoroutineIgnoreFps(IEnumerator _cr) { }
     
-        private IEnumerator updateIgnoreFps(IEnumerator _coroutine) { }
+        private IEnumerator updateIgnoreFps(IEnumerator _coroutine) 
+        {
+            float deltaTimeAccumulated = 0;
+        }
     
         public void RemoveCoroutine(UnitCtrl _unit) { }
     
         public void RemoveAllCoroutines() { }
     
-        public void AppendEffect(SkillEffectCtrl _skillEffectCtrl, UnitCtrl _unit, bool _isAbnormal = False) { }
+        public void AppendEffect(SkillEffectCtrl _skillEffectCtrl, UnitCtrl _unit, bool _isAbnormal = false) { }
     
-        public void AppendUITweener(UITweener uiTweener, UnitCtrl unit, bool ignoreBlackout = False) { }
+        public void AppendUITweener(UITweener uiTweener, UnitCtrl unit, bool ignoreBlackout = false) { }
     
         public void AddEffectToUpdateList(SkillEffectCtrl ef) { }
     
@@ -1455,10 +1174,6 @@ namespace Elements.Battle
     
         public static int HeldRandom(int _min, int _max) { }
     
-        public void CreateUnit(int _unitId, Action<UnitCtrl> _callback, bool _addUnitList = True) { }
-    
-        public void CreateUnitSpine(UnitCtrl _unit, eUnitRespawnPos _respawnPos, UnitParameter _pParam, Action<UnitCtrl> _callback, bool _isOther = False) { }
-    
         private void appendWaveEndLog() { }
     
         public void NextWaveProcess() { }
@@ -1467,7 +1182,10 @@ namespace Elements.Battle
     
         public void CancelInvalidSupportSkill(UnitCtrl _unit) { }
     
-        private IEnumerator updateNextBattleWalk() { }
+        private IEnumerator updateNextBattleWalk() 
+        {
+            float time = 0;
+        }
     
         private void onBossStateChange(eStateIconType _iconType, bool _enable) { }
     
@@ -1495,9 +1213,20 @@ namespace Elements.Battle
     
         private void onDieEnemy(UnitCtrl _unitCtrl) { }
     
-        private IEnumerator playGoldEffectWithDelay(UnitCtrl _unitCtrl) { }
+        private IEnumerator playGoldEffectWithDelay(UnitCtrl _unitCtrl) 
+        {
+            float timer = 0;
+        }
     
-        private IEnumerator dropTreasureBox(UnitCtrl _unitCtrl) { }
+        private IEnumerator dropTreasureBox(UnitCtrl _unitCtrl) 
+        {
+            int dropCount;
+            float timer;
+            float offsetY;
+            TreasureEffectController[] treasureEffectControllers;
+            int i;
+            float dropInterval;
+        }
     
         private SkillEffectCtrl createDropPrefab(UnitCtrl _unitCtrl, GameObject _prefab) { }
     
@@ -1727,7 +1456,12 @@ namespace Elements.Battle
     
         public void SetBlackoutTimeZero() { }
     
-        private IEnumerator updateBlackOutFadeOut(UnitCtrl _unitCtrl, bool _isForce) { }
+        private IEnumerator updateBlackOutFadeOut(UnitCtrl _unitCtrl, bool _isForce) 
+        {
+
+            int tmpUbUsedCount;
+            float fadeoutTime;
+        }
     
         public void AddBlackOutTarget(UnitCtrl _source, UnitCtrl _target, BasePartsData _parts) { }
 
@@ -1755,8 +1489,11 @@ namespace Elements.Battle
         private void displayBonusIcon() { }
     
         private IEnumerator waitMultiTargetAppearEnd(List<BattleManager.BonusEnemyData> _bonusEnemyDatas) { }
-    
-        private IEnumerator waitPlayFirstWaveStartStoryEnd(List<BattleManager.BonusEnemyData> _bonusEnemyDatas) { }
+
+        private IEnumerator waitPlayFirstWaveStartStoryEnd(List<BonusEnemyData> _bonusEnemyDatas)
+        {
+            bool isNeedWait = false;
+        }
 
     
         private void startBonusEffectImpl(List<BattleManager.BonusEnemyData> _bonusEnemyDatas) { }
@@ -1784,7 +1521,12 @@ namespace Elements.Battle
     
         public void StartCameraZoomReset(Action _callback) { }
     
-        private IEnumerator cameraZoomReset(Action _callback) { }
+        private IEnumerator cameraZoomReset(Action _callback) 
+        {
+
+            float time = 0;
+            CustomEasing easing = new();
+        }
     
         public void CallbackRequestFinishBattle() { }
     
@@ -1811,7 +1553,13 @@ namespace Elements.Battle
     
         public void PlayFlatoutAfterMove(bool _isPlayUnitJoyMotion) { }
     
-        public IEnumerator InitializeAndUpdateWalkPlayer(Action _onWalkEnd, bool _isOutOfSystemUpdate = False) { }
+        public IEnumerator InitializeAndUpdateWalkPlayer(Action _onWalkEnd, bool _isOutOfSystemUpdate = false) 
+        {
+            float[][] speedRandArray;
+            float guestSpeed;
+            float deltaTimeAccumulated;
+            float time;
+        }
 
     
         private bool unitCtrlsWalk(UnitCtrl[] _unitCtrls, float[][] _speedRandArray, bool _keepWalkForMain, int _index, UnitCtrl _guestUnit, ref float _guestSpeed) { }
@@ -1903,7 +1651,10 @@ namespace Elements.Battle
     
         public void CallbackDead(UnitCtrl _unit) { }
     
-        private IEnumerator updateIgnoreAllActionDoneCounter() { }
+        private IEnumerator updateIgnoreAllActionDoneCounter() 
+        {
+            float timer = 0;
+        }
 
     
         public void UekOnDeadLastUnit(UnitCtrl _unit, int _area) { }
@@ -1915,18 +1666,18 @@ namespace Elements.Battle
         public void HighRarityOnDeadLastUnit(UnitCtrl _unit, eBattleTreasureBoxType _treasureType) { }
     
         private void finishWave(bool _win) { }
-
-        private void Awake() { }
     
         private BaseBattleProcessor createBattleProcessor(UekTempData _uekTempData) { }
     
         public BaseBattleProcessor CreateBattleProcessorImpl(UekTempData _uekTempData) { }
     
-        private void OnDestroy() { }
-    
         public void Init(ViewBattle _viewBattle) { }
     
-        private IEnumerator coroutineStartProcess(ViewBattle _viewBattle) { }
+        private IEnumerator coroutineStartProcess(ViewBattle _viewBattle) 
+        {
+            int seed = 0;
+            int currentWave = 0;
+        }
 
         public List<UnitCtrl> GetMyUnitList() { }
 
@@ -2042,7 +1793,10 @@ namespace Elements.Battle
     
         public void CheckAcnLosingBattleFinish() { }
     
-        private IEnumerator waitAndFinishBattle() { }
+        private IEnumerator waitAndFinishBattle() 
+        {
+            float timer;
+        }
 
     
         public void SpecialBattleModeChangeOnHpChange() { }
@@ -2055,9 +1809,16 @@ namespace Elements.Battle
     
         public void SetStoryBattleDataPrefab(StoryBattleData _storyBattleDataPrefab) { }
     
-        public IEnumerator StoryBattleAnimationUpdate() { }
+        public IEnumerator StoryBattleAnimationUpdate() 
+        {
+            int index = 0;
+        }
     
-        private IEnumerator storyBattleVoiceTimeLineUpdate() { }
+        private IEnumerator storyBattleVoiceTimeLineUpdate() 
+        {
+            int index;
+            List<StoryBattleVoiceTimeLineData> timeLineData;
+        }
     
         private void execTimeLineData(StoryBattleTimeLineData _timeLineData) { }
 
@@ -2078,9 +1839,6 @@ namespace Elements.Battle
         private void resetStartSkillExecFlag() { }
     
         public bool IsVoiceDownLoad() { }
-    
-        public BattleManager() { }
-
     
         private Coroutine Elements.Battle.IBattleManagerForSkillEffectCtrl.StartCoroutine(IEnumerator _routine) { }
 

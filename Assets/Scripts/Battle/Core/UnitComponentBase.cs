@@ -4,6 +4,9 @@ namespace Elements.Battle.Core
     {
         protected readonly UnitCtrl unitController;
 
-        public UnitComponentBase(UnitCtrl _unitController) { }
+        public UnitComponentBase(UnitCtrl _unitController)
+        {
+            unitController = _unitController;
+        }
     }
 }
