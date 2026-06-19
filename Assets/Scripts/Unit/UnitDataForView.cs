@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class UnitDataForView // TypeDefIndex: 2410
+public class UnitDataForView 
 {
     public int Id { get; set; }
     public int UnitLevel { get; set; }

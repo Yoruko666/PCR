@@ -19,7 +19,7 @@ namespace Elements.Battle.Core
         // public abstract UnitComponentSearchArea ComponentSearchArea { get; }
         // public abstract UnitComponentSortOrder ComponentSortOrder { get; }
         // public abstract UnitComponentSound ComponentSound { get; }
-        // public abstract UnitComponentState ComponentState { get; }
+        public abstract UnitComponentState ComponentState { get; }
         // public abstract UnitComponentUnionBurst ComponentUnionBurst { get; }
     }
 }

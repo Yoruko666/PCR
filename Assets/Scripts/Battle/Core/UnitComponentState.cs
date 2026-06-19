@@ -1,112 +1,11 @@
-public sealed class OnDeadDelegate : MulticastDelegate 
-{
-	public OnDeadDelegate(object object, IntPtr method) { }
-
-	public virtual void Invoke(UnitCtrl owner) { }
-
-	public virtual IAsyncResult BeginInvoke(UnitCtrl owner, AsyncCallback callback, object object) { }
-
-	public virtual void EndInvoke(IAsyncResult result) { }
-}
-
-[CompilerGenerated]
-[Serializable]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c 
-{
-	
-	public static readonly Elements.Battle.Core.UnitComponentState.<>c <>9; 
-	public static Predicate<PartsData> <>9__264_0; 
-	public static Predicate<UnitCtrl> <>9__265_0; 
-	public static Predicate<UnitCtrl> <>9__294_0; 
-	public static Predicate<UnitCtrl> <>9__294_1; 
-	public static Predicate<PrefabWithTime> <>9__308_1; 
-	
-	internal bool <PlayAndSetUpMultiTarget>b__264_0(PartsData e) { }
-
-	
-	internal bool <tryPlayMultiBossAppear>b__265_0(UnitCtrl e) { }
-
-	
-	internal bool <updateWalk>b__294_0(UnitCtrl e) { }
-
-	
-	internal bool <updateWalk>b__294_1(UnitCtrl e) { }
-
-	
-	internal bool <CreatePrefabWithTime>b__308_1(PrefabWithTime e) { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass263_0 
-{
-	
-	public MultiTargetCursor cursor; 
-
-	internal void <SetState>b__0() { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass264_0 
-{
-	
-	public BlockLayerManager blockLayerManager; 
-	public Elements.Battle.Core.UnitComponentState <>4__this; 
-
-	internal void <PlayAndSetUpMultiTarget>b__1() { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass264_1 
-{
-	
-	public MultiTargetCursor cursor; 
-	public Elements.Battle.Core.UnitComponentState <>4__this; 
-
-	internal void <PlayAndSetUpMultiTarget>b__2() { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass271_0 
-{
-	
-	public int unionBurstSkillId; 
-
-	internal bool <setStateUnionBurst>b__0(Skill e) { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass276_0 
-{
-	
-	public int unionBurstSkillId; 
-
-	internal bool <playVoiceDataList>b__0(Skill e) { }
-}
-
-
-[CompilerGenerated]
-private sealed class Elements.Battle.Core.UnitComponentState.<>c__DisplayClass291_0 
-{
-	
-	public string _voiceName; 
-	public int counter; 
-	public int _maxNum; 
-	public bool playVoice; 
-
-	internal void <judgePlayVoice>b__0(List<UnitCtrl> list) { }
-}
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Elements.Battle.Core
 {
-
-    public class UnitComponentState : Elements.Battle.Core.UnitComponentBase, Elements.Battle.Core.IUnitComponent
+    public class UnitComponentState : UnitComponentBase, IUnitComponent
     {
-
         private const int DIE_MOTION1 = 1;
         private const int SUMMON_INDEX_INVALID_VALUE = -1;
         private const int MULTI_TARGET_CURSOR_DEPTH = 100;
@@ -119,8 +18,10 @@ namespace Elements.Battle.Core
         public Action<UnitCtrl> OnDieForZeroHp;
         public Action<UnitCtrl> OnDieFadeOutEnd;
 
+        public delegate void OnDeadDelegate(UnitCtrl owner);
+        public OnDeadDelegate OnDeadForRevival { get; set; }
+
         private BattleManager battleManager { get; set; }
-        private IBattleLog battleLog { get; set; }
         private SoundManager soundManager { get; set; }
         private Elements.Battle.Core.UnitComponentAbnormal componentAbnormal { get; set; }
         private Elements.Battle.Core.UnitComponentAnimation componentAnimation { get; set; }
@@ -128,7 +29,7 @@ namespace Elements.Battle.Core
         private Elements.Battle.Core.UnitComponentColor componentColor { get; set; }
         private Elements.Battle.Core.UnitComponentMultiPartsBoss componentMultiPartsBoss { get; set; }
         private Elements.Battle.Core.UnitComponentDamageControl componentDamageControl { get; set; }
-        private Elements.Battle.Core.UnitComponentParameter componentParameter { get; set; }
+        private UnitComponentParameter componentParameter { get; set; }
         private Elements.Battle.Core.UnitComponentPassiveSkill componentPassiveSkill { get; set; }
         private Elements.Battle.Core.UnitComponentSearchArea componentSearchArea { get; set; }
         private Elements.Battle.Core.UnitComponentSortOrder componentSortOrder { get; set; }
@@ -136,8 +37,6 @@ namespace Elements.Battle.Core
         private Elements.Battle.Core.UnitComponentUnionBurst componentUnionBurst { get; set; }
         private Elements.Battle.Core.PresetBattleEffectData battleEffectData { get; set; }
         public Elements.Battle.Core.ActionState CurrentState { get; set; }
-
-        public Elements.Battle.Core.UnitComponentState.OnDeadDelegate OnDeadForRevival { get; set; }
 
         public bool IdleOnly { get; set; }
         public bool IsDead { get; set; }
@@ -161,8 +60,6 @@ namespace Elements.Battle.Core
         public bool GameStartDone { get; set; }
         public bool IsStartActionForExtraEffect { get; set; }
         private int dieCoroutineId { get; set; }
-        public Action<float> OnUpdateWhenIdle { get; set; }
-        public Action OnBreakAll { get; set; }
         public bool IsOnBreakAllCallWhenGameStartDone { get; set; }
         private int damageCoroutineId { get; set; }
         private int walkCoroutineId { get; set; }
@@ -172,80 +69,151 @@ namespace Elements.Battle.Core
         public int EnemyPoint { get; set; }
         public long SpecialBattlePurposeHp { get; set; }
         public int PositionOrder { get; set; }
-        public Action OnMotionPrefixChanged { get; set; }
         public bool MultiTargetDone { get; set; }
         public bool ModeChangeUnableStateBarrier { get; set; }
         public bool MultiTargetByTime { get; set; }
         public int SpecialIdleMotionId { get; set; }
-        private List<SkillEffectCtrl> idleEffectsObjs { get; set; }
         private bool isRunForCatchUp { get; set; }
         public CutinVoiceStatus CutinVoiceStatus { get; set; }
         public bool HasSetStateCalled { get; set; }
         public bool IsNotPartsBossReady { get; set; }
-        private Dictionary<int, Elements.Battle.Core.VoiceTypeAndSkillNumber> voiceTypeDictionary { get; set; }
+        private List<SkillEffectCtrl> idleEffectsObjs { get; set; }
+        private Dictionary<int, VoiceTypeAndSkillNumber> voiceTypeDictionary { get; set; }
+        public Action<float> OnUpdateWhenIdle { get; set; }
+        public Action OnBreakAll { get; set; }
+        public Action OnMotionPrefixChanged { get; set; }
+
+        public UnitComponentState(UnitCtrl _unitCtrl, BattleManager _battleManager, Elements.Battle.Core.PresetBattleEffectData _battleEffectData)
+        {
+
+        }
+
+        public void SetState(ActionState _state, int _nextSkillId = 0, int _skillId = 0, bool _quiet = false)
+        {
+            MultiTargetCursor cursor;
+            //internal void <SetState>b__0() { }
+        }
+
+        public IEnumerator SetStateWithDelayForRevival(float delay, Elements.Battle.Core.ActionState state, int nextSkillId = 0, int skillId = 0)
+        {
+            float time = 0;
+        }
+
+        private void setStateWalk() => SetState(ActionState.Walk);
+
+        private void setStateAttack() => SetState(ActionState.Attack);
+
+        private void setStateSkill(int skillId) => SetState(ActionState.Skill, _skillId: skillId);
+
+        private void setStateUnionBurst()
+        {
+            SetState(ActionState.UnionBurst);
+            // int unionBurstSkillId; 
+            // internal bool <setStateUnionBurst>b__0(Skill e) { }
+        }
+
+        private void setStateDie() => SetState(ActionState.Die);
 
 
-        private void tryPlayMultiBossAppear() { }
+        private IEnumerator updateGameStart()
+        {
+            float time = 0;
+            bool[] shakeStarted = new bool[4];
+        }
 
-        private void setStateDie() { }
-
-        private IEnumerator updateGameStartMotionIdle() 
+        private IEnumerator updateGameStartMotionIdle()
         {
             float endTime = 0;
         }
 
-        public void TryPlaySkillVoice(int _skillId) { }
-
         private IEnumerator updateStandBy() { }
 
+        private IEnumerator updateWalk(int coroutineId)
+        {
 
-        public UnitComponentState(UnitCtrl _unitCtrl, BattleManager _battleManager, IBattleLog _battleLog, Elements.Battle.Core.PresetBattleEffectData _battleEffectData) { }
+            // internal bool <updateWalk>b__294_0(UnitCtrl e) { }
+
+            // internal bool <updateWalk>b__294_1(UnitCtrl e) { }
+        }
+
+        private IEnumerator updateIdle()
+        {
+            float fAlpha = 0;
+        }
+
+        private IEnumerator updateAttack(UnitActionController _actionController)
+        {
+            float alpha = 0;
+        }
+
+        private IEnumerator updateSkill(int skillId)
+        {
+            UnitActionController actionController;
+        }
+
+        private IEnumerator updateDamage(int _thisId)
+        {
+            float time = 0;
+            bool isInitPause = false;
+        }
+
+        private IEnumerator updateDamageWhenIdle(bool _damageMotionWhenUnionBurst)
+        {
+            bool blackoutUnitContained = false;
+        }
+
+        private IEnumerator updateUnionBurst()
+        {
+            UnitActionController actionController;
+            int unionBurstSkillId;
+        }
+        private IEnumerator updateDie(int _thisId)
+        {
+            float falpha = 0;
+        }
+
+        public void TryPlaySkillVoice(int _skillId) { }
 
         private IEnumerator updateUndoDivision() { }
 
         public bool IsCancelActionState(bool _isUnionBurst, int _skillId = -1) { }
 
-        private IEnumerator updateGameStart() 
+        public IEnumerator CreatePrefabWithTime(List<PrefabWithTime> _data, bool _isIdle = false, int _summonIndex = -1, bool _isAura = false, bool _isShieldEffect = false, bool _ignorePause = false, int _damagedTriggerActionId = -1, bool _useTimeDelta = false)
         {
             float time = 0;
-            bool[] shakeStarted = new bool[4];
+            bool[] effectCreated = new bool[_data.Count];
+
+
+            // internal bool <CreatePrefabWithTime>b__308_1(PrefabWithTime e) { }
         }
+
+        private IEnumerator updateDivisionDisappear() { }
+
+        private IEnumerator updateModeChange() { }
+
+
+        private IEnumerator waitBlackOutEndAndPlayLose() { }
 
         private bool isResumeSpecialSleepAnime() { }
 
 
         private void resumeSpineWithTime() { }
 
-
-        private IEnumerator updateUnionBurst() 
-        {
-            UnitActionController actionController;
-            int unionBurstSkillId;
-        }
-
         private void playSubUbVoiceWithDelay(Skill _skill) { }
 
-        private IEnumerator updateIdle() 
-        {
-            float fAlpha = 0;
-        }
 
         private void playUbVoice3WithDelay() { }
 
 
-        public IEnumerator CreatePrefabWithTime(List<PrefabWithTime> _data, bool _isIdle = false, int _summonIndex = -1, bool _isAura = false, bool _isShieldEffect = false, bool _ignorePause = false, int _damagedTriggerActionId = -1, bool _useTimeDelta = false) 
-        {
-            float time = 0;
-            bool[] effectCreated = new bool[_data.Count];
-        }
-
         public void DisappearForDivision(bool _fadeOut, bool _useCoroutine) { }
 
-        private bool judgeStateIsWalk() { }
+        private bool judgeStateIsWalk()
+        {
+            return CurrentState == ActionState.Walk;
+        }
 
         private bool isMultiBossDestructionTarget(int _enemyId) { }
 
-        public void SetState(Elements.Battle.Core.ActionState _state, int _nextSkillId = 0, int _skillId = 0, bool _quiet = False) { }
 
         private void playUbVoice4WithDelay() { }
 
@@ -254,24 +222,12 @@ namespace Elements.Battle.Core
             float deltaTimeAccumulated = 0;
         }
 
-        public IEnumerator SetStateWithDelayForRevival(float delay, Elements.Battle.Core.ActionState state, int nextSkillId = 0, int skillId = 0)
-        {
-            float time = 0;
-        }
-
-        private void setStateAttack() { }
-
         private void playUbNameVoiceWithDelay() { }
 
         public void AddVoiceTypeAndSkillNumber(int _key, Elements.Battle.Core.VoiceTypeAndSkillNumber _data) { }
 
         public void PlayDamageWhenIdle(bool _damageMotionWhenUnionBurst = False, bool _pauseStopState = False) { }
 
-        private IEnumerator updateDamage(int _thisId) 
-        {
-            float time = 0;
-            bool isInitPause = false;
-        }
         private bool judgeWalkEnd(int _coroutineId) { }
 
         public void DeleteDamagedHpAuraEffect(int _actionId) { }
@@ -284,13 +240,17 @@ namespace Elements.Battle.Core
             float delay = 0;
         }
 
-        public void PlayAndSetUpMultiTarget(bool _isFirst) { }
-
-        private IEnumerator waitBlackOutEndAndPlayLose() { }
-
-        private IEnumerator updateAttack(UnitActionController _actionController) 
+        public void PlayAndSetUpMultiTarget(bool _isFirst) 
         {
-            float alpha = 0;
+            //public BlockLayerManager blockLayerManager; 
+            //public Elements.Battle.Core.UnitComponentState <>4__this; 
+            //internal void <PlayAndSetUpMultiTarget>b__1() { }
+            
+            //public MultiTargetCursor cursor; 
+            //public Elements.Battle.Core.UnitComponentState <>4__this; 
+            //internal void <PlayAndSetUpMultiTarget>b__2() { }
+
+            // internal bool <PlayAndSetUpMultiTarget>b__264_0(PartsData e) { }
         }
 
         public void StartLoseMotion() { }
@@ -298,22 +258,6 @@ namespace Elements.Battle.Core
         public void RegisterComponentSet(Elements.Battle.Core.IUnitComponentContainer _container) { }
 
         private bool isPauseDamageMotion() { }
-
-        private IEnumerator updateDamageWhenIdle(bool _damageMotionWhenUnionBurst)
-        {
-            bool blackoutUnitContained = false;
-        }
-
-        private IEnumerator updateDie(int _thisId)
-        {
-            float falpha = 0;
-
-        }
-
-        private IEnumerator updateWalk(int coroutineId) 
-        {
-
-        }
 
         public IEnumerator PlayCutInVoiceWithDelay(VoiceDelayAndEnable _data, int _voiceId, bool _withCutin) 
         {
@@ -329,13 +273,11 @@ namespace Elements.Battle.Core
             float time = 0;
         }
 
-        private IEnumerator updateDivisionDisappear() { }
-
-        private void playVoiceDataList(List<VoiceDelayAndEnable> _dataList, int _id, int _skillNum = 0) { }
-
-        private void setStateUnionBurst() { }
-
-        private IEnumerator updateModeChange() { }
+        private void playVoiceDataList(List<VoiceDelayAndEnable> _dataList, int _id, int _skillNum = 0) 
+        {
+            // int unionBurstSkillId; 
+            //internal bool <playVoiceDataList>b__0(Skill e) { }
+        }
 
         public void SkillEndProcess() { }
 
@@ -343,15 +285,18 @@ namespace Elements.Battle.Core
 
         private bool isResumeDamageAnimationFromStopStateTime() { }
 
-        private IEnumerator updateSkill(int skillId) 
+        private bool judgePlayVoice(string _voiceName, int _maxNum, bool _isSkill, float _voiceOffsetRate) 
         {
-            UnitActionController actionController;
+            //public string _voiceName; 
+            //public int counter; 
+            //public int _maxNum; 
+            //public bool playVoice; 
+
+            //internal void <judgePlayVoice>b__0(List<UnitCtrl> list) { }
         }
-
-        private void setStateSkill(int skillId) { }
-
-        private bool judgePlayVoice(string _voiceName, int _maxNum, bool _isSkill, float _voiceOffsetRate) { }
-
-        private void setStateWalk() { }
+        private void tryPlayMultiBossAppear()
+        {
+            //internal bool <tryPlayMultiBossAppear>b__265_0(UnitCtrl e) { }
+        }
     }
 }
